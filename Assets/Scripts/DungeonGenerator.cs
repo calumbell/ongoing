@@ -65,6 +65,59 @@ public class DungeonGenerator : MonoBehaviour {
                 if (map[y, x] > 0){
                     CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
                 }
+
+                if (map[y, x] > 2) {
+                    // check if we are at the left bound of our map
+                    if (x == 0) {
+
+                        // if at bottom of map, create a BottomLeft corner (index 6)
+                        if (y == 0) {
+                            CreateChildPrefab(wallPrefabs[6], wallParent, x, y, 0);
+                        }
+
+                        // if at top of map, create a TopLeft corner (index 0)
+                        else if (y+1 == height) {
+                            CreateChildPrefab(wallPrefabs[0], wallParent, x, y, 0);
+                        }
+
+                        // if not a corner, create a LeftCentre wall (index 3)
+                        else {
+                            CreateChildPrefab(wallPrefabs[3], wallParent, x, y, 0);
+                        }
+                    }
+
+                    // check if we are at the right bound of our map
+                    else if (x+1 == width) {
+                        // if at bottom of map, create a BottomRight corner (index 6)
+                        if (y == 0)
+                        {
+                            CreateChildPrefab(wallPrefabs[8], wallParent, x, y, 0);
+                        }
+
+                        // if at top of map, create a TopRight corner (index 0)
+                        else if (y + 1 == height)
+                        {
+                            CreateChildPrefab(wallPrefabs[2], wallParent, x, y, 0);
+                        }
+
+                        // if not a corner, create a RightCentre wall (index 3)
+                        else
+                        {
+                            CreateChildPrefab(wallPrefabs[5], wallParent, x, y, 0);
+                        }
+                    }
+
+                    // if we are at bottom of map, create a BottomCentre wall (index 7)
+                    else if (y == 0) {
+                        CreateChildPrefab(wallPrefabs[7], wallParent, x, y, 0);
+                    }
+
+                    // else, it has to be a TopCentre wall (index 1)
+                    else {
+                        CreateChildPrefab(wallPrefabs[1], wallParent, x, y, 0);
+                    }
+
+                }
             }
         }
     }
