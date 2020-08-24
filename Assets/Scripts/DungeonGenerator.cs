@@ -9,6 +9,12 @@ public class DungeonGenerator : MonoBehaviour {
     public GameObject floorPrefab;
     public GameObject floorParent;
 
+
+
+    // 
+    public GameObject[] wallPrefabs;
+    public GameObject wallParent;
+
     // Start is called before the first frame update
     void Start() {
         int[,] map = GenerateMapData(width, height);
@@ -38,7 +44,11 @@ public class DungeonGenerator : MonoBehaviour {
         // iterate over 2D array
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                map[y, x] = 1;
+                map[y, x] = 0b0001;
+
+                if (y == 0 || y+1 == height || x == 0 || x+1 == width) {
+                    map[y, x] = map[y, x] | 0b0010;
+                }
             }
         }
 
@@ -52,7 +62,9 @@ public class DungeonGenerator : MonoBehaviour {
     void InstantiateMapData(int[,] map, int width, int height) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
+                if (map[y, x] > 0){
+                    CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
+                }
             }
         }
     }
