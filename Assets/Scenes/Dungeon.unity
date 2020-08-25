@@ -189,7 +189,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -305,7 +305,7 @@ MonoBehaviour:
   - {fileID: 3066719296215675114, guid: 2e51f41b3e7cf4de899e3ccd53e05a6f, type: 3}
   - {fileID: 7662496556304188387, guid: e109ef5f89d6d428b932d71e58293c54, type: 3}
   - {fileID: 383418656873400845, guid: 8c61295e763b94390a20925d323fb6d2, type: 3}
-  - {fileID: 0}
+  - {fileID: 3003891875264547821, guid: ef0e090fd7add4411b4c79a1284a47d2, type: 3}
   - {fileID: 2393023370183532183, guid: c111c12ad96a04294959176f2e2ddec6, type: 3}
   - {fileID: 2260941970144194411, guid: 69e694af00f5847b7a9778cc6580a6bb, type: 3}
   - {fileID: 7385672271095336265, guid: 174b4db2b6ea546e9b48f29dc1deb6b3, type: 3}

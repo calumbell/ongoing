@@ -17,7 +17,7 @@ public class DungeonGenerator : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        int[,] map = GenerateMapData(width, height);
+        byte[,] map = GenerateMapData(width, height);
         InstantiateMapData(map, width, height);
     }
 
@@ -38,16 +38,16 @@ public class DungeonGenerator : MonoBehaviour {
     // ========================================
     // GenerateMapData: returns a 2D array of ints that represents a map
 
-    int[,] GenerateMapData(int width, int height) {
-        int[,] map = new int[height, width];
+    byte[,] GenerateMapData(int width, int height) {
+        byte[,] map = new byte[height, width];
 
         // iterate over 2D array
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                map[y, x] = 0b0001;
+                map[y, x] = 0b1;
 
                 if (y == 0 || y+1 == height || x == 0 || x+1 == width) {
-                    map[y, x] = map[y, x] | 0b0010;
+                    map[y, x] = (byte) (map[y, x] | 0b10);
                 }
             }
         }
@@ -59,7 +59,7 @@ public class DungeonGenerator : MonoBehaviour {
     // InstantiateMapData: takes a 2D array of map data and instantiates the
     // prefabs that render it in our scene.
 
-    void InstantiateMapData(int[,] map, int width, int height) {
+    void InstantiateMapData(byte[,] map, int width, int height) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (map[y, x] > 0){
