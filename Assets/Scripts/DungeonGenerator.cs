@@ -6,10 +6,10 @@ public class DungeonGenerator : MonoBehaviour {
     public int width;
     public int height;
 
+    byte[,] map;
+
     public GameObject floorPrefab;
     public GameObject floorParent;
-
-
 
     // 
     public GameObject[] wallPrefabs;
@@ -17,7 +17,7 @@ public class DungeonGenerator : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        byte[,] map = GenerateMapData(width, height);
+        map = GenerateMapData(width, height);
         InstantiateMapData(map, width, height);
     }
 
@@ -25,6 +25,9 @@ public class DungeonGenerator : MonoBehaviour {
     void Update() {
         
     }
+
+
+
 
     // ========================================
     // CreateChildPrefab: instantiates a prefab and parents it to another game obj
@@ -36,23 +39,66 @@ public class DungeonGenerator : MonoBehaviour {
 
 
     // ========================================
-    // GenerateMapData: returns a 2D array of ints that represents a map
+    // AddRoomToMap
+
+    void AddRoomToMap(byte[,] room, byte[,] map, int x, int y) {
+
+        if (x < 1 || y < 1) {
+            return;
+        }
+
+        // get dims of room & map
+        int roomHeight = room.GetLength(0);
+        int roomWidth = room.GetLength(1);
+        int mapHeight = map.GetLength(0);
+        int mapWidth = map.GetLength(1);
+
+        if (x + roomWidth  > mapWidth || y + roomHeight > mapHeight) {
+            return;
+        }
+
+        for (int i = 0; i < roomHeight; i++) {
+            for (int j = 0; j < roomWidth; j++) {
+                map[y+i, x+j] = room[i, j];
+            }
+        }
+    }
+
+
+    // ========================================
+    // GenerateMapData: returns a 2D array of bytes that represents a map
 
     byte[,] GenerateMapData(int width, int height) {
         byte[,] map = new byte[height, width];
+        byte[,] room = GenerateRoom(6, 6);
+
+        AddRoomToMap(room, map, 6, 2);
+
+        return map;
+    }
+
+    // ========================================
+    // GenerateRoom: returns a 2D array of bytes representing a room
+
+    byte[,] GenerateRoom(int width, int height)
+    {
+        byte[,] room = new byte[height, width];
 
         // iterate over 2D array
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                map[y, x] = 0b1;
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                room[y, x] = 0b1;
 
-                if (y == 0 || y+1 == height || x == 0 || x+1 == width) {
-                    map[y, x] = (byte) (map[y, x] | 0b10);
+                if (y == 0 || y + 1 == height || x == 0 || x + 1 == width)
+                {
+                    room[y, x] = (byte)(room[y, x] | 0b10);
                 }
             }
         }
 
-        return map;
+        return room;
     }
 
     // ========================================
@@ -62,11 +108,11 @@ public class DungeonGenerator : MonoBehaviour {
     void InstantiateMapData(byte[,] map, int width, int height) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if (map[y, x] > 0){
+                if ((map[y, x] & 0x1) > 0){
                     CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
                 }
 
-                if (map[y, x] > 2) {
+                if ((map[y, x] & 0x2) > 0) {
                     // check if we are at the left bound of our map
                     if (x == 0) {
 
