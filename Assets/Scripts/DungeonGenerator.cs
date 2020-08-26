@@ -7,6 +7,7 @@ public class DungeonGenerator : MonoBehaviour {
     public int height;
 
     byte[,] map;
+    Room[] rooms;
 
     public GameObject floorPrefab;
     public GameObject floorParent;
@@ -21,17 +22,8 @@ public class DungeonGenerator : MonoBehaviour {
         InstantiateMapData(map, width, height);
     }
 
-    // Update is called once per frame
-    void Update() {
-        
-    }
-
-
-
-
     // ========================================
     // CreateChildPrefab: instantiates a prefab and parents it to another game obj
-
     void CreateChildPrefab(GameObject prefab, GameObject parent, int x, int y, int z) {
         var myPrefab = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
         myPrefab.transform.parent = parent.transform;
@@ -39,7 +31,6 @@ public class DungeonGenerator : MonoBehaviour {
 
     // ========================================
     // CreateWallPrefab: instantiates the correct wall prefab based on room geometry
-
     void CreateWallPrefab(GameObject parent, int x, int y) {
         // if there is floor and no wall below this tile
         if (!((map[y-1, x] & 0x2) > 0) & ((map[y-1, x] & 0x1) > 0)) {
@@ -95,66 +86,99 @@ public class DungeonGenerator : MonoBehaviour {
 
     // ========================================
     // AddRoomToMap: adds a room to a map and the coords x & y
-
-    void AddRoomToMap(byte[,] room, byte[,] map, int x, int y) {
-
-        if (x < 1 || y < 1) {
-            return;
-        }
-
-        // get dims of room & map
-        int roomHeight = room.GetLength(0);
-        int roomWidth = room.GetLength(1);
+    void AddRoomToMap(Room room, byte[,] map) {
+        // get map dims
         int mapHeight = map.GetLength(0);
-        int mapWidth = map.GetLength(1);
+        int mapWidth = map.GetLength(0);
 
-        if (x + roomWidth  > mapWidth || y + roomHeight > mapHeight) {
-            return;
-        }
+        // get room dims & coords
+        int offsetX = room.getX();
+        int offsetY = room.getY();
+        int roomWidth = room.getWidth();
+        int roomHeight = room.getHeight();
 
-        for (int i = 0; i < roomHeight; i++) {
-            for (int j = 0; j < roomWidth; j++) {
-                map[y+i, x+j] = room[i, j];
+        // iterate across room & map
+        for (int y = 0; y < roomHeight; y++) {
+            for (int x = 0; x < roomWidth; x++) {
+                // copy room data into map at an offset
+                map[y + offsetY, x + offsetX] = room.getTile(x, y);
             }
         }
     }
-
 
     // ========================================
     // GenerateMapData: returns a 2D array of bytes that represents a map
 
     byte[,] GenerateMapData(int width, int height) {
         byte[,] map = new byte[height, width];
-        byte[,] room = GenerateRoom(10, 6);
-        AddRoomToMap(room, map, 6, 2);
 
-        room = GenerateRoom(8, 8);
-        AddRoomToMap(room, map, 2, 11);
+        // create rooms and add them to map
+        rooms = GenerateRooms(3, width, height);
 
+       
+        foreach (Room room in rooms) {
+            AddRoomToMap(room, map);
+        }
         return map;
     }
 
+    Room[] GenerateRooms(int n, int boundX, int boundY) {
+        Room[] rooms = new Room[n];
+        
+        for (int i = 0; i < n; i++) {
+            // generate parameters
+            int width = Random.Range(4, 10);
+            int height = Random.Range(4, 10);
+            int x = Random.Range(1, boundX - width - 1);
+            int y = Random.Range(1, boundY - height - 1);
+            Room newRoom = new Room(x, y, width, height);
+            
+            // check for collisions between new and existing rooms
+            bool roomCollisionFlag = false;
+            foreach(Room room in rooms) {
+
+                // make sure array index is not null to avoid seg. faults
+                if (room != null) {                    
+                    if (room.CollidesWithRoom(newRoom)) {
+                        roomCollisionFlag = true;
+                    }
+                }    
+            }
+
+            // if no collisions, add newRoom to rooms array
+            if (!roomCollisionFlag) {
+                rooms[i] = newRoom;
+            }
+
+            // else, decrement iterator so that the loop repeats
+            // possible bug: if geometries of rooms do not allow another room to be
+            // added, we have an infinity loop - add some kind of base-case?
+
+            else {
+                i--;
+            }
+           
+        }       
+        
+        return rooms;
+    }
+
     // ========================================
-    // GenerateRoom: returns a 2D array of bytes representing a room
+    // Instantiate Room
 
-    byte[,] GenerateRoom(int width, int height)
-    {
-        byte[,] room = new byte[height, width];
+    void InstantiateRoom(Room room) {
+        for (int y = 0; y < room.getHeight(); y++ ) {
+            for (int x = 0; x < room.getWidth(); x++) {
+                byte tile = room.getTile(x, y);
+                if ((tile & 0x1) > 0) {
+                    CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
+                }
 
-        // iterate over 2D array
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                // add a floor underneath each tile
-                room[y, x] = 0b1;
-
-                // add walls around the edges of room
-                if (y == 0 || y + 1 == height || x == 0 || x + 1 == width) {
-                    room[y, x] = (byte)(room[y, x] | 0x2);
+                if ((tile & 0x2) > 0) {
+                    CreateWallPrefab(wallParent, x, y);
                 }
             }
         }
-
-        return room;
     }
 
     // ========================================
