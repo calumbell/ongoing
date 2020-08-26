@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cd2cf2419fc45deae204fb8c82d07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 30
+  width: 40
   height: 30
   floorPrefab: {fileID: 604878441931748688, guid: 0702ba517dbde4d25af14986c947494a,
     type: 3}

@@ -27,14 +27,15 @@
     public byte getTile(int x, int y) { return map[y, x];  }
 
     // ===========================
-    // AABBCollisionDetection returns turn if the two rects described by the
+    // AABBCollisionDetection returns turn if the two rects (+1 boarder tile) described by the
     // arguments intersect, else returns false
 
     private bool AABBCollisionDetection(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
-        if (x1 < x2 + w2 &&
-            x1 + w1 > x2 &&
-            y1 < y2 + h2 &&
-            y1 + h1 > y2) {
+        // Add one to each width to make sure that each box has a boarder
+        if (x1 < x2 + w2 + 1 &&
+            x1 + w1 + 1 > x2 &&
+            y1 < y2 + h2 + 1 &&
+            y1 + h1 + 1 > y2) {
             return true;
         }
 

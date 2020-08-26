@@ -87,6 +87,10 @@ public class DungeonGenerator : MonoBehaviour {
     // ========================================
     // AddRoomToMap: adds a room to a map and the coords x & y
     void AddRoomToMap(Room room, byte[,] map) {
+        if (room == null) {
+            return;
+        }
+
         // get map dims
         int mapHeight = map.GetLength(0);
         int mapWidth = map.GetLength(0);
@@ -113,7 +117,7 @@ public class DungeonGenerator : MonoBehaviour {
         byte[,] map = new byte[height, width];
 
         // create rooms and add them to map
-        rooms = GenerateRooms(3, width, height);
+        rooms = GenerateRooms(6, width, height);
 
        
         foreach (Room room in rooms) {
@@ -124,13 +128,18 @@ public class DungeonGenerator : MonoBehaviour {
 
     Room[] GenerateRooms(int n, int boundX, int boundY) {
         Room[] rooms = new Room[n];
-        
+
+        // only allow n+10 attempts to create a room (base-case)
+        int attempts = n + 10;
+
         for (int i = 0; i < n; i++) {
             // generate parameters
-            int width = Random.Range(4, 10);
-            int height = Random.Range(4, 10);
+            int width = Random.Range(4, 15);
+            int height = Random.Range(4, 15);
             int x = Random.Range(1, boundX - width - 1);
             int y = Random.Range(1, boundY - height - 1);
+
+            // instantiate new room
             Room newRoom = new Room(x, y, width, height);
             
             // check for collisions between new and existing rooms
@@ -157,28 +166,18 @@ public class DungeonGenerator : MonoBehaviour {
             else {
                 i--;
             }
+
+            if (attempts <= 0) {
+                break;
+            }
+
+            else {
+                attempts--;
+            }
            
         }       
         
         return rooms;
-    }
-
-    // ========================================
-    // Instantiate Room
-
-    void InstantiateRoom(Room room) {
-        for (int y = 0; y < room.getHeight(); y++ ) {
-            for (int x = 0; x < room.getWidth(); x++) {
-                byte tile = room.getTile(x, y);
-                if ((tile & 0x1) > 0) {
-                    CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
-                }
-
-                if ((tile & 0x2) > 0) {
-                    CreateWallPrefab(wallParent, x, y);
-                }
-            }
-        }
     }
 
     // ========================================
@@ -193,7 +192,6 @@ public class DungeonGenerator : MonoBehaviour {
                 if ((map[y, x] & 0x1) > 0){
                     CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
                 }
-
                 
                 if ((map[y, x] & 0x2) > 0) {
                     CreateWallPrefab(wallParent, x, y);
@@ -202,4 +200,3 @@ public class DungeonGenerator : MonoBehaviour {
         }
     }
 }
-
