@@ -136,14 +136,9 @@ public class DungeonGenerator : MonoBehaviour {
         int attempts = n + 10;
 
         for (int i = 0; i < n; i++) {
-            // generate parameters
-            int width = Random.Range(4, 15);
-            int height = Random.Range(4, 15);
-            int x = Random.Range(1, boundX - width - 1);
-            int y = Random.Range(1, boundY - height - 1);
 
             // instantiate new room
-            Room newRoom = new Room(x, y, width, height);
+            Room newRoom = new Room(width, height);
             
             // check for collisions between new and existing rooms
             bool roomCollisionFlag = false;

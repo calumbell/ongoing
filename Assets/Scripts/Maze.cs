@@ -64,11 +64,11 @@
     public void GenerateMaze() {
     
         // call recursive algo. to fill maze - start at coords (1,1)
-        GenerateMazeNodeAndFill(1, 1);     
+        GenerateMazeNode(1, 1);     
         return;
     }
 
-    public void GenerateMazeNodeAndFill(int x, int y) {
+    public void GenerateMazeNode(int x, int y) {
         // if out of bounds, return
         if (x < 1 || x >= width - 1 || y < 1 || y > height - 1)
             return;
@@ -81,10 +81,10 @@
 
         map[y, x] = 0x1;
 
-        GenerateMazeNodeAndFill(x - 1, y);
-        GenerateMazeNodeAndFill(x + 1, y);
-        GenerateMazeNodeAndFill(x, y - 1);
-        GenerateMazeNodeAndFill(x, y + 1);
+        GenerateMazeNode(x - 1, y);
+        GenerateMazeNode(x + 1, y);
+        GenerateMazeNode(x, y - 1);
+        GenerateMazeNode(x, y + 1);
 
     }
 }

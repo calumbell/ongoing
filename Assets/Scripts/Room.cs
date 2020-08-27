@@ -1,4 +1,6 @@
-﻿public class Room
+﻿using UnityEngine;
+
+public class Room
 {
     private int x;
     private int y;
@@ -9,6 +11,16 @@
     // ===========================
     // Class Constructor
 
+    // pass room dims to generate a random room with odd params
+    public Room(int roomX, int roomY) {
+        width = GenerateRandomOddInt(5, 13);
+        height = GenerateRandomOddInt(5, 13);
+        x = GenerateRandomOddInt(1, roomX - width - 1);
+        y = GenerateRandomOddInt(1, roomY - height - 1);
+        map = GenerateRoomMap(width, height);
+    }
+
+    // pass numerical params to declare what kind of room you want
     public Room(int xIn, int yIn, int widthIn, int heightIn) {
         x = xIn;
         y = yIn;
@@ -63,6 +75,15 @@
         // run AABB on a rect parent & rect with dims 1x1 to represent a single tile
         return AABBCollisionDetection(x, y, width, height,
             otherX, otherY, 1, 1);
+    }
+
+    private int GenerateRandomOddInt(int min, int max){
+        int n = Random.Range(min, max);
+
+        while (n % 2 != 1)
+            n = Random.Range(min, max);
+  
+        return n;
     }
 
     // ===========================
