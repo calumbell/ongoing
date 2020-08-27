@@ -8,6 +8,7 @@ public class DungeonGenerator : MonoBehaviour {
 
     byte[,] map;
     Room[] rooms;
+    Maze maze;
 
     public GameObject floorPrefab;
     public GameObject floorParent;
@@ -118,8 +119,8 @@ public class DungeonGenerator : MonoBehaviour {
 
         // create rooms and add them to map
         rooms = GenerateRooms(6, width, height);
-
-       
+        maze = new Maze(width, height);
+        
         foreach (Room room in rooms) {
             AddRoomToMap(room, map);
         }

@@ -8,8 +8,8 @@
 
     // ===========================
     // Class Constructor
-    public Room(int xIn, int yIn, int widthIn, int heightIn)
-    {
+
+    public Room(int xIn, int yIn, int widthIn, int heightIn) {
         x = xIn;
         y = yIn;
         width = widthIn;
@@ -87,6 +87,4 @@
 
         return room;
     }
-
-
 }
