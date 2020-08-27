@@ -62,16 +62,29 @@
     // the corrosponding indices in the blockedTiles array ignored by the algorithm
 
     public void GenerateMaze() {
-
-        // iterate over tiles in maze (offset by 1 to leave a boarder)
-        for (int y = 1; y < height - 1; y++) {
-            for (int x = 1; x < width - 1; x++) {
-
-                // only proceed if this tile is not blocked
-                if (!blockedTiles[y,x])
-                    map[y, x] = 0x1;
-            }
-        }
+    
+        // call recursive algo. to fill maze - start at coords (1,1)
+        GenerateMazeNodeAndFill(1, 1);     
         return;
+    }
+
+    public void GenerateMazeNodeAndFill(int x, int y) {
+        // if out of bounds, return
+        if (x < 1 || x >= width - 1 || y < 1 || y > height - 1)
+            return;
+
+        // if tile is blocked, return
+        if (blockedTiles[y, x])
+            return;
+
+        blockedTiles[y, x] = true;
+
+        map[y, x] = 0x1;
+
+        GenerateMazeNodeAndFill(x - 1, y);
+        GenerateMazeNodeAndFill(x + 1, y);
+        GenerateMazeNodeAndFill(x, y - 1);
+        GenerateMazeNodeAndFill(x, y + 1);
+
     }
 }
