@@ -119,8 +119,10 @@ public class DungeonGenerator : MonoBehaviour {
 
         // create rooms and add them to map
         rooms = GenerateRooms(6, width, height);
-        maze = new Maze(width, height);
-        
+        maze = new Maze(width, height, rooms);
+
+        map = maze.getMap();
+
         foreach (Room room in rooms) {
             AddRoomToMap(room, map);
         }

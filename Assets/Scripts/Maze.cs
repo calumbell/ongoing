@@ -23,7 +23,8 @@
         blockedTiles = new bool[height, width];
 
         foreach (Room room in rooms) {
-            BlockOutRoom(room);
+            if (room != null) 
+                BlockOutRoom(room);            
         }
 
         GenerateMaze();
@@ -49,9 +50,8 @@
         // go 1 index over in all directions to preserve space around room
 
         for (int y = -1; y < room.getHeight() + 1; y++) {
-            for (int x = -1; x < room.getWidth() + 1; x++) {
+            for (int x = -1; x < room.getWidth() + 1; x++)
                 blockedTiles[y+offsetY, x+offsetX] = true;
-            }
         }
         return;
     }
@@ -62,6 +62,16 @@
     // the corrosponding indices in the blockedTiles array ignored by the algorithm
 
     public void GenerateMaze() {
+
+        // iterate over tiles in maze (offset by 1 to leave a boarder)
+        for (int y = 1; y < height - 1; y++) {
+            for (int x = 1; x < width - 1; x++) {
+
+                // only proceed if this tile is not blocked
+                if (!blockedTiles[y,x])
+                    map[y, x] = 0x1;
+            }
+        }
         return;
     }
 }
