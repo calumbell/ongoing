@@ -9,18 +9,11 @@
     // ===========================
     // Class Constructors
 
-    public Maze(int widthIn, int heightIn) {
-        width = widthIn;
-        height = heightIn;
-        map = new byte[height, width];
-        blockedTiles = new bool[height, width];
-    }
-
-    // instantiate w/ a rooms array to generate the maze
+    // instantiate w/ rooms array to generate the maze
     public Maze(int widthIn, int heightIn, Room[] rooms) {
         width = widthIn;
         height = heightIn;
-        map = new byte[height, width];
+        tiles = new Tile[height, width];
         blockedTiles = new bool[height, width];
 
         foreach (Room room in rooms) {
@@ -28,19 +21,19 @@
                 BlockOutRoom(room);            
         }
 
-        GenerateMaze();
+        GenerateMazeCourse();
     }
 
     // ===========================
     // Getters
 
-    public byte[,] getMap() { return map; }
-    public byte getTile(int x, int y) { return map[y, x]; }
+    public Tile[,] getTiles() { return tiles; }
+    public Tile getTile(int x, int y) { return tiles[y, x]; }
 
 
     // ===========================
-    // BlockOutRooms: takes a room as an argument and marks all tiles contained in it
-    // (and a 1 block buffer around it) as out of bounds for the maze gen algorithm.
+    // BlockOutRooms: takes a room as an argument and marks all tiles contained
+    // within as out of bounds for the maze gen. algorithm
 
     public void BlockOutRoom(Room room) {
         // get room position to use as offset for blockedTiles array
@@ -50,8 +43,8 @@
         // iterate across all tiles in rooms and block them for the maze gen
         // go 1 index over in all directions to preserve space around room
 
-        for (int y = -1; y < room.getHeight() + 1; y++) {
-            for (int x = -1; x < room.getWidth() + 1; x++)
+        for (int y = 0; y < room.getHeight(); y++) {
+            for (int x = 0; x < room.getWidth(); x++)
                 blockedTiles[y+offsetY, x+offsetX] = true;
         }
         return;
@@ -59,33 +52,17 @@
 
 
     // ===========================
-    // GenerateMaze fills the map with a maze. Tiles that are flagged true at
-    // the corrosponding indices in the blockedTiles array ignored by the algorithm
-
-    public void GenerateMaze() {
-    
-        // call recursive algo. to fill maze - start at coords (1,1)
-        GenerateMazeNode(1, 1);     
+    // GenerateMazeCourse fills empty spaces in the tiles array with a maze
+    public void GenerateMazeCourse() {    
         return;
     }
 
-    public void GenerateMazeNode(int x, int y) {
-        // if out of bounds, return
-        if (x < 1 || x >= width - 1 || y < 1 || y > height - 1)
-            return;
 
-        // if tile is blocked, return
-        if (blockedTiles[y, x])
-            return;
+    // ===========================
+    // GenerateMazeFine fills empty spaces in the map with corridors, esp.
+    // corridors between rooms which GenerateMazeCourse ignores
 
-        blockedTiles[y, x] = true;
-
-        map[y, x] = 0x1;
-
-        GenerateMazeNode(x - 1, y);
-        GenerateMazeNode(x + 1, y);
-        GenerateMazeNode(x, y - 1);
-        GenerateMazeNode(x, y + 1);
-
+    public static byte[,] GenerateMazeFine(byte[,] map) {
+        return map;
     }
 }

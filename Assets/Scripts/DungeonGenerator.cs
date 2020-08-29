@@ -160,6 +160,9 @@ public class DungeonGenerator : MonoBehaviour {
             }
         }
 
+        // once we have converted our tiles to a map, fill in maze fine detail
+        map = Maze.GenerateMazeFine(map);
+
         return map;
     }
 
