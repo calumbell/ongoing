@@ -6,27 +6,19 @@ public class Room
     private int y;
     private int width;
     private int height;
-    private byte[,] map;
+    private Tile[,] tiles;
 
     // ===========================
     // Class Constructor
 
     // pass room dims to generate a random room with odd params
     public Room(int roomX, int roomY) {
-        width = GenerateRandomOddInt(5, 13);
-        height = GenerateRandomOddInt(5, 13);
-        x = GenerateRandomOddInt(1, roomX - width - 1);
-        y = GenerateRandomOddInt(1, roomY - height - 1);
-        map = GenerateRoomMap(width, height);
-    }
-
-    // pass numerical params to declare what kind of room you want
-    public Room(int xIn, int yIn, int widthIn, int heightIn) {
-        x = xIn;
-        y = yIn;
-        width = widthIn;
-        height = heightIn;
-        map = GenerateRoomMap(width, height);
+        width = Random.Range(6, 12); // includes a 1-tile buffer around room
+        height = Random.Range(6, 12);
+        x = Random.Range(0, roomX - width - 1); // -1 for 0-indexing
+        y = Random.Range(0, roomY - height - 1);
+        tiles = new Tile[height, width];
+        InitRoom(width, height);
     }
 
     // ===========================
@@ -36,7 +28,8 @@ public class Room
     public int getY() { return y; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
-    public byte getTile(int x, int y) { return map[y, x];  }
+    public Tile getTile(int x, int y) { return tiles[y, x]; }
+    public Tile[,] getTiles() { return tiles; }
 
     // ===========================
     // AABBCollisionDetection returns turn if the two rects (+1 boarder tile) described by the
@@ -44,10 +37,10 @@ public class Room
 
     private bool AABBCollisionDetection(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
         // Add one to each width to make sure that each box has a boarder
-        if (x1 < x2 + w2 + 1 &&
-            x1 + w1 + 1 > x2 &&
-            y1 < y2 + h2 + 1 &&
-            y1 + h1 + 1 > y2) {
+        if (x1 < x2 + w2 &&
+            x1 + w1 > x2 &&
+            y1 < y2 + h2 &&
+            y1 + h1 > y2) {
             return true;
         }
 
@@ -61,51 +54,36 @@ public class Room
     // the two rooms overlap. otherwise it returns false
 
     public bool CollidesWithRoom(Room otherRoom) {
-
         return AABBCollisionDetection(x, y, width, height,
             otherRoom.getX(), otherRoom.getY(), otherRoom.getWidth(), otherRoom.getHeight());
     }
 
-    // ===========================
-    // ContainsTile returns true if the coordinates passed to the function
-    // are contained in the parent room, else returns false
-    // ==
-
-    public bool ContainsTile(int otherX, int otherY) {
-        // run AABB on a rect parent & rect with dims 1x1 to represent a single tile
-        return AABBCollisionDetection(x, y, width, height,
-            otherX, otherY, 1, 1);
-    }
-
-    private int GenerateRandomOddInt(int min, int max){
-        int n = Random.Range(min, max);
-
-        while (n % 2 != 1)
-            n = Random.Range(min, max);
-  
-        return n;
-    }
-
-    // ===========================
-    // GenerateRoomMap()
-    // ==
-
-    byte[,] GenerateRoomMap(int width, int height) {
-        byte[,] room = new byte[height, width];
-
+    void InitRoom(int width, int height) {       
         // iterate over 2D array
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                // add a floor underneath each tile
-                room[y, x] = 0x1;
 
-                // add walls around the edges of room
-                if (y == 0 || y + 1 == height || x == 0 || x + 1 == width) {
-                    room[y, x] = (byte)(room[y, x] | 0x2);
+                // if we are at the very edge of room, add our buffer
+                if (y == 0 | y == height-1 | x == 0 | x == width-1)
+                    tiles[y, x] = new Tile(false, (byte)0x0);
+
+                // if we are one index in from our buffer, calc ext. walls
+                else {              
+                    byte walls = 0x0;
+                
+                    if (y == 1)
+                        walls = (byte)(walls | 0x4);
+                    else if (y == height-2)
+                        walls = (byte)(walls | 0x1);
+                    if (x == 1)
+                        walls = (byte)(walls | 0x8);
+                    else if (x == width-2)
+                        walls = (byte)(walls | 0x2);
+
+                    // create new tile and add it to tiles array
+                    tiles[y, x] = new Tile(true, walls);
                 }
             }
         }
-
-        return room;
     }
 }

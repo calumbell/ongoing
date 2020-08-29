@@ -6,6 +6,7 @@ public class DungeonGenerator : MonoBehaviour {
     public int width;
     public int height;
 
+    Tile[,] tiles;
     byte[,] map;
     Room[] rooms;
     Maze maze;
@@ -19,8 +20,9 @@ public class DungeonGenerator : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        map = GenerateMapData(width, height);
-        InstantiateMapData(map, width, height);
+        tiles = GenerateDungeonTiles(width/3, height/3);
+        map = GenerateMapFromTiles();
+        InstantiateMapData(map);
     }
 
     // ========================================
@@ -86,15 +88,15 @@ public class DungeonGenerator : MonoBehaviour {
 
 
     // ========================================
-    // AddRoomToMap: adds a room to a map and the coords x & y
-    void AddRoomToMap(Room room, byte[,] map) {
+    // AddRoomToTiles: adds a room to a map and the coords x & y
+    void AddRoomToTiles(Room room, Tile[,] tiles) {
         if (room == null) {
             return;
         }
 
         // get map dims
-        int mapHeight = map.GetLength(0);
-        int mapWidth = map.GetLength(0);
+        int mapHeight = tiles.GetLength(0);
+        int mapWidth = tiles.GetLength(1);
 
         // get room dims & coords
         int offsetX = room.getX();
@@ -106,7 +108,7 @@ public class DungeonGenerator : MonoBehaviour {
         for (int y = 0; y < roomHeight; y++) {
             for (int x = 0; x < roomWidth; x++) {
                 // copy room data into map at an offset
-                map[y + offsetY, x + offsetX] = room.getTile(x, y);
+                tiles[y + offsetY, x + offsetX] = room.getTile(x, y);
             }
         }
     }
@@ -114,18 +116,50 @@ public class DungeonGenerator : MonoBehaviour {
     // ========================================
     // GenerateMapData: returns a 2D array of bytes that represents a map
 
-    byte[,] GenerateMapData(int width, int height) {
-        byte[,] map = new byte[height, width];
+    Tile[,] GenerateDungeonTiles(int x, int y) {
+        Tile[,] tiles = new Tile[y, x];
 
-        // create rooms and add them to map
-        rooms = GenerateRooms(6, width, height);
-        maze = new Maze(width, height, rooms);
+        // create rooms
+        rooms = GenerateRooms(10, x, y);
 
-        map = maze.getMap();
-
+        // add rooms to tiles
         foreach (Room room in rooms) {
-            AddRoomToMap(room, map);
+            AddRoomToTiles(room, tiles);
         }
+
+        return tiles;
+    }
+
+    byte[,] GenerateMapFromTiles() {
+        // get array dims
+        int tileX = tiles.GetLength(1);
+        int tileY = tiles.GetLength(0);
+        int mapX = 3 * tileX + 1;
+        int mapY = 3 * tileY + 1;
+
+        // create new map of level
+        byte[,] map = new byte[mapY, mapX];
+
+        byte[,] tileMap;
+
+        // x & y iterate over indices over the tiles array
+        for (int y = 0; y < tileY; y++) {
+            for (int x = 0; x < tileX; x++) {
+
+                if (tiles[y, x] != null) {
+                    tileMap = tiles[y, x].getMap();
+
+                    // i & j iterate over the bytes in each tileMap
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                          map[3 * y + i + 1, 3 * x + j + 1] =
+                                (byte)(map[(3*y)+i+1, (3*x)+j+1] | tileMap[i, j]);
+                        }
+                    }
+                }
+            }
+        }
+
         return map;
     }
 
@@ -133,12 +167,12 @@ public class DungeonGenerator : MonoBehaviour {
         Room[] rooms = new Room[n];
 
         // only allow n+10 attempts to create a room (base-case)
-        int attempts = n + 10;
+        int attempts = n + 25;
 
         for (int i = 0; i < n; i++) {
 
             // instantiate new room
-            Room newRoom = new Room(width, height);
+            Room newRoom = new Room(boundX, boundY);
             
             // check for collisions between new and existing rooms
             bool roomCollisionFlag = false;
@@ -182,16 +216,18 @@ public class DungeonGenerator : MonoBehaviour {
     // InstantiateMapData: takes a 2D array of map data and instantiates the
     // prefabs that render it in our scene.
 
-    void InstantiateMapData(byte[,] map, int width, int height) {
+    void InstantiateMapData(byte[,] map) {
+        int width = map.GetLength(1);
+        int height = map.GetLength(0);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
 
                 // add a floor if 1st bit of mask is 1
-                if ((map[y, x] & 0x1) > 0){
+                if ((byte)(map[y, x] & 0x1) > 0){
                     CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
                 }
                 
-                if ((map[y, x] & 0x2) > 0) {
+                if ((byte)(map[y, x] & 0x2) > 0) {
                     CreateWallPrefab(wallParent, x, y);
                 }
             }

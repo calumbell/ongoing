@@ -2,6 +2,7 @@
 {
     private int width;
     private int height;
+    private Tile[,] tiles;
     private byte[,] map;
     private bool[,] blockedTiles;
 
