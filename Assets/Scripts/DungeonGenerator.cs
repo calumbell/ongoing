@@ -14,7 +14,7 @@ public class DungeonGenerator : MonoBehaviour {
     public GameObject floorPrefab;
     public GameObject floorParent;
 
-    // 
+    
     public GameObject[] wallPrefabs;
     public GameObject wallParent;
 
@@ -163,10 +163,27 @@ public class DungeonGenerator : MonoBehaviour {
                                 (byte)(map[(4*y)+i+1, (4*x)+j+1] | tileMap[i, j]);
                         }
                     }
-
-                    // create paths too connected tiles
-                    // TODO
                 }
+            }
+        }
+
+
+        // fill in columns between tiles, connect everything up nicely
+        for (int y = 4; y < map.GetLength(1) - 1; y += 4) {
+            for (int x = 1; x < map.GetLength(0) -1; x++) {
+
+                // if there are two floors either side of a space, connect them
+                if (map[y - 1, x] == 0x1 & map[y + 1, x] == 0x1)
+                    map[y, x] = 0x1;       
+            }
+        }
+
+        for (int x = 4; x < map.GetLength(0) - 1; x += 4)
+        {
+            for (int y = 1; y < map.GetLength(1) - 1; y++)
+            {
+                if (map[y, x - 1] == 0x1 & map[y, x + 1] == 0x1)
+                    map[y, x] = 0x1;
             }
         }
 
