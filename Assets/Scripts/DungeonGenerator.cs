@@ -33,81 +33,41 @@ public class DungeonGenerator : MonoBehaviour {
 
     
     void CreateWallPrefab(GameObject parent, int x, int y) {
-        // CreateWallPrefab: instantiates the correct wall prefab based on room geometry
+        // How does this work? The map is divided into 4x4 grid (3x3 tiles with
+        // a 1 tile border). By using factorials we can figure out the position
+        // of a wall piece relative to the open space that flanks
 
-        // make sure y-1 is within range of the map array
-        if (y > 0) {
-            // if there is floor and no wall below this tile
-            if (!((map[y - 1, x] & 0x2) > 0) & ((map[y-1, x] & 0x1) > 0)) {
-                // select a TopCentre wall piece (index 1)
-                CreateChildPrefab(wallPrefabs[1], wallParent, x, y, 0);
-                return;
-            }
+        // select a LeftCentre wall piece (index 3)
+        if (x % 4 == 1 & y % 4 == 2)
+            CreateChildPrefab(wallPrefabs[3], wallParent, x, y, 0);
 
-            if (x > 0) {
-                // if there is floor and no wall down-left of tile
-                if (!((map[y - 1, x - 1] & 0x2) > 0) & ((map[y - 1, x - 1] & 0x1) > 0)) {
-                    // select a TopRight wall piece (index 2)
-                    CreateChildPrefab(wallPrefabs[2], wallParent, x, y, 0);
-                    return;
-                }
-            }
+        // select a RightCentre wall piece (index 5)
+        else if (x % 4 == 3 & y % 4 == 2)
+            CreateChildPrefab(wallPrefabs[5], wallParent, x, y, 0);
 
-            if (x < map.GetLength(1) - 1) {
-                // if there is floor and no wall down-right of tile
-                if (!((map[y - 1, x + 1] & 0x2) > 0) & ((map[y - 1, x + 1] & 0x1) > 0)) {
-                    // select a TopLeft wall piece (index 0)
-                    CreateChildPrefab(wallPrefabs[0], wallParent, x, y, 0);
-                    return;
-                }
-            }
-        }
+        // select a TopCentre wall piece (index 1)
+        else if (x % 4 == 2 & y % 4 == 3)            
+            CreateChildPrefab(wallPrefabs[1], wallParent, x, y, 0);
 
-        // make sure that y+1 is in range of the map array
-        if (y < map.GetLength(0) - 1) {
+        // select a BottomCentre wall piece (index 7)
+        else if (x % 4 == 2 & y % 4 == 1)
+            CreateChildPrefab(wallPrefabs[7], wallParent, x, y, 0);
 
-            // if there is floor and no wall above this tile
-            if (!((map[y + 1, x] & 0x2) > 0) & ((map[y + 1, x] & 0x1) > 0)) {
-                // select a BottomCentre wall piece (index 7)
-                CreateChildPrefab(wallPrefabs[7], wallParent, x, y, 0);
-                return;
-            }
+        // select a TopLeft wall piece (index 0)
+        else if (x % 4 == 1 & y % 4 == 3)            
+            CreateChildPrefab(wallPrefabs[0], wallParent, x, y, 0);
 
-            if (x > 0) {
-                // if there is floor and no wall up-left of tile
-                if (!((map[y + 1, x - 1] & 0x2) > 0) & ((map[y + 1, x - 1] & 0x1) > 0)) {
-                    // select a BottomRight wall piece (index 8)
-                    CreateChildPrefab(wallPrefabs[8], wallParent, x, y, 0);
-                    return;
-                }
-            }
+        // select a TopRight wall piece (index 2)
+        else if (x % 4 == 3 & y % 4 == 3)
+            CreateChildPrefab(wallPrefabs[2], wallParent, x, y, 0);
 
-            if (x < map.GetLength(1) - 1) {
-                // if there is floor and no wall up-right of tile
-                if (!((map[y + 1, x + 1] & 0x2) > 0) & ((map[y + 1, x + 1] & 0x1) > 0)) {
-                    // select a BottomLeft wall piece (index 6)
-                    CreateChildPrefab(wallPrefabs[6], wallParent, x, y, 0);
-                    return;
-                }
-            }
-        }
-        
-        if (x < map.GetLength(1) - 1) {
-            // if there is floor and no wall to the right of this tile
-            if (!((map[y, x+1] & 0x2) > 0) & ((map[y, x+1] & 0x1) > 0)) {
-                // select a LeftCentre wall piece (index 3)
-                CreateChildPrefab(wallPrefabs[3], wallParent, x, y, 0);
-                return;
-            }
-        }
+        // select a BottomLeft wall piece (index 6)
+        else if (x % 4 == 1 & y % 4 == 1)
+            CreateChildPrefab(wallPrefabs[6], wallParent, x, y, 0);
 
-        if (x > 0) {
-            // if there is floor and no wall to the left of this tile
-            if (!((map[y, x - 1] & 0x2) > 0) & ((map[y, x - 1] & 0x1) > 0)) {
-                // select a RightCentre wall piece (index 5)
-                CreateChildPrefab(wallPrefabs[5], wallParent, x, y, 0);
-            }
-        }
+        // select a BottomRight wall piece (index 8)
+        else if (x % 4 == 3 & y % 4 == 1)
+            CreateChildPrefab(wallPrefabs[8], wallParent, x, y, 0);
     }
 
     void AddMazeToTiles(Maze maze, Tile[,] tiles) {
@@ -165,8 +125,7 @@ public class DungeonGenerator : MonoBehaviour {
         }
 
         // create rooms
-        //rooms = GenerateRooms(1, x, y);
-        rooms = new Room[0];
+        rooms = GenerateRooms(5, x, y);
 
         // add rooms to tiles
         foreach (Room room in rooms) {

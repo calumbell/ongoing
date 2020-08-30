@@ -42,27 +42,27 @@ public class Tile
     public byte[,] getMap() {
         byte[,] map = new byte[3, 3];
 
-        if (open) {
+        if (open)
             // set centre tile to a piece of unobstructed floor
             map[1, 1] = 0x1;
-        }
+        
             // check for walls at the top
-            byte wallCode = (byte)(((walls & 0x1) > 0) ? 0x3 : 0x1);
+            byte wallCode = (byte)(((walls & 0x1) > 0) ? 0x3 : map[1, 1]);
             for (int i = 0; i < 3; i++)
                 map[2, i] = (byte)(map[2, i] | wallCode);
 
             // check for walls to the right
-            wallCode = (byte)(((walls & 0x2) > 0) ? 0x3 : 0x1);
+            wallCode = (byte)(((walls & 0x2) > 0) ? 0x3 : map[1, 1]);
             for (int i = 0; i < 3; i++)
                 map[i, 2] = (byte)(map[i, 2] | wallCode);
 
             // check for walls to the bottom
-            wallCode = (byte)(((walls & 0x4) > 0) ? 0x3 : 0x1);
+            wallCode = (byte)(((walls & 0x4) > 0) ? 0x3 : map[1, 1]);
             for (int i = 0; i < 3; i++)
                 map[0, i] = (byte)(map[0, i] | wallCode);
 
             // check for walls to the left
-            wallCode = (byte)(((walls & 0x8) > 0) ? 0x3 : 0x1);
+            wallCode = (byte)(((walls & 0x8) > 0) ? 0x3 : map[1, 1]);
             for (int i = 0; i < 3; i++)
                 map[i, 0] = (byte)(map[i, 0] | wallCode);
         
