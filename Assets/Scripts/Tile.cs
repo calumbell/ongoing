@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Tile
 {
+    private int x;
+    private int y;
     private bool open;
 
     // 0x1 -> wall up
@@ -12,7 +14,9 @@ public class Tile
     // 0x8 -> wall left
     private byte walls;
 
-    public Tile(bool openInput, byte wallsInput) {
+    public Tile(int xInput, int yInput, bool openInput, byte wallsInput) {
+        x = xInput;
+        y = yInput;
         open = openInput;
         walls = wallsInput;
     }
@@ -21,6 +25,8 @@ public class Tile
     // Getters
 
     public byte getWalls() { return walls; }
+    public int getX() { return x; }
+    public int getY() { return y; }
     public bool isOpen() { return open; }
 
 
@@ -28,8 +34,10 @@ public class Tile
     // Setters
 
     public void setWalls(byte sides) { walls = sides; }
-    public void openWallOnSides(byte sides) { walls = (byte)(walls | sides); }
-
+    public void closeWallOnSides(byte sides) { walls = (byte)(walls | sides); }
+    public void openWallOnSides(byte sides) { if (walls >= sides) walls -= sides; }
+    public void setOpen() { open = true; }
+    public void setClosed() { open = false;  }
 
     public byte[,] getMap() {
         byte[,] map = new byte[3, 3];
@@ -37,7 +45,7 @@ public class Tile
         if (open) {
             // set centre tile to a piece of unobstructed floor
             map[1, 1] = 0x1;
-
+        }
             // check for walls at the top
             byte wallCode = (byte)(((walls & 0x1) > 0) ? 0x3 : 0x1);
             for (int i = 0; i < 3; i++)
@@ -57,7 +65,7 @@ public class Tile
             wallCode = (byte)(((walls & 0x8) > 0) ? 0x3 : 0x1);
             for (int i = 0; i < 3; i++)
                 map[i, 0] = (byte)(map[i, 0] | wallCode);
-        }
+        
         return map;
     }
 }

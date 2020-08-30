@@ -24,75 +24,114 @@ public class DungeonGenerator : MonoBehaviour {
         map = GenerateMapFromTiles();
         InstantiateMapData(map);
     }
-
-    // ========================================
-    // CreateChildPrefab: instantiates a prefab and parents it to another game obj
+    
     void CreateChildPrefab(GameObject prefab, GameObject parent, int x, int y, int z) {
+        // CreateChildPrefab: instantiates a prefab and parents it to another game obj
         var myPrefab = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
         myPrefab.transform.parent = parent.transform;
     }
 
-    // ========================================
-    // CreateWallPrefab: instantiates the correct wall prefab based on room geometry
+    
     void CreateWallPrefab(GameObject parent, int x, int y) {
-        // if there is floor and no wall below this tile
-        if (!((map[y-1, x] & 0x2) > 0) & ((map[y-1, x] & 0x1) > 0)) {
-            // select a TopCentre wall piece (index 1)
-            CreateChildPrefab(wallPrefabs[1], wallParent, x, y, 0);
+        // CreateWallPrefab: instantiates the correct wall prefab based on room geometry
+
+        // make sure y-1 is within range of the map array
+        if (y > 0) {
+            // if there is floor and no wall below this tile
+            if (!((map[y - 1, x] & 0x2) > 0) & ((map[y-1, x] & 0x1) > 0)) {
+                // select a TopCentre wall piece (index 1)
+                CreateChildPrefab(wallPrefabs[1], wallParent, x, y, 0);
+                return;
+            }
+
+            if (x > 0) {
+                // if there is floor and no wall down-left of tile
+                if (!((map[y - 1, x - 1] & 0x2) > 0) & ((map[y - 1, x - 1] & 0x1) > 0)) {
+                    // select a TopRight wall piece (index 2)
+                    CreateChildPrefab(wallPrefabs[2], wallParent, x, y, 0);
+                    return;
+                }
+            }
+
+            if (x < map.GetLength(1) - 1) {
+                // if there is floor and no wall down-right of tile
+                if (!((map[y - 1, x + 1] & 0x2) > 0) & ((map[y - 1, x + 1] & 0x1) > 0)) {
+                    // select a TopLeft wall piece (index 0)
+                    CreateChildPrefab(wallPrefabs[0], wallParent, x, y, 0);
+                    return;
+                }
+            }
         }
 
-        // if there is floor and no wall above this tile
-        else if (!((map[y+1, x] & 0x2) > 0) & ((map[y+1, x] & 0x1) > 0)) {
-            // select a BottomCentre wall piece (index 7)
-            CreateChildPrefab(wallPrefabs[7], wallParent, x, y, 0);
+        // make sure that y+1 is in range of the map array
+        if (y < map.GetLength(0) - 1) {
+
+            // if there is floor and no wall above this tile
+            if (!((map[y + 1, x] & 0x2) > 0) & ((map[y + 1, x] & 0x1) > 0)) {
+                // select a BottomCentre wall piece (index 7)
+                CreateChildPrefab(wallPrefabs[7], wallParent, x, y, 0);
+                return;
+            }
+
+            if (x > 0) {
+                // if there is floor and no wall up-left of tile
+                if (!((map[y + 1, x - 1] & 0x2) > 0) & ((map[y + 1, x - 1] & 0x1) > 0)) {
+                    // select a BottomRight wall piece (index 8)
+                    CreateChildPrefab(wallPrefabs[8], wallParent, x, y, 0);
+                    return;
+                }
+            }
+
+            if (x < map.GetLength(1) - 1) {
+                // if there is floor and no wall up-right of tile
+                if (!((map[y + 1, x + 1] & 0x2) > 0) & ((map[y + 1, x + 1] & 0x1) > 0)) {
+                    // select a BottomLeft wall piece (index 6)
+                    CreateChildPrefab(wallPrefabs[6], wallParent, x, y, 0);
+                    return;
+                }
+            }
+        }
+        
+        if (x < map.GetLength(1) - 1) {
+            // if there is floor and no wall to the right of this tile
+            if (!((map[y, x+1] & 0x2) > 0) & ((map[y, x+1] & 0x1) > 0)) {
+                // select a LeftCentre wall piece (index 3)
+                CreateChildPrefab(wallPrefabs[3], wallParent, x, y, 0);
+                return;
+            }
         }
 
-        // if there is floor and no wall to the right of this tile
-        else if (!((map[y, x+1] & 0x2) > 0) & ((map[y, x+1] & 0x1) > 0)) {
-            // select a LeftCentre wall piece (index 3)
-            CreateChildPrefab(wallPrefabs[3], wallParent, x, y, 0);
-        }
-
-
-        // if there is floor and no wall to the left of this tile
-        else if (!((map[y, x-1] & 0x2) > 0) & ((map[y, x-1] & 0x1) > 0)) {
-            // select a RightCentre wall piece (index 5)
-            CreateChildPrefab(wallPrefabs[5], wallParent, x, y, 0);
-        }
-
-        // if there is floor and no wall up-right of tile
-        else if (!((map[y+1, x+1] & 0x2) > 0) & ((map[y+1, x+1] & 0x1) > 0)) {
-            // select a BottomLeft wall piece (index 6)
-            CreateChildPrefab(wallPrefabs[6], wallParent, x, y, 0);
-        }
-
-        // if there is floor and no wall up-left of tile
-        else if (!((map[y+1, x-1] & 0x2) > 0) & ((map[y+1, x-1] & 0x1) > 0)) {
-            // select a BottomRight wall piece (index 8)
-            CreateChildPrefab(wallPrefabs[8], wallParent, x, y, 0);
-        }
-
-        // if there is floor and no wall down-right of tile
-        else if (!((map[y-1, x+1] & 0x2) > 0) & ((map[y-1, x+1] & 0x1) > 0)) {
-            // select a TopLeft wall piece (index 0)
-            CreateChildPrefab(wallPrefabs[0], wallParent, x, y, 0);
-        }
-
-        // if there is floor and no wall down-left of tile
-        else if (!((map[y-1, x-1] & 0x2) > 0) & ((map[y-1, x-1 ] & 0x1) > 0))
-        {
-            // select a TopRight wall piece (index 2)
-            CreateChildPrefab(wallPrefabs[2], wallParent, x, y, 0);
+        if (x > 0) {
+            // if there is floor and no wall to the left of this tile
+            if (!((map[y, x - 1] & 0x2) > 0) & ((map[y, x - 1] & 0x1) > 0)) {
+                // select a RightCentre wall piece (index 5)
+                CreateChildPrefab(wallPrefabs[5], wallParent, x, y, 0);
+            }
         }
     }
 
-
-    // ========================================
-    // AddRoomToTiles: adds a room to a map and the coords x & y
-    void AddRoomToTiles(Room room, Tile[,] tiles) {
-        if (room == null) {
+    void AddMazeToTiles(Maze maze, Tile[,] tiles) {
+        if (maze == null)
             return;
+
+        // get map dims
+        int mapHeight = tiles.GetLength(0);
+        int mapWidth = tiles.GetLength(1);
+
+        for (int y = 0; y < mapHeight; y++) {
+            for (int x = 0; x < mapWidth; x++) {
+                //if (!tiles[y, x].isOpen())
+                    tiles[y, x] = maze.getTile(x, y);
+            }
         }
+
+    }
+
+    
+    void AddRoomToTiles(Room room, Tile[,] tiles) {
+    // AddRoomToTiles: adds a room to a map and the coords x & y
+        if (room == null) 
+            return;
 
         // get map dims
         int mapHeight = tiles.GetLength(0);
@@ -113,20 +152,29 @@ public class DungeonGenerator : MonoBehaviour {
         }
     }
 
-    // ========================================
-    // GenerateMapData: returns a 2D array of bytes that represents a map
+
+    
 
     Tile[,] GenerateDungeonTiles(int x, int y) {
+    // GenerateDungeonTiles: returns a 2D array of tiles
         Tile[,] tiles = new Tile[y, x];
 
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++)
+                tiles[j, i] = new Tile(i, j, false, 0xF);
+        }
+
         // create rooms
-        rooms = GenerateRooms(10, x, y);
+        //rooms = GenerateRooms(1, x, y);
+        rooms = new Room[0];
 
         // add rooms to tiles
         foreach (Room room in rooms) {
             AddRoomToTiles(room, tiles);
         }
 
+        maze = new Maze(tiles, rooms);
+        AddMazeToTiles(maze, tiles);
         return tiles;
     }
 
@@ -134,8 +182,8 @@ public class DungeonGenerator : MonoBehaviour {
         // get array dims
         int tileX = tiles.GetLength(1);
         int tileY = tiles.GetLength(0);
-        int mapX = 3 * tileX + 1;
-        int mapY = 3 * tileY + 1;
+        int mapX = 4 * tileX + 1;
+        int mapY = 4 * tileY + 1;
 
         // create new map of level
         byte[,] map = new byte[mapY, mapX];
@@ -152,10 +200,13 @@ public class DungeonGenerator : MonoBehaviour {
                     // i & j iterate over the bytes in each tileMap
                     for (int i = 0; i < 3; i++) {
                         for (int j = 0; j < 3; j++) {
-                          map[3 * y + i + 1, 3 * x + j + 1] =
-                                (byte)(map[(3*y)+i+1, (3*x)+j+1] | tileMap[i, j]);
+                          map[4 * y + i + 1, 4 * x + j + 1] =
+                                (byte)(map[(4*y)+i+1, (4*x)+j+1] | tileMap[i, j]);
                         }
                     }
+
+                    // create paths too connected tiles
+                    // TODO
                 }
             }
         }
@@ -197,29 +248,22 @@ public class DungeonGenerator : MonoBehaviour {
             // else, decrement iterator so that the loop repeats
             // possible bug: if geometries of rooms do not allow another room to be
             // added, we have an infinity loop - add some kind of base-case?
-
-            else {
+            else 
                 i--;
-            }
 
-            if (attempts <= 0) {
+            if (attempts <= 0)
                 break;
-            }
 
-            else {
-                attempts--;
-            }
-           
+            else
+                attempts--;          
         }       
         
         return rooms;
     }
 
-    // ========================================
+    void InstantiateMapData(byte[,] map) {
     // InstantiateMapData: takes a 2D array of map data and instantiates the
     // prefabs that render it in our scene.
-
-    void InstantiateMapData(byte[,] map) {
         int width = map.GetLength(1);
         int height = map.GetLength(0);
         for (int y = 0; y < height; y++) {

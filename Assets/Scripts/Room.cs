@@ -65,7 +65,7 @@ public class Room
 
                 // if we are at the very edge of room, add our buffer
                 if (y == 0 | y == height-1 | x == 0 | x == width-1)
-                    tiles[y, x] = new Tile(false, (byte)0x0);
+                    tiles[y, x] = new Tile(x, y, false, (byte)0x0);
 
                 // if we are one index in from our buffer, calc ext. walls
                 else {              
@@ -81,7 +81,7 @@ public class Room
                         walls = (byte)(walls | 0x2);
 
                     // create new tile and add it to tiles array
-                    tiles[y, x] = new Tile(true, walls);
+                    tiles[y, x] = new Tile(x, y, true, walls);
                 }
             }
         }
