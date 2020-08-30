@@ -13,8 +13,8 @@ public class Room
 
     // pass room dims to generate a random room with odd params
     public Room(int roomX, int roomY) {
-        width = Random.Range(6, 12); // includes a 1-tile buffer around room
-        height = Random.Range(6, 12);
+        width = Random.Range(4, 8); // includes a 1-tile buffer around room
+        height = Random.Range(4, 8);
         x = Random.Range(0, roomX - width - 1); // -1 for 0-indexing
         y = Random.Range(0, roomY - height - 1);
         tiles = new Tile[height, width];
@@ -62,27 +62,19 @@ public class Room
         // iterate over 2D array
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-
-                // if we are at the very edge of room, add our buffer
-                if (y == 0 | y == height-1 | x == 0 | x == width-1)
-                    tiles[y, x] = new Tile(x, y, false, (byte)0x0);
-
-                // if we are one index in from our buffer, calc ext. walls
-                else {              
-                    byte walls = 0x0;
+                byte walls = 0x0;
                 
-                    if (y == 1)
-                        walls = (byte)(walls | 0x4);
-                    else if (y == height-2)
-                        walls = (byte)(walls | 0x1);
-                    if (x == 1)
-                        walls = (byte)(walls | 0x8);
-                    else if (x == width-2)
-                        walls = (byte)(walls | 0x2);
+                if (y == 0)
+                    walls = (byte)(walls | 0x4);
+                else if (y == height-1)
+                    walls = (byte)(walls | 0x1);
+                if (x == 0)
+                    walls = (byte)(walls | 0x8);
+                else if (x == width-1)
+                    walls = (byte)(walls | 0x2);
 
-                    // create new tile and add it to tiles array
-                    tiles[y, x] = new Tile(x, y, true, walls);
-                }
+                // create new tile and add it to tiles array
+                tiles[y, x] = new Tile(x, y, true, walls);
             }
         }
     }
