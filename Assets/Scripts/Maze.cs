@@ -17,6 +17,7 @@ public class Maze
 
     
     public Maze(Tile[,] tilesInput, Room[] rooms) {
+
         // instantiate w/ rooms array to generate the maze
         tiles = tilesInput;
         width = tiles.GetLength(1);

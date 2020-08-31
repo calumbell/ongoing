@@ -33,9 +33,6 @@ public class DungeonGenerator : MonoBehaviour {
 
     
     void CreateWallPrefab(GameObject parent, int x, int y) {
-        // How does this work? The map is divided into 4x4 grid (3x3 tiles with
-        // a 1 tile border). By using factorials we can figure out the position
-        // of a wall piece relative to the open space that flanks
 
         // select LeftCentre wall (indx 3) if there is an open tile to the right
         if (map[y,x+1] == 0x1)
@@ -161,10 +158,121 @@ public class DungeonGenerator : MonoBehaviour {
                     for (int i = 0; i < 3; i++) {
                         for (int j = 0; j < 3; j++) {
                           map[4 * y + i + 1, 4 * x + j + 1] =
-                                (byte)(map[(4*y)+i+1, (4*x)+j+1] | tileMap[i, j]);
+                                (byte)(map[(4*y)+i  +1, (4*x)+j+1] | tileMap[i, j]);
+                        }
+                    }
+
+                    /*
+                     * this next section handles literal corner cases. its func.
+                     * is to generate walls for the 270º corners that occur in
+                     * the maze (but not in the room). These come in 3 flavours
+                     * 
+                     * when a corridor turns (2 tile connections)
+                     * T-junctions (3 tile connections)
+                     * 4-way junctions (4 tile connections)
+                    */
+
+                    // check whether a tile has two or more bounding walls
+                    if (((tileMap[1,0] & 0x2) + (tileMap[1,2] & 0x2) +
+                        (tileMap[2,1] & 0x2) + (tileMap[0,1] & 0x2)) == 0x4){
+
+                        
+                        if (y > 0) {
+                            // if tile below has a wall to the right, but current
+                            // tile doesn't, add a wall to Btm-R corner
+
+                            if ((tiles[y, x].getWalls() & 0x2) == 0
+                                & (tiles[y, x].getWalls() & 0x4) == 0
+                                & (tiles[y-1, x].getWalls() & 0x2) > 0) {
+                                // (+3, +3) offset get the indx at Btm-R of tile
+                                map[4 * y + 1, 4 * x + 3] = 0x3;
+                            }
+
+                            // if tile below has a wall to the left, but current
+                            // tile doesn't, add a wall to Btm-L cornter
+
+                            if ((tiles[y, x].getWalls() & 0x8) == 0
+                                & (tiles[y, x].getWalls() & 0x4) == 0
+                                & (tiles[y - 1, x].getWalls() & 0x8) > 0) {
+                                // (+1, +1) offset get the indx at Btm-R of tile
+                                map[4 * y + 1, 4 * x + 1] = 0x3;
+                            }
+                        }
+                        
+                        if (y < tileY-1) {
+                            // if tile above has a wall to the right, but current
+                            // tile doesn't, add a wall to Top-R corner
+
+                            if ((tiles[y, x].getWalls() & 0x2) == 0
+                                & (tiles[y, x].getWalls() & 0x1) == 0
+                                & (tiles[y + 1, x].getWalls() & 0x2) > 0) {
+                                // (+3, +3) offset get the indx at Top-R of tile
+                                map[4 * y + 3, 4 * x + 3] = 0x3;
+                                // Debug.Log("x : " + (4 * x + 1) + " y: " + (4 * y + 1));
+                            }
+
+                            // if tile above has a wall to the left, but current
+                            // tile doesn't, add a wall to Top-L corner
+
+                            if ((tiles[y, x].getWalls() & 0x8) == 0
+                                & (tiles[y, x].getWalls() & 0x1) == 0
+                                & (tiles[y + 1, x].getWalls() & 0x8) > 0) {
+                                // (+1, +3) offset gets the indx at Top-L of tile
+                                map[4 * y + 3, 4 * x + 1] = 0x3;
+                            }
+                        }
+
+                        if (x > 0) {
+
+                            // if tile to left has a top wall, but current
+                            // tile doesn't, add a wall to Top-L corner
+
+                            if ((tiles[y, x].getWalls() & 0x1) == 0
+                                & (tiles[y, x].getWalls() & 0x8) == 0
+                                & (tiles[y, x - 1].getWalls() & 0x1) > 0) {
+                                // (+1, +3) offset get the indx at Top-L of tile
+                                map[4 * y + 3, 4 * x + 1] = 0x3;
+                            }
+
+                            // if tile to left has a bottom wall, but current
+                            // tile doesn't, add a wall to Btm-L corner
+
+                            if ((tiles[y, x].getWalls() & 0x4) == 0
+                                & (tiles[y, x].getWalls() & 0x8) == 0
+                                & (tiles[y, x - 1].getWalls() & 0x4) > 0) {
+                                // (+1, +3) offset gets the indx at Btm-L of tile
+                                map[4 * y + 1, 4 * x + 1] = 0x3;
+                            }
+                        }
+
+
+                        if (x < tileX - 1) {
+
+                            // if tile to right has a top wall, but current
+                            // tile doesn't, add a wall to Top-R corner
+
+                            if ((tiles[y, x].getWalls() & 0x1) == 0
+                                & (tiles[y, x].getWalls() & 0x2) == 0
+                                & (tiles[y, x + 1].getWalls() & 0x1) > 0) {
+                                // (+3, +3) offset get the indx at Top-R of tile
+                                map[4 * y + 3, 4 * x + 3] = 0x3;
+                            }
+
+                            // if tile to right has a bottom wall, but current
+                            // tile doesn't, add a wall to Btm-R corner
+
+                            if ((tiles[y, x].getWalls() & 0x4) == 0
+                                & (tiles[y, x].getWalls() & 0x2) == 0
+                                & (tiles[y, x + 1].getWalls() & 0x4) > 0) {
+                                // (+1, +3) offset gets the indx at Btm-R of tile
+                                map[4 * y + 1, 4 * x + 3] = 0x3;
+
+                            }
                         }
                     }
                 }
+
+
             }
         }
 
@@ -184,9 +292,6 @@ public class DungeonGenerator : MonoBehaviour {
                     & ((map[y - 1, x + 1] == 0x1 & map[y + 1, x + 1] == 0x1)
                     | ((map[y - 1, x - 1] == 0x1 & map[y + 1, x - 1] == 0x1))))
                     
-                    map[y, x] = (byte)(map[y, x] | (byte)0x3);
-
-                else if (map[y, x-1] == 0x1)
                     map[y, x] = (byte)(map[y, x] | (byte)0x3);
 
 
