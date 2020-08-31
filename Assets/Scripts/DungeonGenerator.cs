@@ -37,37 +37,38 @@ public class DungeonGenerator : MonoBehaviour {
         // a 1 tile border). By using factorials we can figure out the position
         // of a wall piece relative to the open space that flanks
 
-        // select a LeftCentre wall piece (index 3)
-        if (x % 4 == 1 & y % 4 == 2)
+        // select LeftCentre wall (indx 3) if there is an open tile to the right
+        if (map[y,x+1] == 0x1)
             CreateChildPrefab(wallPrefabs[3], wallParent, x, y, 0);
 
-        // select a RightCentre wall piece (index 5)
-        else if (x % 4 == 3 & y % 4 == 2)
+        // select RightCentre wall (indx 5) if there is an open tiles to the left
+        else if (map[y, x-1] == 0x1)
             CreateChildPrefab(wallPrefabs[5], wallParent, x, y, 0);
 
-        // select a TopCentre wall piece (index 1)
-        else if (x % 4 == 2 & y % 4 == 3)            
+        // select TopCentre wall (indx 1) if there is an open tile below
+        else if (map[y-1,x] == 0x1)
             CreateChildPrefab(wallPrefabs[1], wallParent, x, y, 0);
 
-        // select a BottomCentre wall piece (index 7)
-        else if (x % 4 == 2 & y % 4 == 1)
-            CreateChildPrefab(wallPrefabs[7], wallParent, x, y, 0);
+        // select BottomCentre wall (index 7) if there is an open tile above
+        else if (map[y+1, x] == 0x1)
+                CreateChildPrefab(wallPrefabs[7], wallParent, x, y, 0);
 
-        // select a TopLeft wall piece (index 0)
-        else if (x % 4 == 1 & y % 4 == 3)            
+        // select TopLeft wall (index 0) if there is an open tile to SE
+        else if (map[y-1, x+1] == 0x1)            
             CreateChildPrefab(wallPrefabs[0], wallParent, x, y, 0);
 
-        // select a TopRight wall piece (index 2)
-        else if (x % 4 == 3 & y % 4 == 3)
+        // select TopRight wall (index 2) if there is an open tile to SW
+        else if (map[y-1, x-1] == 0x1)
             CreateChildPrefab(wallPrefabs[2], wallParent, x, y, 0);
 
-        // select a BottomLeft wall piece (index 6)
-        else if (x % 4 == 1 & y % 4 == 1)
+        // select BottomLeft wall (index 6) if there is an open tile to NE
+        else if (map[y+1,x+1] == 0x1)
             CreateChildPrefab(wallPrefabs[6], wallParent, x, y, 0);
 
-        // select a BottomRight wall piece (index 8)
-        else if (x % 4 == 3 & y % 4 == 1)
+        // select BottomRight wall (index 8) if there is an open tile NW
+        else if (map[y+1, x-1] == 0x1)
             CreateChildPrefab(wallPrefabs[8], wallParent, x, y, 0);
+
     }
 
     void AddMazeToTiles(Maze maze, Tile[,] tiles) {
@@ -80,7 +81,6 @@ public class DungeonGenerator : MonoBehaviour {
 
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {
-                //if (!tiles[y, x].isOpen())
                     tiles[y, x] = maze.getTile(x, y);
             }
         }
@@ -149,14 +149,15 @@ public class DungeonGenerator : MonoBehaviour {
 
         byte[,] tileMap;
 
-        // x & y iterate over indices over the tiles array
+        // iterate for all of our tiles
         for (int y = 0; y < tileY; y++) {
             for (int x = 0; x < tileX; x++) {
 
+                // if the current tile isn't null, convert to a 3x3 byte array
                 if (tiles[y, x] != null) {
                     tileMap = tiles[y, x].getMap();
 
-                    // i & j iterate over the bytes in each tileMap
+                    // iterate over the byte array and add each on to the map
                     for (int i = 0; i < 3; i++) {
                         for (int j = 0; j < 3; j++) {
                           map[4 * y + i + 1, 4 * x + j + 1] =
@@ -168,25 +169,49 @@ public class DungeonGenerator : MonoBehaviour {
         }
 
 
-        // fill in columns between tiles, connect everything up nicely
+        // fill in rows between tiles, connect everything up nicely
         for (int y = 4; y < map.GetLength(1) - 1; y += 4) {
             for (int x = 1; x < map.GetLength(0) -1; x++) {
 
                 // if there are two floors either side of a space, connect them
                 if (map[y - 1, x] == 0x1 & map[y + 1, x] == 0x1)
-                    map[y, x] = 0x1;       
+                    map[y, x] = (byte)(map[y,x] | 0x1);
+
+                // if there is a wall N+S AND either floor NE+SE OR floor NW+SW
+                // then this is the edge of a vertical passage, make a wall.
+
+                else if (map[y - 1, x] == 0x3 & map[y + 1, x] == 0x3
+                    & ((map[y - 1, x + 1] == 0x1 & map[y + 1, x + 1] == 0x1)
+                    | ((map[y - 1, x - 1] == 0x1 & map[y + 1, x - 1] == 0x1))))
+                    
+                    map[y, x] = (byte)(map[y, x] | (byte)0x3);
+
+                else if (map[y, x-1] == 0x1)
+                    map[y, x] = (byte)(map[y, x] | (byte)0x3);
+
+
             }
         }
-
-        for (int x = 4; x < map.GetLength(0) - 1; x += 4)
-        {
-            for (int y = 1; y < map.GetLength(1) - 1; y++)
-            {
+        
+        // fill in columns between tiles, connect everything up
+        for (int x = 4; x < map.GetLength(0) - 1; x += 4) {
+            for (int y = 1; y < map.GetLength(1) - 1; y++) {
+                // if there are two floors either side of a space, connect them
                 if (map[y, x - 1] == 0x1 & map[y, x + 1] == 0x1)
-                    map[y, x] = 0x1;
+                    map[y, x] = (byte)(map[y, x] | 0x1);
+
+                // if there is a wall W+E AND either floor SW+SE OR floor NW+NE
+                // then this is the edge of a horizontal passage, make a wall
+
+                else if (map[y, x - 1] == 0x3 & map[y, x + 1] == 0x3
+                    & ((map[y - 1, x - 1] == 0x1 & map[y - 1, x + 1] == 0x1)
+                    | ((map[y + 1, x - 1] == 0x1 & map[y + 1, x + 1] == 0x1))))
+                
+                    map[y, x] = (byte)(map[y, x] | (byte)0x3);
+                
             }
         }
-
+        
         // once we have converted our tiles to a map, fill in maze fine detail
         map = Maze.GenerateMazeFine(map);
 
@@ -197,7 +222,7 @@ public class DungeonGenerator : MonoBehaviour {
         Room[] rooms = new Room[n];
 
         // only allow n+10 attempts to create a room (base-case)
-        int attempts = n + 25;
+        int attempts = n + 10;
 
         for (int i = 0; i < n; i++) {
 
@@ -246,13 +271,12 @@ public class DungeonGenerator : MonoBehaviour {
             for (int x = 0; x < width; x++) {
 
                 // add a floor if 1st bit of mask is 1
-                if ((byte)(map[y, x] & 0x1) > 0){
+                if ((byte)(map[y, x] & 0x1) > 0)
                     CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
-                }
                 
-                if ((byte)(map[y, x] & 0x2) > 0) {
+                if ((byte)(map[y, x] & 0x2) > 0) 
                     CreateWallPrefab(wallParent, x, y);
-                }
+                
             }
         }
     }

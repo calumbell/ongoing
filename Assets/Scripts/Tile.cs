@@ -7,7 +7,7 @@ public class Tile
     private int x;
     private int y;
     private bool open;
-
+    private bool isPartOfRoom;
     // 0x1 -> wall up
     // 0x2 -> wall right
     // 0x4 -> wall down
@@ -19,6 +19,7 @@ public class Tile
         y = yInput;
         open = openInput;
         walls = wallsInput;
+
     }
 
     // ======================
