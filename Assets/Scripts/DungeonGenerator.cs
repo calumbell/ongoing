@@ -34,8 +34,24 @@ public class DungeonGenerator : MonoBehaviour {
     
     void CreateWallPrefab(GameObject parent, int x, int y) {
 
+        // select TopLeftCornerObtuse (indx 9) if there are open tiles Lft + Up
+        if (map[y,x-1] == 0x1 & map[y+1,x] == 0x1) {
+            CreateChildPrefab(wallPrefabs[9], wallParent, x, y, 0);
+        }
+        // select TopRightCornerObtuse (indx 10) if there are open tiles Rght + Up
+        else if (map[y,x+1] == 0x1 & map[y+1,x] == 0x1)
+            CreateChildPrefab(wallPrefabs[10], wallParent, x, y, 0);
+
+        // select BtmLeftCornerObtuse (indx 11) if there are open tiles Lft + Dwm
+        else if (map[y,x-1] == 0x1 & map[y-1,x] == 0x1)
+            CreateChildPrefab(wallPrefabs[11], wallParent, x, y, 0);
+
+        // select BtmRgtCornerObtuse (indx 11) if there are open tiles Rght + Dwm
+        else if (map[y, x+1] == 0x1 & map[y-1, x] == 0x1)
+            CreateChildPrefab(wallPrefabs[12], wallParent, x, y, 0);
+
         // select LeftCentre wall (indx 3) if there is an open tile to the right
-        if (map[y,x+1] == 0x1)
+        else if (map[y,x+1] == 0x1)
             CreateChildPrefab(wallPrefabs[3], wallParent, x, y, 0);
 
         // select RightCentre wall (indx 5) if there is an open tiles to the left
