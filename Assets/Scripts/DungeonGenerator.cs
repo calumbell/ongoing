@@ -189,6 +189,7 @@ public class DungeonGenerator : MonoBehaviour {
                     */
 
                     // check whether a tile has two or more bounding walls
+
                     if (((tileMap[1,0] & 0x2) + (tileMap[1,2] & 0x2) +
                         (tileMap[2,1] & 0x2) + (tileMap[0,1] & 0x2)) == 0x4){
 
@@ -286,9 +287,63 @@ public class DungeonGenerator : MonoBehaviour {
                             }
                         }
                     }
+
+
+                    // check whether a tile has one bounding walls
+                    if (((tileMap[1, 0] & 0x2) + (tileMap[1, 2] & 0x2) +
+                        (tileMap[2, 1] & 0x2) + (tileMap[0, 1] & 0x2)) == 0x2) {
+
+                        // determine whether tile is a T-junction or room wall
+                        // by summing the number of walls each connected adjacent
+                        // tile has. room tiles will have 4 maximum.
+
+                        int numWallsInAdjTiles = 0;
+                        if ((tiles[y, x].getWalls() & 0x1) == 0)
+                            numWallsInAdjTiles += tiles[y + 1, x].getNumWalls();
+
+                        if ((tiles[y,x].getWalls() & 0x2) == 0)
+                            numWallsInAdjTiles += tiles[y, x + 1].getNumWalls();
+
+                        if ((tiles[y, x].getWalls() & 0x4) == 0)
+                            numWallsInAdjTiles += tiles[y - 1, x].getNumWalls();
+
+                        if ((tiles[y, x].getWalls() & 0x8) == 0)
+                            numWallsInAdjTiles += tiles[y, x - 1].getNumWalls();
+
+                        // 3 is the maximum a room tile can have, if we have more
+                        // tile must be a T junction
+                        if(numWallsInAdjTiles >= 4) {
+
+                            // if top wall blocked, add L-btm + R-btm corners
+                            if ((tiles[y, x].getWalls() & 0x1) > 0) {
+                                map[4 * y + 1, 4 * x + 1] = 0x3;
+                                map[4 * y + 1, 4 * x + 3] = 0x3;
+                            }
+
+                            // if rgt wall blocked, add L-btm + L-top corners
+                            else if ((tiles[y, x].getWalls() & 0x2) > 0) {
+                                map[4 * y + 1, 4 * x + 1] = 0x3;
+                                map[4 * y + 3, 4 * x + 1] = 0x3;
+                            }
+
+                            // if top wall blocked, add L-top + R-top corners
+                            else if ((tiles[y, x].getWalls() & 0x4) > 0)
+                            {
+                                map[4 * y + 3, 4 * x + 1] = 0x3;
+                                map[4 * y + 3, 4 * x + 3] = 0x3;
+                            }
+
+                            // if left wall blocked, add R-top + R-btm corners
+                            else {
+                                map[4 * y + 3, 4 * x + 3] = 0x3;
+                                map[4 * y + 1, 4 * x + 3] = 0x3;
+                            }
+                        }
+
+
+                    }
+
                 }
-
-
             }
         }
 

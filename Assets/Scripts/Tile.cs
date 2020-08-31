@@ -30,7 +30,16 @@ public class Tile
     public int getY() { return y; }
     public bool isOpen() { return open; }
 
+    public int getNumWalls() {
+        int n = 0;
 
+        n = (walls & 0x1) > 0 ? n + 1 : n;
+        n = (walls & 0x2) > 0 ? n + 1 : n;
+        n = (walls & 0x4) > 0 ? n + 1 : n;
+        n = (walls & 0x8) > 0 ? n + 1 : n;
+
+        return n;
+    }
     // ======================
     // Setters
 
