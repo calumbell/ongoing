@@ -13,8 +13,8 @@ public class Room
 
     // pass room dims to generate a random room with odd params
     public Room(int roomX, int roomY) {
-        width = Random.Range(4, 8); // includes a 1-tile buffer around room
-        height = Random.Range(4, 8);
+        width = Random.Range(4, 6); // includes a 1-tile buffer around room
+        height = Random.Range(4, 6);
         x = Random.Range(0, roomX - width - 1); // -1 for 0-indexing
         y = Random.Range(0, roomY - height - 1);
         tiles = new Tile[height, width];
