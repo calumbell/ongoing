@@ -45,7 +45,8 @@ public class Tile
 
     public void setWalls(byte sides) { walls = sides; }
     public void closeWallOnSides(byte sides) { walls = (byte)(walls | sides); }
-    public void openWallOnSides(byte sides) { if (walls >= sides) walls -= sides; }
+    public void openWallOnSides(byte sides) { walls = (byte)(walls & ~sides) ; }
+    //public void openWallOnSides(byte sides) { if (walls >= sides) walls -= sides; }
     public void setOpen() { open = true; }
     public void setClosed() { open = false;  }
 

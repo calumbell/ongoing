@@ -59,17 +59,11 @@ public class Dungeon {
 
                     tileMap = tiles[y, x].getMap();
 
-                    // add our tile to the map
-                    GenerateMapFromTile(tileMap, x, y);
-
-                    // add walls to obtuse (270º) corner
+                    // add walls to obtuse (270º) corner of our tileMap
                     GenerateObtuseCorners(tileMap, x, y);
 
-                    // add walls to T-junction corners
-                    GenerateTJunction(tileMap, x, y);
-
-                    // add walls to 4-way intersection corners
-                    GenerateFourWayJunction(tileMap, x, y);
+                    // add our tile to the map
+                    GenerateMapFromTile(tileMap, x, y);
                 }
             }
         }
@@ -80,25 +74,6 @@ public class Dungeon {
 
     // ===================
     // Helper Methods
-
-    private int CalculateAdjacentWalls(int x, int y) {
-
-        int numWallsInAdjTiles = 0;
-
-        if ((tiles[y, x].getWalls() & 0x1) == 0)
-            numWallsInAdjTiles += tiles[y + 1, x].getNumWalls();
-
-        if ((tiles[y, x].getWalls() & 0x2) == 0)
-            numWallsInAdjTiles += tiles[y, x + 1].getNumWalls();
-
-        if ((tiles[y, x].getWalls() & 0x4) == 0)
-            numWallsInAdjTiles += tiles[y - 1, x].getNumWalls();
-
-        if ((tiles[y, x].getWalls() & 0x8) == 0)
-            numWallsInAdjTiles += tiles[y, x - 1].getNumWalls();
-
-        return numWallsInAdjTiles;
-    }
 
     private void ConnectMapTiles() {
         // fill in rows between tiles, connect everything up nicely
@@ -120,10 +95,8 @@ public class Dungeon {
         }
 
         // fill in columns between tiles, connect everything up
-        for (int x = 4; x < map.GetLength(0) - 1; x += 4)
-        {
-            for (int y = 1; y < map.GetLength(1) - 1; y++)
-            {
+        for (int x = 4; x < map.GetLength(0) - 1; x += 4) {
+            for (int y = 1; y < map.GetLength(1) - 1; y++) {
                 // if there are two floors either side of a space, connect them
                 if (map[y, x - 1] == 0x1 & map[y, x + 1] == 0x1)
                     map[y, x] = (byte)(map[y, x] | 0x1);
@@ -151,7 +124,7 @@ public class Dungeon {
                 continue;
 
             // n controls how many exits to attempt to make
-            n = Random.Range(1, 2);
+            n = Random.Range(2, 4);
 
             roomX = room.getX();
             roomY = room.getY();
@@ -159,7 +132,10 @@ public class Dungeon {
             roomHeight = room.getHeight();
 
             for (int i = 0; i < n; i++) {
+
+                // pick an edge to create the exit on
                 edge = edges[Random.Range(0, 4)];
+
                 if (edge == 0x1 & (roomY + roomHeight) < tilesHeight) {
                     x = Random.Range(roomX, roomX + roomWidth);
                     y = roomY + roomHeight - 1;
@@ -170,7 +146,17 @@ public class Dungeon {
                     }
                 }
 
-                if (edge == 0x2 & (roomX + roomWidth) < tilesWidth) {
+                else if (edge == 0x4 & roomY > 0) {
+                    x = Random.Range(roomX, roomX + roomWidth);
+                    y = roomY;
+
+                    if (tiles[y - 1, x].isOpen()) {
+                        tiles[y - 1, x].openWallOnSides(0x1);
+                        tiles[y, x].openWallOnSides(0x4);
+                    }
+                }
+
+                else if (edge == 0x2 & (roomX + roomWidth) < tilesWidth) {
                     x = roomX + roomWidth - 1;
                     y = Random.Range(roomY, roomY + roomHeight);
 
@@ -180,7 +166,7 @@ public class Dungeon {
                     }
                 }
 
-                if (edge == 0x8 & roomX > 0) {
+                else if (edge == 0x8 & roomX > 0) {
                     x = roomX;
                     y = Random.Range(roomY, roomY + roomHeight);
 
@@ -190,15 +176,7 @@ public class Dungeon {
                     }
                 }
 
-                if (edge == 0x4 & roomY > 0) {
-                    x = Random.Range(roomX, roomX + roomWidth);
-                    y = roomY;
 
-                    if (tiles[y - 1, x].isOpen()) {
-                        tiles[y - 1, x].openWallOnSides(0x1);
-                        tiles[y, x].openWallOnSides(0x4);
-                    }
-                }
 
             }
         }
@@ -217,162 +195,75 @@ public class Dungeon {
 
     private void GenerateObtuseCorners(byte[,] tileMap, int x, int y) {
 
-        // check whether a tile has two or more bounding walls
-        if (((tileMap[1, 0] & 0x2) + (tileMap[1, 2] & 0x2) +
-        (tileMap[2, 1] & 0x2) + (tileMap[0, 1] & 0x2)) == 0x4) {
-            if (y > 0) {
+        // if above 0, and  there is an open path down from current tileMap
+        if (y > 0 & tileMap[0,1] == 0x1) {
 
-                // if tile below has a wall to the right, but current
-                // tile doesn't, add a wall to Btm-R corner
-                if ((tiles[y, x].getWalls() & 0x2) == 0
-                    & (tiles[y, x].getWalls() & 0x4) == 0
-                    & (tiles[y-1, x].getWalls() & 0x2) > 0) {
-                    // (+3, +3) offset get the indx at Btm-R of tile
-                    map[4 * y + 1, 4 * x + 3] = 0x3;
-                }
-
-                // if tile below has a wall to the left, but current
-                // tile doesn't, add a wall to Btm-L cornter
-
-                if ((tiles[y, x].getWalls() & 0x8) == 0
-                    & (tiles[y, x].getWalls() & 0x4) == 0
-                    & (tiles[y - 1, x].getWalls() & 0x8) > 0) {
-                    // (+1, +1) offset get the indx at Btm-R of tile
-                    map[4 * y + 1, 4 * x + 1] = 0x3;
-                }
+            // if current tile has no left wall, but tile below does
+            if ((tiles[y, x].getWalls() & 0x8) == 0
+            & (tiles[y - 1, x].getWalls() & 0x8) > 0) {
+                // add an obtuse corner to btm-L of tileMap
+                tileMap[0, 0] = 0x3;
+                // Debug.Log("x: " + (4 * x + 1) + " y: " + (4 * y + 1));
             }
-                        
-            if (y < tilesHeight-1) {
-                // if tile above has a wall to the right, but current
-                // tile doesn't, add a wall to Top-R corner
-
-                if ((tiles[y, x].getWalls() & 0x2) == 0
-                    & (tiles[y, x].getWalls() & 0x1) == 0
-                    & (tiles[y + 1, x].getWalls() & 0x2) > 0) {
-                    // (+3, +3) offset get the indx at Top-R of tile
-                    map[4 * y + 3, 4 * x + 3] = 0x3;
-                }
-
-                // if tile above has a wall to the left, but current
-                // tile doesn't, add a wall to Top-L corner
-
-                if ((tiles[y, x].getWalls() & 0x8) == 0
-                    & (tiles[y, x].getWalls() & 0x1) == 0
-                    & (tiles[y + 1, x].getWalls() & 0x8) > 0) {
-                    // (+1, +3) offset gets the indx at Top-L of tile
-                    map[4 * y + 3, 4 * x + 1] = 0x3;
-                }
-            }
-
-            if (x > 0) {
-
-                // if tile to left has a top wall, but current
-                // tile doesn't, add a wall to Top-L corner
-
-                if ((tiles[y, x].getWalls() & 0x1) == 0
-                    & (tiles[y, x].getWalls() & 0x8) == 0
-                    & (tiles[y, x - 1].getWalls() & 0x1) > 0) {
-                    // (+1, +3) offset get the indx at Top-L of tile
-                    map[4 * y + 3, 4 * x + 1] = 0x3;
-                }
-
-                // if tile to left has a bottom wall, but current
-                // tile doesn't, add a wall to Btm-L corner
-
-                if ((tiles[y, x].getWalls() & 0x4) == 0
-                    & (tiles[y, x].getWalls() & 0x8) == 0
-                    & (tiles[y, x - 1].getWalls() & 0x4) > 0) {
-                    // (+1, +3) offset gets the indx at Btm-L of tile
-                    map[4 * y + 1, 4 * x + 1] = 0x3;
-                }
-            }
-
-
-            if (x < tilesWidth - 1) {
-
-                // if tile to right has a top wall, but current
-                // tile doesn't, add a wall to Top-R corner
-
-                if ((tiles[y, x].getWalls() & 0x1) == 0
-                    & (tiles[y, x].getWalls() & 0x2) == 0
-                    & (tiles[y, x + 1].getWalls() & 0x1) > 0) {
-                    // (+3, +3) offset get the indx at Top-R of tile
-                    map[4 * y + 3, 4 * x + 3] = 0x3;
-                }
-
-                // if tile to right has a bottom wall, but current
-                // tile doesn't, add a wall to Btm-R corner
-
-                if ((tiles[y, x].getWalls() & 0x4) == 0
-                    & (tiles[y, x].getWalls() & 0x2) == 0
-                    & (tiles[y, x + 1].getWalls() & 0x4) > 0) {
-                    // (+1, +3) offset gets the indx at Btm-R of tile
-                    map[4 * y + 1, 4 * x + 3] = 0x3;
-
-                }
-            }
+            
+            // if current tile has no right wall, but tile below does
+            if ((tiles[y, x].getWalls() & 0x2) == 0
+            & (tiles[y - 1, x].getWalls() & 0x2) > 0)
+                // add an obtuse corner to btm-R of tileMap
+                tileMap[0, 2] = 0x3;
         }
-    }
 
-    private void GenerateTJunction(byte[,] tileMap, int x, int y) {
+        // if below tilesHeight, and there is an open path down from current tileMap
+        if (y < tilesHeight-1 & tileMap[2,1] == 0x1) {
 
-        // check whether a tile has one bounding walls
-        if (((tileMap[1, 0] & 0x2) + (tileMap[1, 2] & 0x2) +
-            (tileMap[2, 1] & 0x2) + (tileMap[0, 1] & 0x2)) == 0x2) {
-
-            // determine whether tile is a T-junction or room wall
-            // by summing the number of walls each connected adjacent
-            // tile has. room tiles will have 4 maximum.
-
-            int numWallsInAdjTiles = CalculateAdjacentWalls(x, y);
-
-            // 3 is the maximum a room tile can have, if we have more
-            // tile must be a T junction
-            if(numWallsInAdjTiles >= 4) {
-
-                // if top wall blocked, add L-btm + R-btm corners
-                if ((tiles[y, x].getWalls() & 0x1) > 0) {
-                    map[4 * y + 1, 4 * x + 1] = 0x3;
-                    map[4 * y + 1, 4 * x + 3] = 0x3;
-                }
-
-                // if rgt wall blocked, add L-btm + L-top corners
-                else if ((tiles[y, x].getWalls() & 0x2) > 0) {
-                    map[4 * y + 1, 4 * x + 1] = 0x3;
-                    map[4 * y + 3, 4 * x + 1] = 0x3;
-                }
-
-                // if top wall blocked, add L-top + R-top corners
-                else if ((tiles[y, x].getWalls() & 0x4) > 0) {
-                    map[4 * y + 3, 4 * x + 1] = 0x3;
-                    map[4 * y + 3, 4 * x + 3] = 0x3;
-                }
-
-                // if left wall blocked, add R-top + R-btm corners
-                else {
-                    map[4 * y + 3, 4 * x + 3] = 0x3;
-                    map[4 * y + 1, 4 * x + 3] = 0x3;
-                }
+            // if current tile has no left wall, but tile above does
+            if ((tiles[y, x].getWalls() & 0x8) == 0
+            & (tiles[y+1, x].getWalls() & 0x8) > 0) {
+                // add an obtuse corner to top-L of tileMap
+                tileMap[2, 0] = 0x3;
             }
+
+            // if current tile has no right wall, but tile above does
+            if ((tiles[y, x].getWalls() & 0x2) == 0
+            & (tiles[y + 1, x].getWalls() & 0x2) > 0) {
+                // add an obtuse corner to top-R of tileMap
+                tileMap[2, 2] = 0x3;
+            }
+
         }
-    }
 
-    private void GenerateFourWayJunction(byte [,] tileMap, int x, int y) {
+        // if right of 0, and there is an open path left from current tileMap
+        if (x > 0 & tileMap[1,0] == 0x1) {
 
-        // first check whether tile has no bounding walls
-        if (((tileMap[1, 0] & 0x2) + (tileMap[1, 2] & 0x2) +
-            (tileMap[2, 1] & 0x2) + (tileMap[0, 1] & 0x2)) == 0x0) {
+            // if current tile has no top wall, but tile to left does
+            if ((tiles[y, x].getWalls() & 0x1) == 0
+            & (tiles[y, x-1].getWalls() & 0x1) > 0)
+                // add an obtuse corner to top-L of tileMap
+                tileMap[2, 0] = 0x3;
+            
+            
+            // if current tile has no bottom wall, but tile to left does
+            if ((tiles[y, x].getWalls() & 0x4) == 0
+            & (tiles[y, x-1].getWalls() & 0x4) > 0)
+                // add an obtuse corner to btm-L of tileMap
+                tileMap[0, 0] = 0x3;
+        }
 
-            // check how many sides are walled off in adjacent tiles
-            int numWallsInAdjTiles = CalculateAdjacentWalls(x, y);
+        // if left of tilesWidth, & there is an open path right from current tileMap
+        if (x < tilesWidth-1 & tileMap[1,2] == 0x1) {
 
-            // min. of 8 walled sides in T-junction (4 passages w/ 2 sides each)
-            if (numWallsInAdjTiles >= 8) {
-                // add wall corners to map
-                map[4 * y + 1, 4 * x + 1] = 0x3;
-                map[4 * y + 3, 4 * x + 1] = 0x3;
-                map[4 * y + 1, 4 * x + 3] = 0x3;
-                map[4 * y + 3, 4 * x + 3] = 0x3;
+            // if current tile has no top wall, but tile to right does
+            if ((tiles[y, x].getWalls() & 0x1) == 0
+            & (tiles[y, x+1].getWalls() & 0x1) > 0) {
+                // add an obtuse corner to top-R of tileMap
+                tileMap[2, 2] = 0x3;
+            }
+
+            // if current tile has no bottom wall, but tile to right does
+            if ((tiles[y, x].getWalls() & 0x4) == 0
+            & (tiles[y, x+1].getWalls() & 0x4) > 0) {
+                // add an obtuse corner to btm-R of tileMap
+                tileMap[0, 2] = 0x3;
             }
         }
     }
