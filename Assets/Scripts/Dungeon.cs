@@ -38,6 +38,24 @@ public class Dungeon {
     public int getHeight() { return height; }
 
 
+    private int CalculateAdjacentWalls(int x, int y) {
+
+        int numWallsInAdjTiles = 0;
+
+        if ((tiles[y, x].getWalls() & 0x1) == 0)
+            numWallsInAdjTiles += tiles[y + 1, x].getNumWalls();
+
+        if ((tiles[y, x].getWalls() & 0x2) == 0)
+            numWallsInAdjTiles += tiles[y, x + 1].getNumWalls();
+
+        if ((tiles[y, x].getWalls() & 0x4) == 0)
+            numWallsInAdjTiles += tiles[y - 1, x].getNumWalls();
+
+        if ((tiles[y, x].getWalls() & 0x8) == 0)
+            numWallsInAdjTiles += tiles[y, x - 1].getNumWalls();
+
+        return numWallsInAdjTiles;
+    }
 
     private void ConnectMapTiles() {
         // fill in rows between tiles, connect everything up nicely
@@ -74,9 +92,45 @@ public class Dungeon {
                     | ((map[y + 1, x - 1] == 0x1 & map[y + 1, x + 1] == 0x1))))
 
                     map[y, x] = (byte)(map[y, x] | (byte)0x3);
-
             }
         }
+    }
+
+
+    private void InitialiseDungeon() {
+
+        // create new map of level
+        map = new byte[height, width];
+
+        // declare var to store the map of each tile
+        byte[,] tileMap;
+
+        // iterate for all of our tiles
+        for (int y = 0; y < tilesHeight; y++) {
+            for (int x = 0; x < tilesWidth; x++) {
+
+                // if the current tile isn't null, convert to a 3x3 byte array
+                if (tiles[y, x] != null) {
+
+                    tileMap = tiles[y, x].getMap();
+
+                    // add our tile to the map
+                    GenerateMapFromTile(tileMap, x, y);
+
+                    // add walls to obtuse (270º) corner
+                    GenerateObtuseCorners(tileMap, x, y);
+
+                    // add walls to T-junction corners
+                    GenerateTJunction(tileMap, x, y);
+
+                    // add walls to 4-way intersection corners
+                    GenerateFourWayJunction(tileMap, x, y);
+                }
+            }
+        }
+
+        // add walls & floors to buffer btwn tiles to connect the map
+        ConnectMapTiles();
     }
 
     private void GenerateMapFromTile(byte[,] tileMap, int x, int y) {
@@ -198,18 +252,7 @@ public class Dungeon {
             // by summing the number of walls each connected adjacent
             // tile has. room tiles will have 4 maximum.
 
-            int numWallsInAdjTiles = 0;
-            if ((tiles[y, x].getWalls() & 0x1) == 0)
-                numWallsInAdjTiles += tiles[y + 1, x].getNumWalls();
-
-            if ((tiles[y,x].getWalls() & 0x2) == 0)
-                numWallsInAdjTiles += tiles[y, x + 1].getNumWalls();
-
-            if ((tiles[y, x].getWalls() & 0x4) == 0)
-                numWallsInAdjTiles += tiles[y - 1, x].getNumWalls();
-
-            if ((tiles[y, x].getWalls() & 0x8) == 0)
-                numWallsInAdjTiles += tiles[y, x - 1].getNumWalls();
+            int numWallsInAdjTiles = CalculateAdjacentWalls(x, y);
 
             // 3 is the maximum a room tile can have, if we have more
             // tile must be a T junction
@@ -242,44 +285,25 @@ public class Dungeon {
         }
     }
 
-    private void InitialiseDungeon() {
+    private void GenerateFourWayJunction(byte [,] tileMap, int x, int y) {
 
+        // first check whether tile has no bounding walls
+        if (((tileMap[1, 0] & 0x2) + (tileMap[1, 2] & 0x2) +
+            (tileMap[2, 1] & 0x2) + (tileMap[0, 1] & 0x2)) == 0x0) {
 
-        // create new map of level
-        map = new byte[height, width];
+            // check how many sides are walled off in adjacent tiles
+            int numWallsInAdjTiles = CalculateAdjacentWalls(x, y);
 
-        // declare var to store the map of each tile
-        byte[,] tileMap;
-
-        // iterate for all of our tiles
-        for (int y = 0; y < tilesHeight; y++) {
-            for (int x = 0; x < tilesWidth; x++) {
-
-                // if the current tile isn't null, convert to a 3x3 byte array
-                if (tiles[y, x] != null) {
-
-                    tileMap = tiles[y, x].getMap();
-
-                    GenerateMapFromTile(tileMap, x, y);
-
-                    // handle all corner-cases for walls at obtuse (270º) corner
-                    GenerateObtuseCorners(tileMap, x, y);
-                    GenerateTJunction(tileMap, x, y);
-                    /*
-                     * this next section handles literal corner cases. its func.
-                     * is to generate walls for the 270º corners that occur in
-                     * the maze (but not in the room). These come in 3 flavours
-                     * 
-                     * when a corridor turns (2 tile connections)
-                     * T-junctions (3 tile connections)
-                     * 4-way junctions (4 tile connections)
-                    */                   
-                }
+            // min. of 8 walled sides in T-junction (4 passages w/ 2 sides each)
+            if (numWallsInAdjTiles >= 8) {
+                // add wall corners to map
+                map[4 * y + 1, 4 * x + 1] = 0x3;
+                map[4 * y + 3, 4 * x + 1] = 0x3;
+                map[4 * y + 1, 4 * x + 3] = 0x3;
+                map[4 * y + 3, 4 * x + 3] = 0x3;
             }
         }
-
-
-        ConnectMapTiles();
     }
+
 }
 
