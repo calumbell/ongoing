@@ -37,6 +37,49 @@ public class Dungeon {
     public int getWidth() { return width; }
     public int getHeight() { return height; }
 
+    // ===================
+    // Init Methods
+
+    private void InitialiseDungeon() {
+
+        ConnectRoomsToMaze();
+
+        // create new map of level
+        map = new byte[height, width];
+
+        // declare var to store the map of each tile
+        byte[,] tileMap;
+
+        // iterate for all of our tiles
+        for (int y = 0; y < tilesHeight; y++) {
+            for (int x = 0; x < tilesWidth; x++) {
+
+                // if the current tile isn't null, convert to a 3x3 byte array
+                if (tiles[y, x] != null) {
+
+                    tileMap = tiles[y, x].getMap();
+
+                    // add our tile to the map
+                    GenerateMapFromTile(tileMap, x, y);
+
+                    // add walls to obtuse (270º) corner
+                    GenerateObtuseCorners(tileMap, x, y);
+
+                    // add walls to T-junction corners
+                    GenerateTJunction(tileMap, x, y);
+
+                    // add walls to 4-way intersection corners
+                    GenerateFourWayJunction(tileMap, x, y);
+                }
+            }
+        }
+
+        // add walls & floors to buffer btwn tiles to connect the map
+        ConnectMapTiles();
+    }
+
+    // ===================
+    // Helper Methods
 
     private int CalculateAdjacentWalls(int x, int y) {
 
@@ -96,42 +139,71 @@ public class Dungeon {
         }
     }
 
+    private void ConnectRoomsToMaze() {
+        byte[] edges = { 0x1, 0x2, 0x4, 0x8 };
+        byte edge;
+        int n, x, y, roomX, roomY, roomWidth, roomHeight;
 
-    private void InitialiseDungeon() {
+        // iterate over rooms in dungeon
+        foreach (Room room in rooms) {
 
-        // create new map of level
-        map = new byte[height, width];
+            if (room == null)
+                continue;
 
-        // declare var to store the map of each tile
-        byte[,] tileMap;
+            // n controls how many exits to attempt to make
+            n = Random.Range(1, 2);
 
-        // iterate for all of our tiles
-        for (int y = 0; y < tilesHeight; y++) {
-            for (int x = 0; x < tilesWidth; x++) {
+            roomX = room.getX();
+            roomY = room.getY();
+            roomWidth = room.getWidth();
+            roomHeight = room.getHeight();
 
-                // if the current tile isn't null, convert to a 3x3 byte array
-                if (tiles[y, x] != null) {
+            for (int i = 0; i < n; i++) {
+                edge = edges[Random.Range(0, 4)];
+                if (edge == 0x1 & (roomY + roomHeight) < tilesHeight) {
+                    x = Random.Range(roomX, roomX + roomWidth);
+                    y = roomY + roomHeight - 1;
 
-                    tileMap = tiles[y, x].getMap();
-
-                    // add our tile to the map
-                    GenerateMapFromTile(tileMap, x, y);
-
-                    // add walls to obtuse (270º) corner
-                    GenerateObtuseCorners(tileMap, x, y);
-
-                    // add walls to T-junction corners
-                    GenerateTJunction(tileMap, x, y);
-
-                    // add walls to 4-way intersection corners
-                    GenerateFourWayJunction(tileMap, x, y);
+                    if (tiles[y + 1, x].isOpen()) {
+                        tiles[y + 1, x].openWallOnSides(0x4);
+                        tiles[y, x].openWallOnSides(0x1);
+                    }
                 }
+
+                if (edge == 0x2 & (roomX + roomWidth) < tilesWidth) {
+                    x = roomX + roomWidth - 1;
+                    y = Random.Range(roomY, roomY + roomHeight);
+
+                    if (tiles[y, x + 1].isOpen()) {
+                        tiles[y, x + 1].openWallOnSides(0x8);
+                        tiles[y, x].openWallOnSides(0x2);
+                    }
+                }
+
+                if (edge == 0x8 & roomX > 0) {
+                    x = roomX;
+                    y = Random.Range(roomY, roomY + roomHeight);
+
+                    if (tiles[y, x - 1].isOpen()) {
+                        tiles[y, x - 1].openWallOnSides(0x2);
+                        tiles[y, x].openWallOnSides(0x8);
+                    }
+                }
+
+                if (edge == 0x4 & roomY > 0) {
+                    x = Random.Range(roomX, roomX + roomWidth);
+                    y = roomY;
+
+                    if (tiles[y - 1, x].isOpen()) {
+                        tiles[y - 1, x].openWallOnSides(0x1);
+                        tiles[y, x].openWallOnSides(0x4);
+                    }
+                }
+
             }
         }
-
-        // add walls & floors to buffer btwn tiles to connect the map
-        ConnectMapTiles();
     }
+
 
     private void GenerateMapFromTile(byte[,] tileMap, int x, int y) {
         // iterate over the byte array and add each on to the map
