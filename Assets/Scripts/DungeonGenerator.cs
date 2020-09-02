@@ -23,9 +23,7 @@ public class DungeonGenerator : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         tiles = GenerateDungeonTiles(width/3, height/3);
-        // map = GenerateMapFromTiles();
         dungeon = new Dungeon(tiles, rooms);
-        // InstantiateMapData(map);
         InstantiateDungeon(dungeon);
     }
     
@@ -104,6 +102,7 @@ public class DungeonGenerator : MonoBehaviour {
     }
 
     void AddRoomToTiles(Room room, Tile[,] tiles) {
+
     // AddRoomToTiles: adds a room to a map and the coords x & y
         if (room == null) 
             return;
@@ -129,6 +128,7 @@ public class DungeonGenerator : MonoBehaviour {
 
 
     Tile[,] GenerateDungeonTiles(int x, int y) {
+
         // GenerateDungeonTiles: returns a 2D array of tiles
         Tile[,] tiles = new Tile[y, x];
 

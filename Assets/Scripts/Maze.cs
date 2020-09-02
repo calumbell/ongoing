@@ -1,16 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Maze
-{
-    private int width;
-    private int height;
+public class Maze {
+
+    // ==========================
+    // Member Fields
+
+    // width and height of maze
+    private int width, height;
+
+    // the tiles that make up the maze
     private Tile[,] tiles;
+
+    // an array of which tiles have been marks as off-limits. its indices line up
+    // with the tiles array. tiles are blocked if they are part of a room, or
+    // have already been visited by our maze gen. algorithm
+
     private bool[,] blockedTiles;
 
-    private byte[,] map;
-    private int numTilesRemaining;
+
 
     // ===========================
     // Class Constructors
@@ -25,16 +33,14 @@ public class Maze
         
         blockedTiles = new bool[height, width];
 
-        numTilesRemaining = width * height;
-
+        // block out all of the rooms in the tilemap
         foreach (Room room in rooms) {
             if (room != null) {
                 BlockOutRoom(room);
-                numTilesRemaining -= room.getWidth() * room.getHeight();
             }
         }
 
-        GenerateMazeCourse();
+        GenerateMaze();
     }
 
     // ===========================
@@ -48,7 +54,7 @@ public class Maze
     // Instance Methods
 
     public void BlockOutRoom(Room room) {
-        // BlockOutRooms: takes a room as an argument and marks all tiles contained
+        // takes a room as an argument and marks all tiles contained
         // within as out of bounds for the maze gen. algorithm
 
 
@@ -63,17 +69,21 @@ public class Maze
             for (int x = 0; x < room.getWidth(); x++)
                 blockedTiles[y+offsetY, x+offsetX] = true;
         }
-        return;
     }
    
-    public void GenerateMazeCourse() {
+    public void GenerateMaze() {
+        // recursive backtracker algorithm for creating a perfect maze
+        // http://www.astrolog.org/labyrnth/algrithm.htm#perfect
+
         // GenerateMazeCourse fills empty spaces in the tiles array with a maze
         Stack<Tile> tileStack = new Stack<Tile>();
         Tile currentTile, nextTile;
 
+        // iterate over all tiles in our dungeon
         for (int y = 0; y <  height; y++) {
             for (int x = 0; x < width; x++) {
-                
+
+                // at a perimeter wall to our maze
                 if (y == 0)
                     tiles[y, x].closeWallOnSides(0x4);
                 else if (y == height - 1)
@@ -88,18 +98,23 @@ public class Maze
                 if (!blockedTiles[y,x]) {
 
                     // push initial tile too stack and mark it as visited
-                    //tiles[y, x].setOpen();
                     tileStack.Push(tiles[y, x]);
                     blockedTiles[y, x] = true;
 
                     // while the stack is not empty
                     while (tileStack.Count > 0) {
+
+                        // pop a tile from our stack and check whether it has
+                        // any unvisited neighbours
                         currentTile = tileStack.Pop();
                         currentTile.setOpen();
                         string[] unvisitedNeighbours = getUnvisitedNeighbours(currentTile.getX(), currentTile.getY(), blockedTiles);
 
+                        // if tile has unvisited neighbours, pick one and create
+                        // a path between the two tiles
                         if (unvisitedNeighbours.Length > 0) {
-                            
+
+                            // pick rndm dir with an unvisited neighbour
                             string direction = unvisitedNeighbours[Random.Range(0, unvisitedNeighbours.Length)];
 
                             if (direction == "up") {
@@ -134,6 +149,7 @@ public class Maze
                                 // mark next tile as visited
                                 blockedTiles[currentTile.getY() - 1, currentTile.getX()] = true;
                             }
+
                             else {
                                 nextTile = tiles[currentTile.getY(), currentTile.getX() - 1];
 
@@ -145,6 +161,7 @@ public class Maze
                                 blockedTiles[currentTile.getY(), currentTile.getX() - 1] = true;
                             }
 
+                            // push current & next tile to stack, repeat
                             tileStack.Push(currentTile);
                             tileStack.Push(nextTile);
                         }
@@ -152,14 +169,15 @@ public class Maze
                 }
             }
         }
-
-        return;
     }
 
     private string[] getUnvisitedNeighbours(int x, int y, bool[,] visitedTiles) {
+    // returns an array of directions to unvisited neighbours from the tile at
+    // coordinates (x, y)
+
         List<string> neighbours = new List<string>();
 
-        // check that tile is not on the edge to avoid seg faults
+        // check that tile is not on the edge of map to avoid seg faults
         if (y > 0) 
             if (!visitedTiles[y-1, x])
                 neighbours.Add("down");
@@ -177,14 +195,5 @@ public class Maze
                 neighbours.Add("right");
 
         return neighbours.ToArray();
-    }
-
-    // ===========================
-    // Static Methods
-
-    public static byte[,] GenerateMazeFine(byte[,] map) {
-        // GenerateMazeFine fills empty spaces in the map with corridors, esp.
-        // corridors between rooms which GenerateMazeCourse ignores
-        return map;
     }
 }

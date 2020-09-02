@@ -1,25 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public class Tile {
 
-public class Tile
-{
-    private int x;
-    private int y;
+    // ======================
+    // Member Fields
+
+    // x and y indicies in the tiles array
+    private int x, y;
+
+    // open controls whether this tile is open, can be traversed, has a floor
     private bool open;
-    private bool isPartOfRoom;
-    // 0x1 -> wall up
-    // 0x2 -> wall right
-    // 0x4 -> wall down
-    // 0x8 -> wall left
+
+    // walls controls which walls will be generated around this tile
+    // 0x1 = top wall, 0x2 = right wall, 0x4 = bottom wall, 0x8 = left wall
     private byte walls;
+
+
+    // ======================
+    // Class Constructors
 
     public Tile(int xInput, int yInput, bool openInput, byte wallsInput) {
         x = xInput;
         y = yInput;
         open = openInput;
         walls = wallsInput;
-
     }
 
     // ======================
@@ -30,7 +32,10 @@ public class Tile
     public int getY() { return y; }
     public bool isOpen() { return open; }
 
+
     public int getNumWalls() {
+    // Returns the number of walls that are around this tile. checks the walls
+    // variable and for each wall increments n before returning it
         int n = 0;
 
         n = (walls & 0x1) > 0 ? n + 1 : n;
@@ -40,17 +45,20 @@ public class Tile
 
         return n;
     }
+
     // ======================
     // Setters
 
     public void setWalls(byte sides) { walls = sides; }
     public void closeWallOnSides(byte sides) { walls = (byte)(walls | sides); }
     public void openWallOnSides(byte sides) { walls = (byte)(walls & ~sides) ; }
-    //public void openWallOnSides(byte sides) { if (walls >= sides) walls -= sides; }
     public void setOpen() { open = true; }
     public void setClosed() { open = false;  }
 
     public byte[,] getMap() {
+    // getMap returns a tile as a 3x3 array of bytes that tell DungeonGenerator
+    // exactly where to place floor, walls, etc.
+
         byte[,] map = new byte[3, 3];
 
         if (open)
