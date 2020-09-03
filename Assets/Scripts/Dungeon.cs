@@ -44,7 +44,7 @@ public class Dungeon {
 
         ConnectRoomsToMaze();
 
-        removeDeadEnds(25);
+        removeDeadEnds(10);
 
         // create new map of level
         map = new byte[height, width];
@@ -114,9 +114,10 @@ public class Dungeon {
         }
     }
 
+
     private void ConnectRoomsToMaze() {
         byte[] edges = { 0x1, 0x2, 0x4, 0x8 };
-        byte edge;
+        byte edge, edgeBitmask;
         int n, x, y, roomX, roomY, roomWidth, roomHeight;
 
         // iterate over rooms in dungeon
@@ -126,57 +127,82 @@ public class Dungeon {
                 continue;
 
             // n controls how many exits to attempt to make
-            n = Random.Range(2, 3);
+            n = Random.Range(3, 4);
 
             roomX = room.getX();
             roomY = room.getY();
             roomWidth = room.getWidth();
             roomHeight = room.getHeight();
 
+            edgeBitmask = 0x0;
+
             for (int i = 0; i < n; i++) {
 
                 // pick an edge to create the exit on
                 edge = edges[Random.Range(0, 4)];
 
-                if (edge == 0x1 & (roomY + roomHeight) < tilesHeight) {
+                if (edge == 0x1 & (roomY + roomHeight) < tilesHeight
+                    & (0x1 & edgeBitmask) == 0)
+                {
+
+                    edgeBitmask = (byte)(edgeBitmask | 0x1);
+
                     x = Random.Range(roomX, roomX + roomWidth);
                     y = roomY + roomHeight - 1;
 
-                    if (tiles[y + 1, x].isOpen()) {
+                    if (tiles[y + 1, x].isOpen())
+                    {
                         tiles[y + 1, x].openWallOnSides(0x4);
                         tiles[y, x].openWallOnSides(0x1);
                     }
                 }
 
-                else if (edge == 0x4 & roomY > 0) {
+                else if (edge == 0x4 & roomY > 0 & (0x4 & edgeBitmask) == 0)
+                {
                     x = Random.Range(roomX, roomX + roomWidth);
                     y = roomY;
 
-                    if (tiles[y - 1, x].isOpen()) {
+                    edgeBitmask = (byte)(edgeBitmask | 0x4);
+
+                    if (tiles[y - 1, x].isOpen())
+                    {
                         tiles[y - 1, x].openWallOnSides(0x1);
                         tiles[y, x].openWallOnSides(0x4);
                     }
                 }
 
-                else if (edge == 0x2 & (roomX + roomWidth) < tilesWidth) {
+                else if (edge == 0x2 & (roomX + roomWidth) < tilesWidth
+                    & (0x2 & edgeBitmask) == 0)
+                {
+
+                    edgeBitmask = (byte)(edgeBitmask | 0x2);
+
                     x = roomX + roomWidth - 1;
                     y = Random.Range(roomY, roomY + roomHeight);
 
-                    if (tiles[y, x + 1].isOpen()) {
+                    if (tiles[y, x + 1].isOpen())
+                    {
                         tiles[y, x + 1].openWallOnSides(0x8);
                         tiles[y, x].openWallOnSides(0x2);
                     }
                 }
 
-                else if (edge == 0x8 & roomX > 0) {
+                else if (edge == 0x8 & roomX > 0 & (0x8 & edgeBitmask) == 0)
+                {
+                    edgeBitmask = (byte)(edgeBitmask | 0x8);
+
                     x = roomX;
                     y = Random.Range(roomY, roomY + roomHeight);
 
-                    if (tiles[y, x - 1].isOpen()) {
+                    if (tiles[y, x - 1].isOpen())
+                    {
                         tiles[y, x - 1].openWallOnSides(0x2);
                         tiles[y, x].openWallOnSides(0x8);
                     }
                 }
+
+                else
+                    i--;
             }
         }
     }

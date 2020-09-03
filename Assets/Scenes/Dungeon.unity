@@ -297,7 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 71
   height: 71
-  numberOfRooms: 25
+  numberOfRooms: 10
   floorPrefab: {fileID: 604878441931748688, guid: 0702ba517dbde4d25af14986c947494a,
     type: 3}
   floorParent: {fileID: 1280315722}
