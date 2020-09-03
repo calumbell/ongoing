@@ -61,7 +61,7 @@
 
         byte[,] map = new byte[3, 3];
 
-        if (open)
+        if (open) {
             // set centre tile to a piece of unobstructed floor
             map[1, 1] = 0x1;
         
@@ -84,7 +84,14 @@
             wallCode = (byte)(((walls & 0x8) > 0) ? 0x3 : map[1, 1]);
             for (int i = 0; i < 3; i++)
                 map[i, 0] = (byte)(map[i, 0] | wallCode);
-        
+        }
+
+        else {
+            for (int y = 0; y < 3; y++)
+                for (int x = 0; x < 3; x++)
+                    map[y, x] = 0;
+        }
+
         return map;
     }
 }

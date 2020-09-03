@@ -154,7 +154,7 @@ public class DungeonGenerator : MonoBehaviour {
         Room[] rooms = new Room[n];
 
         // only allow n+10 attempts to create a room (base-case)
-        int attempts = n + 10;
+        int attempts = n + 30;
 
         for (int i = 0; i < n; i++) {
 

@@ -18,8 +18,8 @@ public class Room {
     // Class Constructor
 
     public Room(int roomX, int roomY) {
-        width = Random.Range(4, 6); // nb, room dims include a 1-tile buffer
-        height = Random.Range(4, 6);
+        width = Random.Range(3, 7); // nb, room dims include a 1-tile buffer
+        height = Random.Range(3, 7);
         x = Random.Range(0, roomX - width - 1);
         y = Random.Range(0, roomY - height - 1);
         tiles = new Tile[height, width];
@@ -59,8 +59,8 @@ public class Room {
     // takes a second room as an argument and runners AABB collision detection on
     // it and the current box. returns true if they collide, else returns false
 
-        return AABBCollisionDetection(x, y, width, height,
-            otherRoom.getX(), otherRoom.getY(), otherRoom.getWidth(), otherRoom.getHeight());
+        return AABBCollisionDetection(x, y, width+1, height+1,
+            otherRoom.getX(), otherRoom.getY(), otherRoom.getWidth()+1, otherRoom.getHeight()+1);
     }
 
     void InitRoom(int width, int height) {

@@ -44,6 +44,8 @@ public class Dungeon {
 
         ConnectRoomsToMaze();
 
+        removeDeadEnds(25);
+
         // create new map of level
         map = new byte[height, width];
 
@@ -124,7 +126,7 @@ public class Dungeon {
                 continue;
 
             // n controls how many exits to attempt to make
-            n = Random.Range(2, 4);
+            n = Random.Range(2, 3);
 
             roomX = room.getX();
             roomY = room.getY();
@@ -175,9 +177,6 @@ public class Dungeon {
                         tiles[y, x].openWallOnSides(0x8);
                     }
                 }
-
-
-
             }
         }
     }
@@ -203,7 +202,6 @@ public class Dungeon {
             & (tiles[y - 1, x].getWalls() & 0x8) > 0) {
                 // add an obtuse corner to btm-L of tileMap
                 tileMap[0, 0] = 0x3;
-                // Debug.Log("x: " + (4 * x + 1) + " y: " + (4 * y + 1));
             }
             
             // if current tile has no right wall, but tile below does
@@ -264,6 +262,52 @@ public class Dungeon {
             & (tiles[y, x+1].getWalls() & 0x4) > 0) {
                 // add an obtuse corner to btm-R of tileMap
                 tileMap[0, 2] = 0x3;
+            }
+        }
+    }
+
+    private void removeDeadEnds(int n) {
+        // create a list of tiles to store dead ends
+        var deadEnds = new List<Tile>();
+
+        // find all dead ends in maze and add them to list
+        for (int y = 0; y < tilesHeight; y++)
+            for (int x = 0; x < tilesWidth; x++)
+                // if tile has 3 bounding walls & isn't blocked, its a dead end
+                if (tiles[y, x].getNumWalls() == 3 & tiles[y,x].isOpen())
+                    deadEnds.Add(tiles[y, x]);
+
+        // remove dead-ends and check if adjacent tiles are now dead ends
+        Tile tile, next;
+        for (int j = 0; j < n; j++) {
+            for (int i = 0; i < deadEnds.Count; i++) {
+                tile = deadEnds[i];
+                tile.setClosed();
+
+                if ((tile.getWalls() & 0x1) == 0 & tile.getY() < tilesHeight - 1) {
+                    next = tiles[tile.getY() + 1, tile.getX()];
+                    next.closeWallOnSides(0x4);
+                }
+
+                else if ((tile.getWalls() & 0x2) == 0 & tile.getX() < tilesWidth - 1) {
+                    next = tiles[tile.getY(), tile.getX() + 1];
+                    next.closeWallOnSides(0x8);
+                }
+                else if ((tile.getWalls() & 0x4) == 0 & tile.getY() > 0) {
+                    next = tiles[tile.getY()-1, tile.getX()];
+                    next.closeWallOnSides(0x1);
+                }
+
+                else {
+                    next = tiles[tile.getY(), tile.getX() - 1];
+                    next.closeWallOnSides(0x2);
+                }
+
+                if (next.getNumWalls() == 3)
+                    deadEnds[i] = next;
+                else
+                    deadEnds.RemoveAt(i--);
+
             }
         }
     }
