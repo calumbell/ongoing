@@ -23,14 +23,22 @@ public class PlayerControl : MonoBehaviour
         change.x = Input.GetAxis("Horizontal");
         change.y = Input.GetAxis("Vertical");
 
-        if (change != Vector3.zero) {
-            MoveCharacter(change);
-            animator.SetFloat("moveX", change.x);
-            animator.SetFloat("moveY", change.y);
-        }
+        UpdateAnimationAndMove();
     }
 
-    void MoveCharacter(Vector3 change) {
+    void UpdateAnimationAndMove() {
+        if (change != Vector3.zero) {
+            MoveCharacter();
+            animator.SetFloat("moveX", change.x);
+            animator.SetFloat("moveY", change.y);
+            animator.SetBool("moving", true);
+        }
+
+        else
+            animator.SetBool("moving", false);
+    }
+
+    void MoveCharacter() {
         rb.MovePosition(
             transform.position + change.normalized * speed * Time.deltaTime);
     }
