@@ -8,8 +8,10 @@ public class PlayerControl : MonoBehaviour
     public float speed;
     private Rigidbody2D rb;
     private Animator animator;
+    private AudioSource audioSource;
 
     private Vector3 change;
+
     private GameObject dungeonObj;
     private Dungeon dungeon;
     private GameObject mainCamara;
@@ -18,6 +20,7 @@ public class PlayerControl : MonoBehaviour
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         // get references to dungeon
         dungeonObj = GameObject.FindGameObjectWithTag("Dungeon");
@@ -39,6 +42,9 @@ public class PlayerControl : MonoBehaviour
         change.y = Input.GetAxis("Vertical");
 
         UpdateAnimationAndMove();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            audioSource.Play();
     }
 
     void UpdateAnimationAndMove() {
