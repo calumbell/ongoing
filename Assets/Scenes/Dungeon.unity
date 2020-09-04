@@ -257,7 +257,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.42790955, y: 0.06478524}
+  m_Offset: {x: 0.44721878, y: 0.08216357}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -268,7 +268,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.36194527, y: 0.10778189}
+  m_Size: {x: 0.30401754, y: 0.07302523}
   m_EdgeRadius: 0
 --- !u!1 &792993369
 GameObject:
@@ -442,8 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cd2cf2419fc45deae204fb8c82d07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 71
-  height: 71
+  width: 41
+  height: 41
   numberOfRooms: 10
   floorPrefab: {fileID: 604878441931748688, guid: 0702ba517dbde4d25af14986c947494a,
     type: 3}
