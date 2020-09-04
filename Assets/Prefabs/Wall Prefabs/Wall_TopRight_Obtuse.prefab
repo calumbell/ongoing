@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5795935255453554747}
   - component: {fileID: 5121864909771212680}
+  - component: {fileID: -2542341835059989455}
   m_Layer: 0
   m_Name: Wall_TopRight_Obtuse
   m_TagString: Untagged
@@ -83,3 +84,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!45 &-2542341835059989455
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5441129437781974408}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}

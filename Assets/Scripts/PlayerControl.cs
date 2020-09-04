@@ -4,23 +4,32 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    private float verticalInput;
-    private float horizontalInput;
+
     public float speed;
 
+    private float verticalInput;
+    private float horizontalInput;
+    private Rigidbody2D rb;
+    private Vector3 change;
+
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+    void Update() {
+        change = Vector3.zero;
+        change.x = Input.GetAxis("Horizontal");
+        change.y = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
-        transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
+        if (change != Vector3.zero)
+            MoveCharacter(change);
+
+    }
+
+    void MoveCharacter(Vector3 change) {
+        rb.MovePosition(
+            transform.position + change.normalized * speed * Time.deltaTime);
     }
 }
