@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Dungeon {
     private byte[,] map;
-    private int width;
-    private int height;
+    private int width, height;
 
     private Tile[,] tiles;
     private int tilesWidth;
@@ -13,7 +12,7 @@ public class Dungeon {
 
 
     private Room[] rooms;
-
+    int startRoom, endRoom;
 
     public Dungeon(Tile[,] tilesInput, Room[] roomsInput) {
 
@@ -36,6 +35,8 @@ public class Dungeon {
     public byte getByte(int x, int y) { return map[y, x]; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
+    public Room getStartRoom() { return rooms[startRoom];  }
+
 
     // ===================
     // Init Methods
@@ -72,6 +73,9 @@ public class Dungeon {
 
         // add walls & floors to buffer btwn tiles to connect the map
         ConnectMapTiles();
+
+        // pick random rooms to be the start and end of maze
+        selectStartAndEndRooms();
     }
 
     // ===================
@@ -290,6 +294,20 @@ public class Dungeon {
                 tileMap[0, 2] = 0x3;
             }
         }
+    }
+
+    private void selectStartAndEndRooms() {
+        int i = Random.Range(0, rooms.Length);
+        while (rooms[i] == null)
+            i = Random.Range(0, rooms.Length);
+
+        startRoom = i;
+
+        i = Random.Range(0, rooms.Length);
+        while (rooms[i] == null | i == startRoom)
+            i = Random.Range(0, rooms.Length);
+
+        endRoom = i;
     }
 
     private void removeDeadEnds(int n) {

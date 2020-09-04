@@ -11,7 +11,7 @@ public class DungeonGenerator : MonoBehaviour {
     Room[] rooms;
     Maze maze;
 
-    Dungeon dungeon;
+    public Dungeon dungeon;
 
     public GameObject floorPrefab;
     public GameObject floorParent;
@@ -20,11 +20,23 @@ public class DungeonGenerator : MonoBehaviour {
     public GameObject[] wallPrefabs;
     public GameObject wallParent;
 
+    public GameObject playerPrefab;
+
     // Start is called before the first frame update
     void Start() {
         tiles = GenerateDungeonTiles(width/3, height/3);
         dungeon = new Dungeon(tiles, rooms);
         InstantiateDungeon(dungeon);
+
+        // pick a random room and teleport the player there
+
+        Instantiate(playerPrefab, new Vector3(width/2, height/2, 0), Quaternion.identity);
+        /*
+        Room room = dungeon.getRandomRoom();
+        Vector3 roomCentre = new Vector3((4 * (room.getX() + room.getWidth() / 2) + 1, 4 * (room.getY() + room.getHeight() / 2) + 1), 0);
+        var myPrefab = Instantiate(playerPrefab, new Vector3(x, y, z), Quaternion.identity);
+        PlayerControl player = playerObj.GetComponent<PlayerControl>();
+        player.Teleport(4 * (room.getX() + room.getWidth()/2) + 1, 4 * (room.getY() + room.getHeight()/2) + 1); */
     }
     
     void CreateChildPrefab(GameObject prefab, GameObject parent, int x, int y, int z) {
