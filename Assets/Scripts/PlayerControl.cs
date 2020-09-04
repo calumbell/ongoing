@@ -6,15 +6,15 @@ public class PlayerControl : MonoBehaviour
 {
 
     public float speed;
-
-    private float verticalInput;
-    private float horizontalInput;
     private Rigidbody2D rb;
+    private Animator animator;
+
     private Vector3 change;
 
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -23,9 +23,11 @@ public class PlayerControl : MonoBehaviour
         change.x = Input.GetAxis("Horizontal");
         change.y = Input.GetAxis("Vertical");
 
-        if (change != Vector3.zero)
+        if (change != Vector3.zero) {
             MoveCharacter(change);
-
+            animator.SetFloat("moveX", change.x);
+            animator.SetFloat("moveY", change.y);
+        }
     }
 
     void MoveCharacter(Vector3 change) {
