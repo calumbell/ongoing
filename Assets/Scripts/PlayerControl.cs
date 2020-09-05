@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
-{
+public enum PlayerState {
+
+    walk,
+    interact
+}
+
+public class PlayerControl : MonoBehaviour {
+
 
     public float speed;
+    public PlayerState currentState;
+
     private Rigidbody2D rb;
     private Animator animator;
     private AudioSource audioSource;
@@ -18,6 +26,8 @@ public class PlayerControl : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
+        currentState = PlayerState.walk;
+
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -38,13 +48,15 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update() {
         change = Vector3.zero;
-        change.x = Input.GetAxis("Horizontal");
-        change.y = Input.GetAxis("Vertical");
+        change.x = Input.GetAxisRaw("Horizontal");
+        change.y = Input.GetAxisRaw("Vertical");
 
-        UpdateAnimationAndMove();
+        if (Input.GetButtonDown("interact") && currentState != PlayerState.interact)
+            StartCoroutine(InteractCo());
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            audioSource.Play();
+        else if (currentState == PlayerState.walk)
+            UpdateAnimationAndMove();
+
     }
 
     void UpdateAnimationAndMove() {
@@ -62,6 +74,16 @@ public class PlayerControl : MonoBehaviour
     public void MoveCharacter() {
         rb.MovePosition(
             transform.position + change.normalized * speed * Time.deltaTime);
+    }
+
+    private IEnumerator InteractCo() {
+        animator.SetBool("attacking", true);
+        currentState = PlayerState.interact;
+        audioSource.Play();
+        yield return null;
+        animator.SetBool("attacking", false);
+        yield return new WaitForSeconds(0.2f);
+        currentState = PlayerState.walk;
     }
 
     public void Teleport(float x, float y) {
