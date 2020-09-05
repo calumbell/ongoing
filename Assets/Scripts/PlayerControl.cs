@@ -82,7 +82,7 @@ public class PlayerControl : MonoBehaviour {
         audioSource.Play();
         yield return null;
         animator.SetBool("attacking", false);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         currentState = PlayerState.walk;
     }
 
