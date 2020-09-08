@@ -6,7 +6,6 @@ public class DungeonGenerator : MonoBehaviour {
     public int width;
     public int height;
     public int numberOfRooms;
-    TileMap tileMap;
 
     private Stack<Dungeon> floorsAbove;
     private Stack<Dungeon> floorsbelow;
@@ -25,12 +24,10 @@ public class DungeonGenerator : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
-        // tileMap = new TileMap(width / 3, height / 3);
         dungeon = new Dungeon(width / 3, height / 3);
         InstantiateDungeon(dungeon);
 
         // pick a random room and teleport the player there
-
         Instantiate(playerPrefab, new Vector3(width/2, height/2, 0), Quaternion.identity);
     }
     

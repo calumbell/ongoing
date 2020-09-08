@@ -260,7 +260,6 @@ public class TileMap {
     
     private void removeDeadEnds(int n) {
 
-
         /*
          * removeDeadEnds(int n)
          * 
@@ -281,36 +280,55 @@ public class TileMap {
                     deadEnds.Add(tiles[y, x]);
 
         // remove dead-ends and check if adjacent tiles are now dead ends
+
         Tile tile, next;
+
+        // n controls depth of recursion, iterate that many times
         for (int j = 0; j < n; j++) {
+
+            // iterate across all dead-ends in our list
             for (int i = 0; i < deadEnds.Count; i++) {
+
+                // mark the tile as closed
                 tile = deadEnds[i];
                 tile.setClosed();
 
+                // if the closed tile had a wall going up, close the wall going
+                // down from the tile above - store the next tile
                 if ((tile.getWalls() & 0x1) == 0 & tile.getY() < height - 1) {
                     next = tiles[tile.getY() + 1, tile.getX()];
                     next.closeWallOnSides(0x4);
                 }
 
+                // if the closed tile had a wall going to the right, close the 
+                // wall going left from the tile to the right - store the next tile
                 else if ((tile.getWalls() & 0x2) == 0 & tile.getX() < width - 1) {
                     next = tiles[tile.getY(), tile.getX() + 1];
                     next.closeWallOnSides(0x8);
                 }
+
+                // if the closed tile had a wall going down, close the wall 
+                // going up from the tile below - store the next tile
                 else if ((tile.getWalls() & 0x4) == 0 & tile.getY() > 0) {
                     next = tiles[tile.getY()-1, tile.getX()];
                     next.closeWallOnSides(0x1);
                 }
 
+                // if the closed tile had a wall going to the right, close the 
+                // wall going left from the tile to the right - store the next tile
                 else {
                     next = tiles[tile.getY(), tile.getX() - 1];
                     next.closeWallOnSides(0x2);
                 }
 
+                // if the next tile is now a dead-end, replace the closed tile
+                // in our dead-ends list with it
                 if (next.getNumWalls() == 3)
                     deadEnds[i] = next;
+
+                // if the next tile isn't a dead-end, remove the current index
                 else
                     deadEnds.RemoveAt(i--);
-
             }
         }
     }

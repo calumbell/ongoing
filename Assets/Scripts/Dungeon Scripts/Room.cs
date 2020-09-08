@@ -36,6 +36,50 @@ public class Room {
     public Tile getTile(int x, int y) { return tiles[y, x]; }
     public Tile[,] getTiles() { return tiles; }
 
+    public int GetFurthestRoom(Room[] rooms) {
+
+        /*
+         * GetFurthestRoom 
+         * Given an array of Rooms as an argument, this method will return the
+         * index of the room furthest in the level from the current room.
+         * 
+         */
+
+        float delta;
+
+        int furthestRoom = 0;
+        float deltaHighest = 0;
+
+        // get coord of the centre of our starting room, declare vars for others
+        int x1 = this.getX() + this.getWidth() / 2;
+        int y1 = this.getY() + this.getHeight() / 2;
+        int x2, y2;
+
+        // iterate over all of the rooms
+        for (int i = 0; i < rooms.GetLength(0); i++) {
+
+            
+            if (rooms[i] == null)
+                continue;
+
+            // get coords of each room in array
+            x2 = rooms[i].getX() + rooms[i].getWidth() / 2;
+            y2 = rooms[i].getY() + rooms[i].getHeight() / 2;
+
+            // calculate distance between start and current room
+            delta = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(x1 - x2), 2)
+                + Mathf.Pow(Mathf.Abs(y1 - y2), 2));
+
+            // if the current room is the most remote we have encountered
+            if (delta > deltaHighest) {
+                furthestRoom = i;
+                deltaHighest = delta;
+            }
+        }
+
+        return furthestRoom;
+    }
+
     // ===========================
     // Instance Methods
 

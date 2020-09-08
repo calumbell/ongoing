@@ -207,11 +207,7 @@ public class Dungeon {
 
         startRoom = i;
 
-        i = Random.Range(0, rooms.Length);
-        while (rooms[i] == null | i == startRoom)
-            i = Random.Range(0, rooms.Length);
-
-        endRoom = i;
+        endRoom = tileMap.getRoom(i).GetFurthestRoom(rooms);
     }
 }
 
