@@ -43,10 +43,6 @@ public class Dungeon {
 
     private void InitialiseDungeon() {
 
-        ConnectRoomsToMaze();
-
-        removeDeadEnds(10);
-
         // create new map of level
         map = new byte[height, width];
 
@@ -114,99 +110,6 @@ public class Dungeon {
                     | ((map[y + 1, x - 1] == 0x1 & map[y + 1, x + 1] == 0x1))))
 
                     map[y, x] = (byte)(map[y, x] | (byte)0x3);
-            }
-        }
-    }
-
-
-    private void ConnectRoomsToMaze() {
-        byte[] edges = { 0x1, 0x2, 0x4, 0x8 };
-        byte edge, edgeBitmask;
-        int n, x, y, roomX, roomY, roomWidth, roomHeight;
-
-        // iterate over rooms in dungeon
-        foreach (Room room in rooms) {
-
-            if (room == null)
-                continue;
-
-            // n controls how many exits to attempt to make
-            n = Random.Range(3, 4);
-
-            roomX = room.getX();
-            roomY = room.getY();
-            roomWidth = room.getWidth();
-            roomHeight = room.getHeight();
-
-            edgeBitmask = 0x0;
-
-            for (int i = 0; i < n; i++) {
-
-                // pick an edge to create the exit on
-                edge = edges[Random.Range(0, 4)];
-
-                if (edge == 0x1 & (roomY + roomHeight) < tilesHeight
-                    & (0x1 & edgeBitmask) == 0)
-                {
-
-                    edgeBitmask = (byte)(edgeBitmask | 0x1);
-
-                    x = Random.Range(roomX, roomX + roomWidth);
-                    y = roomY + roomHeight - 1;
-
-                    if (tiles[y + 1, x].isOpen())
-                    {
-                        tiles[y + 1, x].openWallOnSides(0x4);
-                        tiles[y, x].openWallOnSides(0x1);
-                    }
-                }
-
-                else if (edge == 0x4 & roomY > 0 & (0x4 & edgeBitmask) == 0)
-                {
-                    x = Random.Range(roomX, roomX + roomWidth);
-                    y = roomY;
-
-                    edgeBitmask = (byte)(edgeBitmask | 0x4);
-
-                    if (tiles[y - 1, x].isOpen())
-                    {
-                        tiles[y - 1, x].openWallOnSides(0x1);
-                        tiles[y, x].openWallOnSides(0x4);
-                    }
-                }
-
-                else if (edge == 0x2 & (roomX + roomWidth) < tilesWidth
-                    & (0x2 & edgeBitmask) == 0)
-                {
-
-                    edgeBitmask = (byte)(edgeBitmask | 0x2);
-
-                    x = roomX + roomWidth - 1;
-                    y = Random.Range(roomY, roomY + roomHeight);
-
-                    if (tiles[y, x + 1].isOpen())
-                    {
-                        tiles[y, x + 1].openWallOnSides(0x8);
-                        tiles[y, x].openWallOnSides(0x2);
-                    }
-                }
-
-                else if (edge == 0x8 & roomX > 0 & (0x8 & edgeBitmask) == 0)
-                {
-                    edgeBitmask = (byte)(edgeBitmask | 0x8);
-
-                    x = roomX;
-                    y = Random.Range(roomY, roomY + roomHeight);
-
-                    if (tiles[y, x - 1].isOpen())
-                    {
-                        tiles[y, x - 1].openWallOnSides(0x2);
-                        tiles[y, x].openWallOnSides(0x8);
-                    }
-                }
-
-                else
-                    i--;
             }
         }
     }
@@ -309,55 +212,5 @@ public class Dungeon {
 
         endRoom = i;
     }
-
-    private void removeDeadEnds(int n) {
-        // create a list of tiles to store dead ends
-        var deadEnds = new List<Tile>();
-
-        // find all dead ends in maze and add them to list
-        for (int y = 0; y < tilesHeight; y++)
-            for (int x = 0; x < tilesWidth; x++)
-                // if tile has 3 bounding walls & isn't blocked, its a dead end
-                if (tiles[y, x].getNumWalls() == 3 & tiles[y,x].isOpen())
-                    deadEnds.Add(tiles[y, x]);
-
-        // remove dead-ends and check if adjacent tiles are now dead ends
-        Tile tile, next;
-        for (int j = 0; j < n; j++) {
-            for (int i = 0; i < deadEnds.Count; i++) {
-                tile = deadEnds[i];
-                tile.setClosed();
-
-                if ((tile.getWalls() & 0x1) == 0 & tile.getY() < tilesHeight - 1) {
-                    next = tiles[tile.getY() + 1, tile.getX()];
-                    next.closeWallOnSides(0x4);
-                }
-
-                else if ((tile.getWalls() & 0x2) == 0 & tile.getX() < tilesWidth - 1) {
-                    next = tiles[tile.getY(), tile.getX() + 1];
-                    next.closeWallOnSides(0x8);
-                }
-                else if ((tile.getWalls() & 0x4) == 0 & tile.getY() > 0) {
-                    next = tiles[tile.getY()-1, tile.getX()];
-                    next.closeWallOnSides(0x1);
-                }
-
-                else {
-                    if (tile.getX() == 0)
-                        Debug.Log("breakpoint");
-                    Debug.Log("x: " + tile.getX() + "y: " + tile.getY() + "tiles width: " + tiles.GetLength(1) + " tiles height: " + tiles.GetLength(0));
-                    next = tiles[tile.getY(), tile.getX() - 1];
-                    next.closeWallOnSides(0x2);
-                }
-
-                if (next.getNumWalls() == 3)
-                    deadEnds[i] = next;
-                else
-                    deadEnds.RemoveAt(i--);
-
-            }
-        }
-    }
-
 }
 

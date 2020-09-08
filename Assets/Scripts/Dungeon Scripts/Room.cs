@@ -49,9 +49,8 @@ public class Room {
             return true;
         }
 
-        else {
+        else 
             return false;
-        }
     }
 
 
