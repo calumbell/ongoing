@@ -13,6 +13,7 @@
     // 0x1 = top wall, 0x2 = right wall, 0x4 = bottom wall, 0x8 = left wall
     private byte walls;
 
+    private bool isStair;
 
     // ======================
     // Class Constructors
@@ -22,6 +23,7 @@
         y = yInput;
         open = openInput;
         walls = wallsInput;
+        isStair = false;
     }
 
     // ======================
@@ -52,8 +54,11 @@
     public void setWalls(byte sides) { walls = sides; }
     public void closeWallOnSides(byte sides) { walls = (byte)(walls | sides); }
     public void openWallOnSides(byte sides) { walls = (byte)(walls & ~sides) ; }
+
     public void setOpen() { open = true; }
     public void setClosed() { open = false;  }
+
+    public void setIsStair(bool state) { isStair = state; }
 
     public byte[,] getMap() {
     // getMap returns a tile as a 3x3 array of bytes that tell DungeonGenerator
@@ -62,26 +67,30 @@
         byte[,] map = new byte[3, 3];
 
         if (open) {
-            // set centre tile to a piece of unobstructed floor
-            map[1, 1] = 0x1;
+
+            // generate a staircase is Tile isStair, else make unblocked floor
+            if (isStair)
+                map[1, 1] = 0x5;
+            else
+                map[1, 1] = 0x1;
         
             // check for walls at the top
-            byte wallCode = (byte)(((walls & 0x1) > 0) ? 0x3 : map[1, 1]);
+            byte wallCode = (byte)(((walls & 0x1) > 0) ? 0x3 : 0x1);
             for (int i = 0; i < 3; i++)
                 map[2, i] = (byte)(map[2, i] | wallCode);
 
             // check for walls to the right
-            wallCode = (byte)(((walls & 0x2) > 0) ? 0x3 : map[1, 1]);
+            wallCode = (byte)(((walls & 0x2) > 0) ? 0x3 : 0x1);
             for (int i = 0; i < 3; i++)
                 map[i, 2] = (byte)(map[i, 2] | wallCode);
 
             // check for walls to the bottom
-            wallCode = (byte)(((walls & 0x4) > 0) ? 0x3 : map[1, 1]);
+            wallCode = (byte)(((walls & 0x4) > 0) ? 0x3 : 0x1);
             for (int i = 0; i < 3; i++)
                 map[0, i] = (byte)(map[0, i] | wallCode);
 
             // check for walls to the left
-            wallCode = (byte)(((walls & 0x8) > 0) ? 0x3 : map[1, 1]);
+            wallCode = (byte)(((walls & 0x8) > 0) ? 0x3 : 0x1);
             for (int i = 0; i < 3; i++)
                 map[i, 0] = (byte)(map[i, 0] | wallCode);
         }

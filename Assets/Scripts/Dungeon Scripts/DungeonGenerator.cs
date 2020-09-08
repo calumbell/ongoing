@@ -14,10 +14,13 @@ public class DungeonGenerator : MonoBehaviour {
 
     public GameObject floorPrefab;
     public GameObject floorParent;
+    public GameObject objectsParent;
 
     
     public GameObject[] wallPrefabs;
     public GameObject wallParent;
+    public GameObject stairsDownPrefab;
+
 
     public GameObject playerPrefab;
 
@@ -25,6 +28,7 @@ public class DungeonGenerator : MonoBehaviour {
     void Start() {
 
         dungeon = new Dungeon(width / 3, height / 3);
+
         InstantiateDungeon(dungeon);
 
         // pick a random room and teleport the player there
@@ -101,8 +105,13 @@ public class DungeonGenerator : MonoBehaviour {
                 if ((byte)(dungeon.getByte(x,y) & 0x1) > 0)
                     CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
 
+                // add a wall if 2nd bit is a 1
                 if ((byte)(dungeon.getByte(x,y) & 0x2) > 0)
                     CreateWallPrefab(wallParent, x, y, dungeon);
+
+                // add a staircase if 3rd bit is a 1
+                if ((byte)(dungeon.getByte(x, y) & 0x4) > 0)
+                    CreateChildPrefab(stairsDownPrefab, objectsParent, x, y, 0);
             }
         }
     }   

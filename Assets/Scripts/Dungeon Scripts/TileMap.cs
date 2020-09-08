@@ -344,6 +344,9 @@ public class TileMap {
 
         // then pick the furthest room as your end room
         endRoom = rooms[i].GetFurthestRoom(rooms);
+
+        tiles[rooms[endRoom].getY() + rooms[endRoom].getHeight()/2,
+            rooms[endRoom].getX() + rooms[endRoom].getWidth()/2].setIsStair(true);
     }
 
 }
