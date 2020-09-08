@@ -6,9 +6,9 @@ public class Dungeon {
     private byte[,] map;
     private int width, height;
 
+    // Array of tiles that make up the dungeon, and its dims
     private Tile[,] tiles;
-    private int tilesWidth;
-    private int tilesHeight;
+    private int tilesWidth, tilesHeight;
 
 
     private Room[] rooms;
@@ -343,6 +343,9 @@ public class Dungeon {
                 }
 
                 else {
+                    if (tile.getX() == 0)
+                        Debug.Log("breakpoint");
+                    Debug.Log("x: " + tile.getX() + "y: " + tile.getY() + "tiles width: " + tiles.GetLength(1) + " tiles height: " + tiles.GetLength(0));
                     next = tiles[tile.getY(), tile.getX() - 1];
                     next.closeWallOnSides(0x2);
                 }

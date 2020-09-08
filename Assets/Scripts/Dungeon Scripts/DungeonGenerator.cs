@@ -6,10 +6,10 @@ public class DungeonGenerator : MonoBehaviour {
     public int width;
     public int height;
     public int numberOfRooms;
+    TileMap tileMap;
 
-    Tile[,] tiles;
-    Room[] rooms;
-    Maze maze;
+    private Stack<Dungeon> floorsAbove;
+    private Stack<Dungeon> floorsbelow;
 
     public Dungeon dungeon;
 
@@ -24,19 +24,14 @@ public class DungeonGenerator : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        tiles = GenerateDungeonTiles(width/3, height/3);
-        dungeon = new Dungeon(tiles, rooms);
+
+        tileMap = new TileMap(width / 3, height / 3);
+        dungeon = new Dungeon(tileMap.getTiles(), tileMap.getRooms());
         InstantiateDungeon(dungeon);
 
         // pick a random room and teleport the player there
 
         Instantiate(playerPrefab, new Vector3(width/2, height/2, 0), Quaternion.identity);
-        /*
-        Room room = dungeon.getRandomRoom();
-        Vector3 roomCentre = new Vector3((4 * (room.getX() + room.getWidth() / 2) + 1, 4 * (room.getY() + room.getHeight() / 2) + 1), 0);
-        var myPrefab = Instantiate(playerPrefab, new Vector3(x, y, z), Quaternion.identity);
-        PlayerControl player = playerObj.GetComponent<PlayerControl>();
-        player.Teleport(4 * (room.getX() + room.getWidth()/2) + 1, 4 * (room.getY() + room.getHeight()/2) + 1); */
     }
     
     void CreateChildPrefab(GameObject prefab, GameObject parent, int x, int y, int z) {
@@ -96,112 +91,6 @@ public class DungeonGenerator : MonoBehaviour {
         else if (d.getByte(x-1, y+1) == 0x1)
             CreateChildPrefab(wallPrefabs[8], wallParent, x, y, 0);
 
-    }
-
-    void AddMazeToTiles(Maze maze, Tile[,] tiles) {
-        if (maze == null)
-            return;
-
-        // get map dims
-        int mapHeight = tiles.GetLength(0);
-        int mapWidth = tiles.GetLength(1);
-
-        for (int y = 0; y < mapHeight; y++) {
-            for (int x = 0; x < mapWidth; x++) {
-                    tiles[y, x] = maze.getTile(x, y);
-            }
-        }
-    }
-
-    void AddRoomToTiles(Room room, Tile[,] tiles) {
-
-    // AddRoomToTiles: adds a room to a map and the coords x & y
-        if (room == null) 
-            return;
-
-        // get map dims
-        int mapHeight = tiles.GetLength(0);
-        int mapWidth = tiles.GetLength(1);
-
-        // get room dims & coords
-        int offsetX = room.getX();
-        int offsetY = room.getY();
-        int roomWidth = room.getWidth();
-        int roomHeight = room.getHeight();
-
-        // iterate across room & map
-        for (int y = 0; y < roomHeight; y++) {
-            for (int x = 0; x < roomWidth; x++) {
-                // copy room data into map at an offset
-                tiles[y + offsetY, x + offsetX] = room.getTile(x, y);
-            }
-        }
-    }
-
-
-    Tile[,] GenerateDungeonTiles(int x, int y) {
-
-        // GenerateDungeonTiles: returns a 2D array of tiles
-        Tile[,] tiles = new Tile[y, x];
-
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++)
-                tiles[j, i] = new Tile(i, j, false, 0xF);
-        }
-
-        // create rooms
-        rooms = GenerateRooms(numberOfRooms, x, y);
-
-        // add rooms to tiles
-        foreach (Room room in rooms) {
-            AddRoomToTiles(room, tiles);
-        }
-
-        maze = new Maze(tiles, rooms);
-        AddMazeToTiles(maze, tiles);
-        return tiles;
-    }
-
-    Room[] GenerateRooms(int n, int boundX, int boundY) {
-        Room[] rooms = new Room[n];
-
-        // only allow n+10 attempts to create a room (base-case)
-        int attempts = n + 30;
-
-        for (int i = 0; i < n; i++) {
-
-            // instantiate new room
-            Room newRoom = new Room(boundX, boundY);
-            
-            // check for collisions between new and existing rooms
-            bool roomCollisionFlag = false;
-            foreach(Room room in rooms) {
-
-                // make sure array index is not null to avoid seg. faults
-                if (room != null) {                    
-                    if (room.CollidesWithRoom(newRoom))
-                        roomCollisionFlag = true;
-                }
-            }
-
-            // if no collisions, add newRoom to rooms array
-            if (!roomCollisionFlag)
-                rooms[i] = newRoom;
-
-            // else, decrement iterator so that the loop repeats
-            // possible bug: if geometries of rooms do not allow another room to be
-            // added, we have an infinity loop - add some kind of base-case?
-            else 
-                i--;
-
-            if (attempts <= 0)
-                break;
-
-            else
-                attempts--;          
-        }       
-        
-        return rooms;
     }
 
     void InstantiateDungeon(Dungeon dungeon) {

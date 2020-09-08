@@ -18,8 +18,8 @@ public class Room {
     // Class Constructor
 
     public Room(int roomX, int roomY) {
-        width = Random.Range(3, 7); // nb, room dims include a 1-tile buffer
-        height = Random.Range(3, 7);
+        width = Random.Range(2, 3); // nb, room dims include a 1-tile buffer
+        height = Random.Range(2, 3);
         x = Random.Range(0, roomX - width - 1);
         y = Random.Range(0, roomY - height - 1);
         tiles = new Tile[height, width];
