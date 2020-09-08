@@ -30,7 +30,6 @@ public class Dungeon {
     public int getHeight() { return height; }
     public Room getStartRoom() { return tileMap.getRoom(startRoom);  }
 
-
     // ===================
     // Init Methods
 
@@ -68,8 +67,8 @@ public class Dungeon {
         // add walls & floors to buffer btwn tiles to connect the map
         ConnectMapTiles();
 
-        // pick random rooms to be the start and end of maze
-        selectStartAndEndRooms();
+        startRoom = tileMap.getStartRoomIndex();
+        endRoom = tileMap.getEndRoomIndex();
     }
 
     // ===================
@@ -196,18 +195,6 @@ public class Dungeon {
             }
         }
     }
-
-    private void selectStartAndEndRooms() {
-
-        Room[] rooms = tileMap.getRooms();
-
-        int i = Random.Range(0, rooms.Length);
-        while (rooms[i] == null)
-            i = Random.Range(0, rooms.Length);
-
-        startRoom = i;
-
-        endRoom = tileMap.getRoom(i).GetFurthestRoom(rooms);
-    }
+    
 }
 

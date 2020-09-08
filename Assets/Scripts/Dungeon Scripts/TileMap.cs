@@ -18,17 +18,20 @@ public class TileMap {
     private int width, height;
 
     private Room[] rooms;
+    int startRoom, endRoom;
     private Maze maze;
 
 
     // =========
     // Getters
 
+    public int getEndRoomIndex() { return endRoom; }
     public int getHeight() { return height; }
     public Tile getTile(int x, int y) { return tiles[y, x]; }
     public Tile[,] getTiles() { return tiles; }
     public Room getRoom(int i) { return rooms[i]; }
     public Room[] getRooms() { return rooms; }
+    public int getStartRoomIndex() { return startRoom; }
     public int getWidth() { return width; }
 
 
@@ -53,6 +56,8 @@ public class TileMap {
         foreach(Room room in rooms)
             AddRoomToTiles(room);
 
+        selectStartAndEndRooms();
+
         // Generate a maze and add it to tileMap
         maze = new Maze(tiles, rooms);
         AddMazeToTiles();
@@ -71,9 +76,7 @@ public class TileMap {
 
     /* 
     * AddMazeToTiles 
-    * 
     * Iterates over the maze field and add its tile to the tiles field.
-    * 
     */
 
         if (maze == null)
@@ -91,10 +94,8 @@ public class TileMap {
     private void AddRoomToTiles(Room room) {
 
         /* AddRoomToTiles
-         * 
          * Adds the tiles from a room passed in as an arugment to the tiles
          * field. 
-         * 
          */
 
         if (room == null) 
@@ -331,6 +332,18 @@ public class TileMap {
                     deadEnds.RemoveAt(i--);
             }
         }
+    }
+
+    private void selectStartAndEndRooms() {
+
+        // pick a random start room
+        int i = Random.Range(0, rooms.Length);
+        while (rooms[i] == null)
+            i = Random.Range(0, rooms.Length);
+        startRoom = i;
+
+        // then pick the furthest room as your end room
+        endRoom = rooms[i].GetFurthestRoom(rooms);
     }
 
 }
