@@ -6,24 +6,17 @@ public class Dungeon {
     private byte[,] map;
     private int width, height;
 
-    // Array of tiles that make up the dungeon, and its dims
-    private Tile[,] tiles;
-    private int tilesWidth, tilesHeight;
+    private TileMap tileMap;
 
-
-    private Room[] rooms;
     int startRoom, endRoom;
 
-    public Dungeon(Tile[,] tilesInput, Room[] roomsInput) {
+    public Dungeon(int x, int y) {
 
-        tiles = tilesInput;
-        rooms = roomsInput;
+        tileMap = new TileMap(x, y);
 
         // get array dims
-        tilesWidth = tiles.GetLength(1);
-        tilesHeight = tiles.GetLength(0);
-        width = 4 * tilesWidth + 1;
-        height = 4 * tilesHeight + 1;
+        width = 4 * tileMap.getWidth() + 1;
+        height = 4 * tileMap.getHeight() + 1;
 
         InitialiseDungeon();
 
@@ -35,7 +28,7 @@ public class Dungeon {
     public byte getByte(int x, int y) { return map[y, x]; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
-    public Room getStartRoom() { return rooms[startRoom];  }
+    public Room getStartRoom() { return tileMap.getRoom(startRoom);  }
 
 
     // ===================
@@ -46,23 +39,28 @@ public class Dungeon {
         // create new map of level
         map = new byte[height, width];
 
-        // declare var to store the map of each tile
-        byte[,] tileMap;
+        // decalre var to store the current tile
+        Tile currentTile;
+
+        // declare var to the tile as a 3x3 array of bytes
+        byte[,] tileInBytes;
 
         // iterate for all of our tiles
-        for (int y = 0; y < tilesHeight; y++) {
-            for (int x = 0; x < tilesWidth; x++) {
+        for (int y = 0; y < tileMap.getHeight(); y++) {
+            for (int x = 0; x < tileMap.getWidth(); x++) {
+
+                currentTile = tileMap.getTile(x, y);
 
                 // if the current tile isn't null, convert to a 3x3 byte array
-                if (tiles[y, x] != null) {
+                if (currentTile != null) {
 
-                    tileMap = tiles[y, x].getMap();
+                    tileInBytes = currentTile.getMap();
 
                     // add walls to obtuse (270º) corner of our tileMap
-                    GenerateObtuseCorners(tileMap, x, y);
+                    GenerateObtuseCorners(tileInBytes, x, y);
 
                     // add our tile to the map
-                    GenerateMapFromTile(tileMap, x, y);
+                    GenerateMapFromTile(tileInBytes, x, y);
                 }
             }
         }
@@ -115,91 +113,94 @@ public class Dungeon {
     }
 
 
-    private void GenerateMapFromTile(byte[,] tileMap, int x, int y) {
+    private void GenerateMapFromTile(byte[,] tileInBytes, int x, int y) {
         // iterate over the byte array and add each on to the map
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 map[(4 * y) + i + 1, (4 * x) + j + 1] =
-                      (byte)(map[(4 * y) + i + 1, (4 * x) + j + 1] | tileMap[i, j]);
+                      (byte)(map[(4 * y) + i + 1, (4 * x) + j + 1] | tileInBytes[i, j]);
             }
         }
     }
 
-    private void GenerateObtuseCorners(byte[,] tileMap, int x, int y) {
+    private void GenerateObtuseCorners(byte[,] tileInBytes, int x, int y) {
 
         // if above 0, and  there is an open path down from current tileMap
-        if (y > 0 & tileMap[0,1] == 0x1) {
+        if (y > 0 & tileInBytes[0,1] == 0x1) {
 
             // if current tile has no left wall, but tile below does
-            if ((tiles[y, x].getWalls() & 0x8) == 0
-            & (tiles[y - 1, x].getWalls() & 0x8) > 0) {
+            if ((tileMap.getTile(x, y).getWalls() & 0x8) == 0
+            & (tileMap.getTile(x, y-1).getWalls() & 0x8) > 0) {
                 // add an obtuse corner to btm-L of tileMap
-                tileMap[0, 0] = 0x3;
+                tileInBytes[0, 0] = 0x3;
             }
             
             // if current tile has no right wall, but tile below does
-            if ((tiles[y, x].getWalls() & 0x2) == 0
-            & (tiles[y - 1, x].getWalls() & 0x2) > 0)
+            if ((tileMap.getTile(x, y).getWalls() & 0x2) == 0
+            & (tileMap.getTile(x, y-1).getWalls() & 0x2) > 0)
                 // add an obtuse corner to btm-R of tileMap
-                tileMap[0, 2] = 0x3;
+                tileInBytes[0, 2] = 0x3;
         }
 
         // if below tilesHeight, and there is an open path down from current tileMap
-        if (y < tilesHeight-1 & tileMap[2,1] == 0x1) {
+        if (y < tileMap.getHeight() - 1 & tileInBytes[2,1] == 0x1) {
 
             // if current tile has no left wall, but tile above does
-            if ((tiles[y, x].getWalls() & 0x8) == 0
-            & (tiles[y+1, x].getWalls() & 0x8) > 0) {
+            if ((tileMap.getTile(x, y).getWalls() & 0x8) == 0
+            & (tileMap.getTile(x, y+1).getWalls() & 0x8) > 0) {
                 // add an obtuse corner to top-L of tileMap
-                tileMap[2, 0] = 0x3;
+                tileInBytes[2, 0] = 0x3;
             }
 
             // if current tile has no right wall, but tile above does
-            if ((tiles[y, x].getWalls() & 0x2) == 0
-            & (tiles[y + 1, x].getWalls() & 0x2) > 0) {
+            if ((tileMap.getTile(x, y).getWalls() & 0x2) == 0
+            & (tileMap.getTile(x, y+1).getWalls() & 0x2) > 0) {
                 // add an obtuse corner to top-R of tileMap
-                tileMap[2, 2] = 0x3;
+                tileInBytes[2, 2] = 0x3;
             }
 
         }
 
         // if right of 0, and there is an open path left from current tileMap
-        if (x > 0 & tileMap[1,0] == 0x1) {
+        if (x > 0 & tileInBytes[1,0] == 0x1) {
 
             // if current tile has no top wall, but tile to left does
-            if ((tiles[y, x].getWalls() & 0x1) == 0
-            & (tiles[y, x-1].getWalls() & 0x1) > 0)
+            if ((tileMap.getTile(x, y).getWalls() & 0x1) == 0
+            & (tileMap.getTile(x-1, y).getWalls() & 0x1) > 0)
                 // add an obtuse corner to top-L of tileMap
-                tileMap[2, 0] = 0x3;
+                tileInBytes[2, 0] = 0x3;
             
             
             // if current tile has no bottom wall, but tile to left does
-            if ((tiles[y, x].getWalls() & 0x4) == 0
-            & (tiles[y, x-1].getWalls() & 0x4) > 0)
+            if ((tileMap.getTile(x, y).getWalls() & 0x4) == 0
+            & (tileMap.getTile(x-1, y).getWalls() & 0x4) > 0)
                 // add an obtuse corner to btm-L of tileMap
-                tileMap[0, 0] = 0x3;
+                tileInBytes[0, 0] = 0x3;
         }
 
         // if left of tilesWidth, & there is an open path right from current tileMap
-        if (x < tilesWidth-1 & tileMap[1,2] == 0x1) {
+        if (x < tileMap.getWidth() - 1 & tileInBytes[1,2] == 0x1) {
 
             // if current tile has no top wall, but tile to right does
-            if ((tiles[y, x].getWalls() & 0x1) == 0
-            & (tiles[y, x+1].getWalls() & 0x1) > 0) {
+            if ((tileMap.getTile(x, y).getWalls() & 0x1) == 0
+            & (tileMap.getTile(x+1, y).getWalls() & 0x1) > 0) {
                 // add an obtuse corner to top-R of tileMap
-                tileMap[2, 2] = 0x3;
+                tileInBytes[2, 2] = 0x3;
             }
 
             // if current tile has no bottom wall, but tile to right does
-            if ((tiles[y, x].getWalls() & 0x4) == 0
-            & (tiles[y, x+1].getWalls() & 0x4) > 0) {
+            if ((tileMap.getTile(x, y).getWalls() & 0x4) == 0
+            & (tileMap.getTile(x+1, y).getWalls() & 0x4) > 0) {
                 // add an obtuse corner to btm-R of tileMap
-                tileMap[0, 2] = 0x3;
+                tileInBytes[0, 2] = 0x3;
             }
         }
     }
 
     private void selectStartAndEndRooms() {
+
+        Room[] rooms = tileMap.getRooms();
+
         int i = Random.Range(0, rooms.Length);
         while (rooms[i] == null)
             i = Random.Range(0, rooms.Length);

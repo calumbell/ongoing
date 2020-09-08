@@ -25,7 +25,7 @@ public class PlayerControl : MonoBehaviour {
     private GameObject mainCamara;
 
     // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         currentState = PlayerState.walk;
 
         rb = GetComponent<Rigidbody2D>();

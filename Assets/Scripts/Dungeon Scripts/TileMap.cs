@@ -20,6 +20,19 @@ public class TileMap {
     private Room[] rooms;
     private Maze maze;
 
+
+    // =========
+    // Getters
+
+    public int getHeight() { return height; }
+    public Tile getTile(int x, int y) { return tiles[y, x]; }
+    public Tile[,] getTiles() { return tiles; }
+    public Room getRoom(int i) { return rooms[i]; }
+    public Room[] getRooms() { return rooms; }
+    public int getWidth() { return width; }
+
+
+
     // =========
     // Class Constructor
 
@@ -51,21 +64,16 @@ public class TileMap {
         removeDeadEnds(10);
     }
 
-
-    // =========
-    // Getters
-
-    public Tile[,] getTiles() { return tiles; }
-    public Room[] getRooms() { return rooms; }
-
-
     // =========
     // Private Methods
 
     private void AddMazeToTiles() {
 
-    /* AddMazeToTiles iterates over the maze field and add its tile to the tiles
-    * field
+    /* 
+    * AddMazeToTiles 
+    * 
+    * Iterates over the maze field and add its tile to the tiles field.
+    * 
     */
 
         if (maze == null)
@@ -82,9 +90,12 @@ public class TileMap {
 
     private void AddRoomToTiles(Room room) {
 
-    /* AddRoomToTiles adds the tiles from a room passed in as an arugment to
-     * the tiles field
-     */
+        /* AddRoomToTiles
+         * 
+         * Adds the tiles from a room passed in as an arugment to the tiles
+         * field. 
+         * 
+         */
 
         if (room == null) 
             return;
@@ -106,11 +117,16 @@ public class TileMap {
 
     
     void GenerateRooms(int n) {
-    /* GenerateRooms attempts the generate n Rooms and adds them to the rooms
-     * arrays. Depending on the precise level geometries, you might get fewer
-     * than n rooms. The rooms will not intersect, room collisions are tested 
-     * before adding a room.
-     */
+
+        /* GenerateRooms(int n)
+         * 
+         * GenerateRooms attempts the generate n Rooms and adds them to the rooms
+         * arrays. Depending on the precise level geometries, you might get fewer
+         * than n rooms. The rooms will not intersect, room collisions are tested 
+         * before adding a room.
+         * 
+         */
+
         rooms = new Room[n];
 
         // only allow n+30 attempts to create a room (base-case)
@@ -150,6 +166,15 @@ public class TileMap {
     }
 
     private void ConnectRoomsToMaze() {
+
+        /* ConnectRoomsToMaze
+         * 
+         * Iterates over all of the rooms in the TileMap and adds some connections
+         * between them and the maze that surrounds them. Without this method,
+         * there would be no way to get from the rooms to the maze.
+         * 
+         */
+
         byte[] edges = { 0x1, 0x2, 0x4, 0x8 };
         byte edge, edgeBitmask;
         int n, x, y, roomX, roomY, roomWidth, roomHeight;
@@ -234,6 +259,17 @@ public class TileMap {
 
     
     private void removeDeadEnds(int n) {
+
+
+        /*
+         * removeDeadEnds(int n)
+         * 
+         * Locates dead-ends in the maze and recursively removes them by 
+         * checking for new adjacent dead-ends once one is removed. Without this
+         * method, the dungeon would have loads of passages leading nowhere. 
+         *
+         */
+
         // create a list of tiles to store dead ends
         var deadEnds = new List<Tile>();
 

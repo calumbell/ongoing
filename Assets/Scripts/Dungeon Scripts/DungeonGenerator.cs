@@ -25,8 +25,8 @@ public class DungeonGenerator : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
-        tileMap = new TileMap(width / 3, height / 3);
-        dungeon = new Dungeon(tileMap.getTiles(), tileMap.getRooms());
+        // tileMap = new TileMap(width / 3, height / 3);
+        dungeon = new Dungeon(width / 3, height / 3);
         InstantiateDungeon(dungeon);
 
         // pick a random room and teleport the player there
