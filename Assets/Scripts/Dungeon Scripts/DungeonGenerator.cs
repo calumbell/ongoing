@@ -24,30 +24,28 @@ public class DungeonGenerator : MonoBehaviour {
 
     public GameObject playerPrefab;
 
-    // Start is called before the first frame update
-    void Start() {
-
+    void Start()
+    {
         dungeon = new Dungeon(width / 3, height / 3);
-
         InstantiateDungeon(dungeon);
-
         // pick a random room and teleport the player there
         Instantiate(playerPrefab, new Vector3(width/2, height/2, 0), Quaternion.identity);
     }
     
-    void CreateChildPrefab(GameObject prefab, GameObject parent, int x, int y, int z) {
+    void CreateChildPrefab(GameObject prefab, GameObject parent, int x, int y, int z)
+    {
         // CreateChildPrefab: instantiates a prefab and parents it to another game obj
         var myPrefab = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
         myPrefab.transform.parent = parent.transform;
     }
 
     
-    void CreateWallPrefab(GameObject parent, int x, int y, Dungeon d) {
-
+    void CreateWallPrefab(GameObject parent, int x, int y, Dungeon d)
+    {
         // select TopLeftCornerObtuse (indx 9) if there are open tiles Lft + Up
-        if (d.getByte(x-1, y) == 0x1 & d.getByte(x, y+1) == 0x1) {
+        if (d.getByte(x-1, y) == 0x1 & d.getByte(x, y+1) == 0x1)
             CreateChildPrefab(wallPrefabs[9], wallParent, x, y, 0);
-        }
+
         // select TopRightCornerObtuse (indx 10) if there are open tiles Rght + Up
         else if (d.getByte(x+1, y) == 0x1 & d.getByte(x, y+1) == 0x1)
             CreateChildPrefab(wallPrefabs[10], wallParent, x, y, 0);
@@ -94,12 +92,12 @@ public class DungeonGenerator : MonoBehaviour {
 
     }
 
-    void InstantiateDungeon(Dungeon dungeon) {
-
+    void InstantiateDungeon(Dungeon dungeon)
+    {
         int width = dungeon.getWidth();
         int height = dungeon.getHeight();
 
-        for (int y = 0; y < height; y++) {
+        for (int y = 0; y < height; y++) 
             for (int x = 0; x < width; x++) {
                 // add a floor if 1st bit of mask is 1
                 if ((byte)(dungeon.getByte(x,y) & 0x1) > 0)
@@ -113,6 +111,5 @@ public class DungeonGenerator : MonoBehaviour {
                 if ((byte)(dungeon.getByte(x, y) & 0x4) > 0)
                     CreateChildPrefab(stairsDownPrefab, objectsParent, x, y, 0);
             }
-        }
     }   
 }

@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 
-public class Room {
-
-    // ======================
-    // Member Fields
-
+public class Room
+{
     // position of room within the dungeon
     private int x, y;
 
@@ -14,10 +11,8 @@ public class Room {
     // the tiles that make up the room
     private Tile[,] tiles;
 
-    // ===========================
-    // Class Constructor
-
-    public Room(int roomX, int roomY) {
+    public Room(int roomX, int roomY)
+    {
         width = Random.Range(3, 5); // nb, room dims include a 1-tile buffer
         height = Random.Range(3, 5);
         x = Random.Range(0, roomX - width - 1);
@@ -36,17 +31,17 @@ public class Room {
     public Tile getTile(int x, int y) { return tiles[y, x]; }
     public Tile[,] getTiles() { return tiles; }
 
-    public int GetFurthestRoom(Room[] rooms) {
 
-        /*
-         * GetFurthestRoom 
-         * Given an array of Rooms as an argument, this method will return the
-         * index of the room furthest in the level from the current room.
-         * 
-         */
+    /*
+    * GetFurthestRoom 
+    * Given an array of Rooms as an argument, this method will return the
+    * index of the room furthest in the level from the current room.
+    * 
+    */
 
+    public int GetFurthestRoom(Room[] rooms)
+    {
         float delta;
-
         int furthestRoom = 0;
         float deltaHighest = 0;
 
@@ -56,9 +51,8 @@ public class Room {
         int x2, y2;
 
         // iterate over all of the rooms
-        for (int i = 0; i < rooms.GetLength(0); i++) {
-
-            
+        for (int i = 0; i < rooms.GetLength(0); i++)
+        {          
             if (rooms[i] == null)
                 continue;
 
@@ -71,7 +65,8 @@ public class Room {
                 + Mathf.Pow(Mathf.Abs(y1 - y2), 2));
 
             // if the current room is the most remote we have encountered
-            if (delta > deltaHighest) {
+            if (delta > deltaHighest)
+            {
                 furthestRoom = i;
                 deltaHighest = delta;
             }
@@ -80,37 +75,46 @@ public class Room {
         return furthestRoom;
     }
 
-    // ===========================
-    // Instance Methods
 
-    private bool AABBCollisionDetection(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
-    // AABBCollisionDetection returns turn if the two rects described by the
-    // arguments intersect, else returns false
+    /*
+     * AABBCollisionDetection 
+     * Returns turn if the two rects described by the arguments intersect
+     * else returns false
+     */
+
+    private bool AABBCollisionDetection(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)
+    {
         if (x1 < x2 + w2 &&
             x1 + w1 > x2 &&
             y1 < y2 + h2 &&
-            y1 + h1 > y2) {
+            y1 + h1 > y2)
             return true;
-        }
-
+      
         else 
             return false;
     }
 
+    /*
+     * CollidesWithRoom
+     * takes a second room as an argument and runners AABB collision detection on
+     * it and the current box. returns true if they collide, else returns false
+     */
 
-    public bool CollidesWithRoom(Room otherRoom) {
-    // takes a second room as an argument and runners AABB collision detection on
-    // it and the current box. returns true if they collide, else returns false
-
+    public bool CollidesWithRoom(Room otherRoom)
+    {
         return AABBCollisionDetection(x, y, width+1, height+1,
             otherRoom.getX(), otherRoom.getY(), otherRoom.getWidth()+1, otherRoom.getHeight()+1);
     }
 
-    void InitRoom(int width, int height) {
-    // sets up the room, creates a set of empty tiles with a perimeter wall
+    /*
+     * InitRoom
+     * sets up the room, creates a set of empty tiles with a perimeter wall
+     */
 
+    void InitRoom(int width, int height)
+    {
         // iterate over 2D array
-        for (int y = 0; y < height; y++) {
+        for (int y = 0; y < height; y++) 
             for (int x = 0; x < width; x++) {
                 byte walls = 0x0;
 
@@ -127,6 +131,5 @@ public class Room {
                 // create new tile and add it to tiles array
                 tiles[y, x] = new Tile(x, y, true, walls);
             }
-        }
     }
 }

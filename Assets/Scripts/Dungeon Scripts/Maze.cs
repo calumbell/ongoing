@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Maze {
+public class Maze
+{
 
     // ==========================
     // Member Fields
@@ -22,9 +23,9 @@ public class Maze {
 
     // ===========================
     // Class Constructors
-
-    
-    public Maze(Tile[,] tilesInput, Room[] rooms) {
+  
+    public Maze(Tile[,] tilesInput, Room[] rooms)
+    {
 
         // instantiate w/ rooms array to generate the maze
         tiles = tilesInput;
@@ -34,11 +35,9 @@ public class Maze {
         blockedTiles = new bool[height, width];
 
         // block out all of the rooms in the tilemap
-        foreach (Room room in rooms) {
-            if (room != null) {
+        foreach (Room room in rooms) 
+            if (room != null) 
                 BlockOutRoom(room);
-            }
-        }
 
         GenerateMaze();
     }
@@ -53,7 +52,8 @@ public class Maze {
     // ===========================
     // Instance Methods
 
-    public void BlockOutRoom(Room room) {
+    public void BlockOutRoom(Room room)
+    {
         // takes a room as an argument and marks all tiles contained
         // within as out of bounds for the maze gen. algorithm
 
@@ -65,13 +65,13 @@ public class Maze {
         // iterate across all tiles in rooms and block them for the maze gen
         // go 1 index over in all directions to preserve space around room
 
-        for (int y = 0; y < room.getHeight(); y++) {
+        for (int y = 0; y < room.getHeight(); y++)
             for (int x = 0; x < room.getWidth(); x++)
                 blockedTiles[y+offsetY, x+offsetX] = true;
-        }
     }
    
-    public void GenerateMaze() {
+    public void GenerateMaze()
+    {
         // recursive backtracker algorithm for creating a perfect maze
         // http://www.astrolog.org/labyrnth/algrithm.htm#perfect
 
@@ -80,7 +80,7 @@ public class Maze {
         Tile currentTile, nextTile;
 
         // iterate over all tiles in our dungeon
-        for (int y = 0; y <  height; y++) {
+        for (int y = 0; y <  height; y++)
             for (int x = 0; x < width; x++) {
 
                 // at a perimeter wall to our maze
@@ -95,14 +95,16 @@ public class Maze {
       
 
                 // once we find an unblocked tile, begin algorithm
-                if (!blockedTiles[y,x]) {
+                if (!blockedTiles[y,x])
+                {
 
                     // push initial tile too stack and mark it as visited
                     tileStack.Push(tiles[y, x]);
                     blockedTiles[y, x] = true;
 
                     // while the stack is not empty
-                    while (tileStack.Count > 0) {
+                    while (tileStack.Count > 0)
+                    {
 
                         // pop a tile from our stack and check whether it has
                         // any unvisited neighbours
@@ -112,12 +114,14 @@ public class Maze {
 
                         // if tile has unvisited neighbours, pick one and create
                         // a path between the two tiles
-                        if (unvisitedNeighbours.Length > 0) {
+                        if (unvisitedNeighbours.Length > 0)
+                        {
 
                             // pick rndm dir with an unvisited neighbour
                             string direction = unvisitedNeighbours[Random.Range(0, unvisitedNeighbours.Length)];
 
-                            if (direction == "up") {
+                            if (direction == "up")
+                            {
                                 nextTile = tiles[currentTile.getY() + 1, currentTile.getX()];
 
                                 // rmv upper wall of current a lower wall of next
@@ -128,7 +132,8 @@ public class Maze {
                                 blockedTiles[currentTile.getY() + 1, currentTile.getX()] = true;
                             }
 
-                            else if (direction == "right") {
+                            else if (direction == "right")
+                            {
                                 nextTile = tiles[currentTile.getY(), currentTile.getX() + 1];
 
                                 //rmv right wall of current and left wall of next
@@ -139,7 +144,8 @@ public class Maze {
                                 blockedTiles[currentTile.getY(), currentTile.getX() + 1] = true;
                             }
 
-                            else if (direction == "down") {
+                            else if (direction == "down")
+                            {
                                 nextTile = tiles[currentTile.getY() - 1, currentTile.getX()];
 
                                 //rmv lower wall of current and upper wall of next
@@ -150,7 +156,8 @@ public class Maze {
                                 blockedTiles[currentTile.getY() - 1, currentTile.getX()] = true;
                             }
 
-                            else {
+                            else
+                            {
                                 nextTile = tiles[currentTile.getY(), currentTile.getX() - 1];
 
                                 //rmv left wall of current and right wall of next
@@ -168,10 +175,10 @@ public class Maze {
                     }
                 }
             }
-        }
     }
 
-    private string[] getUnvisitedNeighbours(int x, int y, bool[,] visitedTiles) {
+    private string[] getUnvisitedNeighbours(int x, int y, bool[,] visitedTiles)
+    {
     // returns an array of directions to unvisited neighbours from the tile at
     // coordinates (x, y)
 

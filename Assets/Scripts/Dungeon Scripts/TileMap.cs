@@ -15,7 +15,8 @@ public class TileMap {
     */
 
     private Tile[,] tiles;
-    private int width, height;
+    private int width;
+    private int height;
 
     private Room[] rooms;
     int startRoom, endRoom;
@@ -39,18 +40,18 @@ public class TileMap {
     // =========
     // Class Constructor
 
-    public TileMap(int inputWidth, int inputHeight) {
+    public TileMap(int inputWidth, int inputHeight)
+    {
         // set tileMap dimensions
         width = inputWidth;
         height = inputHeight;
 
         // instantiate tileMap as a 2D array of tiles
         tiles = new Tile[height, width];
-        for (int y = 0; y < height; y++) {
+        for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++)
                 tiles[y, x] = new Tile(x, y, false, 0xF);
-        }
-
+       
         // Generate rooms and add them to tileMap
         GenerateRooms(20);
         foreach(Room room in rooms)
@@ -69,35 +70,29 @@ public class TileMap {
         removeDeadEnds(10);
     }
 
-    // =========
-    // Private Methods
-
-    private void AddMazeToTiles() {
-
     /* 
     * AddMazeToTiles 
     * Iterates over the maze field and add its tile to the tiles field.
     */
 
+    private void AddMazeToTiles()
+    {
         if (maze == null)
             return;
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
                     tiles[y, x] = maze.getTile(x, y);
-            }
-        }
+    
     }
 
+    /* AddRoomToTiles
+    * Adds the tiles from a room passed in as an arugment to the tiles
+    * field. 
+    */
 
-
-    private void AddRoomToTiles(Room room) {
-
-        /* AddRoomToTiles
-         * Adds the tiles from a room passed in as an arugment to the tiles
-         * field. 
-         */
-
+    private void AddRoomToTiles(Room room)
+    {
         if (room == null) 
             return;
 
@@ -108,46 +103,43 @@ public class TileMap {
         int roomHeight = room.getHeight();
 
         // iterate across room & map
-        for (int y = 0; y < roomHeight; y++) {
-            for (int x = 0; x < roomWidth; x++) {
+        for (int y = 0; y < roomHeight; y++)
+            for (int x = 0; x < roomWidth; x++) 
                 // copy room data into map at an offset
                 tiles[y + offsetY, x + offsetX] = room.getTile(x, y);
-            }
-        }
+
     }
 
-    
-    void GenerateRooms(int n) {
 
-        /* GenerateRooms(int n)
-         * 
-         * GenerateRooms attempts the generate n Rooms and adds them to the rooms
-         * arrays. Depending on the precise level geometries, you might get fewer
-         * than n rooms. The rooms will not intersect, room collisions are tested 
-         * before adding a room.
-         * 
-         */
+    /* GenerateRooms(int n)
+     * 
+     * GenerateRooms attempts the generate n Rooms and adds them to the rooms
+     * arrays. Depending on the precise level geometries, you might get fewer
+     * than n rooms. The rooms will not intersect, room collisions are tested 
+     * before adding a room.
+     * 
+     */
 
+    void GenerateRooms(int n)
+    {
         rooms = new Room[n];
 
         // only allow n+30 attempts to create a room (base-case)
         int attempts = n + 30;
 
-        for (int i = 0; i < n; i++) {
-
+        for (int i = 0; i < n; i++)
+        {
             // instantiate new room
             Room newRoom = new Room(width, height);
             
             // check for collisions between new and existing rooms
             bool roomCollisionFlag = false;
-            foreach(Room room in rooms) {
+            foreach(Room room in rooms) 
                 // make sure array index is not null to avoid seg. faults
-                if (room != null) {                    
+                if (room != null)                     
                     if (room.CollidesWithRoom(newRoom))
                         roomCollisionFlag = true;
-                }
-            }
-
+                            
             // if no collisions, add newRoom to rooms array
             if (!roomCollisionFlag)
                 rooms[i] = newRoom;
@@ -166,22 +158,24 @@ public class TileMap {
         }       
     }
 
-    private void ConnectRoomsToMaze() {
 
-        /* ConnectRoomsToMaze
-         * 
-         * Iterates over all of the rooms in the TileMap and adds some connections
-         * between them and the maze that surrounds them. Without this method,
-         * there would be no way to get from the rooms to the maze.
-         * 
-         */
+    /* ConnectRoomsToMaze
+    * 
+    * Iterates over all of the rooms in the TileMap and adds some connections
+    * between them and the maze that surrounds them. Without this method,
+    * there would be no way to get from the rooms to the maze.
+    * 
+    */
 
+    private void ConnectRoomsToMaze()
+    {
         byte[] edges = { 0x1, 0x2, 0x4, 0x8 };
         byte edge, edgeBitmask;
         int n, x, y, roomX, roomY, roomWidth, roomHeight;
 
         // iterate over rooms in dungeon
-        foreach (Room room in rooms) {
+        foreach (Room room in rooms)
+        {
 
             if (room == null)
                 continue;
@@ -196,57 +190,64 @@ public class TileMap {
 
             edgeBitmask = 0x0;
 
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
 
                 // pick an edge to create the exit on
                 edge = edges[Random.Range(0, 4)];
 
                 if (edge == 0x1 & (roomY + roomHeight) < height
-                    & (0x1 & edgeBitmask) == 0) {
-
+                    & (0x1 & edgeBitmask) == 0)
+                {
                     edgeBitmask = (byte)(edgeBitmask | 0x1);
 
                     x = Random.Range(roomX, roomX + roomWidth);
                     y = roomY + roomHeight - 1;
 
-                    if (tiles[y + 1, x].isOpen()) {
+                    if (tiles[y + 1, x].isOpen())
+                    {
                         tiles[y + 1, x].openWallOnSides(0x4);
                         tiles[y, x].openWallOnSides(0x1);
                     }
                 }
 
-                else if (edge == 0x4 & roomY > 0 & (0x4 & edgeBitmask) == 0) {
+                else if (edge == 0x4 & roomY > 0 & (0x4 & edgeBitmask) == 0)
+                {
                     x = Random.Range(roomX, roomX + roomWidth);
                     y = roomY;
 
                     edgeBitmask = (byte)(edgeBitmask | 0x4);
 
-                    if (tiles[y - 1, x].isOpen()) {
+                    if (tiles[y - 1, x].isOpen())
+                    {
                         tiles[y - 1, x].openWallOnSides(0x1);
                         tiles[y, x].openWallOnSides(0x4);
                     }
                 }
 
-                else if (edge == 0x2 & (roomX + roomWidth) < height & (0x2 & edgeBitmask) == 0) {
-
+                else if (edge == 0x2 & (roomX + roomWidth) < height & (0x2 & edgeBitmask) == 0)
+                {
                     edgeBitmask = (byte)(edgeBitmask | 0x2);
 
                     x = roomX + roomWidth - 1;
                     y = Random.Range(roomY, roomY + roomHeight);
 
-                    if (tiles[y, x + 1].isOpen()) {
+                    if (tiles[y, x + 1].isOpen())
+                    {
                         tiles[y, x + 1].openWallOnSides(0x8);
                         tiles[y, x].openWallOnSides(0x2);
                     }
                 }
 
-                else if (edge == 0x8 & roomX > 0 & (0x8 & edgeBitmask) == 0) {
+                else if (edge == 0x8 & roomX > 0 & (0x8 & edgeBitmask) == 0)
+                {
                     edgeBitmask = (byte)(edgeBitmask | 0x8);
 
                     x = roomX;
                     y = Random.Range(roomY, roomY + roomHeight);
 
-                    if (tiles[y, x - 1].isOpen()) {
+                    if (tiles[y, x - 1].isOpen())
+                    {
                         tiles[y, x - 1].openWallOnSides(0x2);
                         tiles[y, x].openWallOnSides(0x8);
                     }
@@ -258,18 +259,17 @@ public class TileMap {
         }
     }
 
-    
-    private void removeDeadEnds(int n) {
+    /*
+     * removeDeadEnds(int n)
+     * 
+     * Locates dead-ends in the maze and recursively removes them by 
+     * checking for new adjacent dead-ends once one is removed. Without this
+     * method, the dungeon would have loads of passages leading nowhere. 
+     *
+     */
 
-        /*
-         * removeDeadEnds(int n)
-         * 
-         * Locates dead-ends in the maze and recursively removes them by 
-         * checking for new adjacent dead-ends once one is removed. Without this
-         * method, the dungeon would have loads of passages leading nowhere. 
-         *
-         */
-
+    private void removeDeadEnds(int n)
+    {
         // create a list of tiles to store dead ends
         var deadEnds = new List<Tile>();
 
@@ -285,10 +285,12 @@ public class TileMap {
         Tile tile, next;
 
         // n controls depth of recursion, iterate that many times
-        for (int j = 0; j < n; j++) {
+        for (int j = 0; j < n; j++)
+        {
 
             // iterate across all dead-ends in our list
-            for (int i = 0; i < deadEnds.Count; i++) {
+            for (int i = 0; i < deadEnds.Count; i++)
+            {
 
                 // mark the tile as closed
                 tile = deadEnds[i];
@@ -296,28 +298,32 @@ public class TileMap {
 
                 // if the closed tile had a wall going up, close the wall going
                 // down from the tile above - store the next tile
-                if ((tile.getWalls() & 0x1) == 0 & tile.getY() < height - 1) {
+                if ((tile.getWalls() & 0x1) == 0 & tile.getY() < height - 1)
+                {
                     next = tiles[tile.getY() + 1, tile.getX()];
                     next.closeWallOnSides(0x4);
                 }
 
                 // if the closed tile had a wall going to the right, close the 
                 // wall going left from the tile to the right - store the next tile
-                else if ((tile.getWalls() & 0x2) == 0 & tile.getX() < width - 1) {
+                else if ((tile.getWalls() & 0x2) == 0 & tile.getX() < width - 1)
+                {
                     next = tiles[tile.getY(), tile.getX() + 1];
                     next.closeWallOnSides(0x8);
                 }
 
                 // if the closed tile had a wall going down, close the wall 
                 // going up from the tile below - store the next tile
-                else if ((tile.getWalls() & 0x4) == 0 & tile.getY() > 0) {
+                else if ((tile.getWalls() & 0x4) == 0 & tile.getY() > 0)
+                {
                     next = tiles[tile.getY()-1, tile.getX()];
                     next.closeWallOnSides(0x1);
                 }
 
                 // if the closed tile had a wall going to the right, close the 
                 // wall going left from the tile to the right - store the next tile
-                else {
+                else
+                {
                     next = tiles[tile.getY(), tile.getX() - 1];
                     next.closeWallOnSides(0x2);
                 }
@@ -334,8 +340,8 @@ public class TileMap {
         }
     }
 
-    private void selectStartAndEndRooms() {
-
+    private void selectStartAndEndRooms()
+    {
         // pick a random start room
         int i = Random.Range(0, rooms.Length);
         while (rooms[i] == null)

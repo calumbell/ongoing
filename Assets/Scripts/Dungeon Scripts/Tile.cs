@@ -1,22 +1,16 @@
-﻿public class Tile {
-
-    // ======================
-    // Member Fields
-
+﻿public class Tile
+{
     // x and y indicies in the tiles array
     private int x, y;
 
     // open controls whether this tile is open, can be traversed, has a floor
     private bool open;
 
-    // walls controls which walls will be generated around this tile
+    // Walls variable controls which walls will be generated around this tile
     // 0x1 = top wall, 0x2 = right wall, 0x4 = bottom wall, 0x8 = left wall
     private byte walls;
 
     private bool isStair;
-
-    // ======================
-    // Class Constructors
 
     public Tile(int xInput, int yInput, bool openInput, byte wallsInput) {
         x = xInput;
@@ -35,9 +29,13 @@
     public bool isOpen() { return open; }
 
 
-    public int getNumWalls() {
-    // Returns the number of walls that are around this tile. checks the walls
-    // variable and for each wall increments n before returning it
+    /*
+     * getNumWalls
+     * Returns the number of walls that are around this tile. checks the walls
+     * variable and for each wall increments n before returning it
+     */
+    public int getNumWalls()
+    {
         int n = 0;
 
         n = (walls & 0x1) > 0 ? n + 1 : n;
@@ -60,13 +58,20 @@
 
     public void setIsStair(bool state) { isStair = state; }
 
-    public byte[,] getMap() {
-    // getMap returns a tile as a 3x3 array of bytes that tell DungeonGenerator
-    // exactly where to place floor, walls, etc.
+
+    /*
+     * getMap()
+     * Returns a tile as a 3x3 array of bytes that tell DungeonGenerator
+     * exactly where to place floor, walls, etc.
+     */
+
+    public byte[,] getMap()
+    {
 
         byte[,] map = new byte[3, 3];
 
-        if (open) {
+        if (open)
+        {
 
             // generate a staircase is Tile isStair, else make unblocked floor
             if (isStair)
@@ -95,11 +100,10 @@
                 map[i, 0] = (byte)(map[i, 0] | wallCode);
         }
 
-        else {
+        else
             for (int y = 0; y < 3; y++)
                 for (int x = 0; x < 3; x++)
                     map[y, x] = 0;
-        }
 
         return map;
     }

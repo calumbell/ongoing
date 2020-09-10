@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerState {
+public enum PlayerState
+{
 
     walk,
     interact
 }
 
-public class PlayerControl : MonoBehaviour {
-
-
+public class PlayerControl : MonoBehaviour
+{
     public float speed;
     public PlayerState currentState;
 
@@ -24,8 +24,8 @@ public class PlayerControl : MonoBehaviour {
     private Dungeon dungeon;
     private GameObject mainCamara;
 
-    // Start is called before the first frame update
-    void Awake() {
+    void Awake()
+    {
         currentState = PlayerState.walk;
 
         rb = GetComponent<Rigidbody2D>();
@@ -45,8 +45,8 @@ public class PlayerControl : MonoBehaviour {
         camMoveScript.setTarget(transform);
     }
 
-    // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         change = Vector3.zero;
         change.x = Input.GetAxisRaw("Horizontal");
         change.y = Input.GetAxisRaw("Vertical");
@@ -59,8 +59,10 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
-    void UpdateAnimationAndMove() {
-        if (change != Vector3.zero) {
+    void UpdateAnimationAndMove()
+    {
+        if (change != Vector3.zero)
+        {
             MoveCharacter();
             animator.SetFloat("moveX", change.x);
             animator.SetFloat("moveY", change.y);
@@ -71,12 +73,14 @@ public class PlayerControl : MonoBehaviour {
             animator.SetBool("moving", false);
     }
 
-    public void MoveCharacter() {
+    public void MoveCharacter()
+    {
         rb.MovePosition(
             transform.position + change.normalized * speed * Time.deltaTime);
     }
 
-    private IEnumerator InteractCo() {
+    private IEnumerator InteractCo()
+    {
         animator.SetBool("attacking", true);
         currentState = PlayerState.interact;
         audioSource.Play();
@@ -86,7 +90,8 @@ public class PlayerControl : MonoBehaviour {
         currentState = PlayerState.walk;
     }
 
-    public void Teleport(float x, float y) {
+    public void Teleport(float x, float y)
+    {
         rb.position = new Vector2(x, y);
     }
 }
