@@ -52,7 +52,9 @@ public class PlayerControl : MonoBehaviour
         change.y = Input.GetAxisRaw("Vertical");
 
         if (Input.GetButtonDown("interact") && currentState != PlayerState.interact)
+        {
             StartCoroutine(InteractCo());
+        }
 
         else if (currentState == PlayerState.walk)
             UpdateAnimationAndMove();

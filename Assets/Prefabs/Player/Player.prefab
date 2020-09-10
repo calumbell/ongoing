@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9b4718e7acd4cf091f5e202fb7a52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
 --- !u!1 &404097707
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9b4718e7acd4cf091f5e202fb7a52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
 --- !u!1 &1063447637
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9b4718e7acd4cf091f5e202fb7a52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
 --- !u!1 &1661685820
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9b4718e7acd4cf091f5e202fb7a52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
 --- !u!1 &4488836852840157623
 GameObject:
   m_ObjectHideFlags: 0

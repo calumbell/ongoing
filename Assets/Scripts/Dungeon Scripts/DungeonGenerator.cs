@@ -111,5 +111,10 @@ public class DungeonGenerator : MonoBehaviour {
                 if ((byte)(dungeon.getByte(x, y) & 0x4) > 0)
                     CreateChildPrefab(stairsDownPrefab, objectsParent, x, y, 0);
             }
-    }   
+    }
+
+    public void OnStairsInteractEventReceived()
+    {
+        Debug.Log("What a wonderful set of stairs!");
+    }
 }
