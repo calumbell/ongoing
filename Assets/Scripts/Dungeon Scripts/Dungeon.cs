@@ -30,7 +30,16 @@ public class Dungeon
     public byte getByte(int x, int y) { return map[y, x]; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
-    public Room getStartRoom() { return tileMap.getRoom(startRoom);  }
+    public Room getStartRoom() { return tileMap.getRoom(startRoom); }
+    public int getStartCoordX()
+    {
+        return 4 * (getStartRoom().getX() + getStartRoom().getWidth() / 2);
+    }
+
+    public int getStartCoordY()
+    {
+        return 4 * (getStartRoom().getY() + getStartRoom().getHeight() / 2);
+    }
 
     // ===================
     // Init Methods

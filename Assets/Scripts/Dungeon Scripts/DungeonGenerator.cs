@@ -20,13 +20,14 @@ public class DungeonGenerator : MonoBehaviour
 
 
     public GameObject playerPrefab;
+    private GameObject playerInstance;
 
     void Start()
     {
         CreateNewDungeon();
 
         // pick a random room and teleport the player there
-        Instantiate(playerPrefab, new Vector3(width/2, height/2, 0), Quaternion.identity);
+        playerInstance = Instantiate(playerPrefab, new Vector3(dungeon.getStartCoordX(), dungeon.getStartCoordY(), 0), Quaternion.identity);
         
     }
     
@@ -131,5 +132,8 @@ public class DungeonGenerator : MonoBehaviour
     {
         Destroy(currentDungeon);
         CreateNewDungeon();
+        playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
+
+
     }
 }

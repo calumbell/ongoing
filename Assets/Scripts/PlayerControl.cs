@@ -94,6 +94,6 @@ public class PlayerControl : MonoBehaviour
 
     public void Teleport(float x, float y)
     {
-        rb.position = new Vector2(x, y);
+        rb.position = new Vector3(x, y, 0);
     }
 }
