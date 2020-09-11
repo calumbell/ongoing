@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         // get references to dungeon
-        dungeonObj = GameObject.FindGameObjectWithTag("Dungeon");
+        dungeonObj = GameObject.FindGameObjectWithTag("DungeonManager");
         dungeon = dungeonObj.GetComponentInChildren<DungeonGenerator>().dungeon;
         Room startRoom = dungeon.getStartRoom();
         Teleport(4 * (startRoom.getX() + (startRoom.getWidth() / 2)) + 1,

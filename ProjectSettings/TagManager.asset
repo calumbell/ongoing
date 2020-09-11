@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Dungeon
   - StairDown
+  - DungeonManager
   layers:
   - Default
   - TransparentFX

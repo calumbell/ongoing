@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonGenerator : MonoBehaviour {
+public class DungeonGenerator : MonoBehaviour
+{
     public int width;
     public int height;
-    public int numberOfRooms;
-
-    private Stack<Dungeon> floorsAbove;
-    private Stack<Dungeon> floorsbelow;
 
     public Dungeon dungeon;
 
+    public GameObject dungeonPrefab;
+    private GameObject currentDungeon;
     public GameObject floorPrefab;
-    public GameObject floorParent;
-    public GameObject objectsParent;
+    private GameObject floorParent;
 
-    
+    private GameObject objectsParent;
+
     public GameObject[] wallPrefabs;
     public GameObject wallParent;
     public GameObject stairsDownPrefab;
@@ -26,10 +25,11 @@ public class DungeonGenerator : MonoBehaviour {
 
     void Start()
     {
-        dungeon = new Dungeon(width / 3, height / 3);
-        InstantiateDungeon(dungeon);
+        CreateNewDungeon();
+
         // pick a random room and teleport the player there
         Instantiate(playerPrefab, new Vector3(width/2, height/2, 0), Quaternion.identity);
+        
     }
     
     void CreateChildPrefab(GameObject prefab, GameObject parent, int x, int y, int z)
@@ -37,6 +37,17 @@ public class DungeonGenerator : MonoBehaviour {
         // CreateChildPrefab: instantiates a prefab and parents it to another game obj
         var myPrefab = Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity);
         myPrefab.transform.parent = parent.transform;
+    }
+
+    void CreateNewDungeon()
+    {
+        currentDungeon = Instantiate(dungeonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        floorParent = currentDungeon.transform.GetChild(0).gameObject;
+        wallParent = currentDungeon.transform.GetChild(1).gameObject;
+        objectsParent = currentDungeon.transform.GetChild(2).gameObject;
+
+        dungeon = new Dungeon(width / 3, height / 3);
+        InstantiateDungeonFeatures(dungeon);
     }
 
     
@@ -92,7 +103,7 @@ public class DungeonGenerator : MonoBehaviour {
 
     }
 
-    void InstantiateDungeon(Dungeon dungeon)
+    void InstantiateDungeonFeatures(Dungeon dungeon)
     {
         int width = dungeon.getWidth();
         int height = dungeon.getHeight();
@@ -112,6 +123,9 @@ public class DungeonGenerator : MonoBehaviour {
                     CreateChildPrefab(stairsDownPrefab, objectsParent, x, y, 0);
             }
     }
+
+    
+    // -= Events =- 
 
     public void OnStairsInteractEventReceived()
     {
