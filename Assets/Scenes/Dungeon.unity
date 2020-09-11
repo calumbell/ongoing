@@ -195,8 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cd2cf2419fc45deae204fb8c82d07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 51
-  height: 51
+  width: 31
+  height: 31
   dungeonPrefab: {fileID: 665965584838833581, guid: 808aa7d060b874a00aa0a3f9b765ae52,
     type: 3}
   floorPrefab: {fileID: 604878441931748688, guid: 0702ba517dbde4d25af14986c947494a,

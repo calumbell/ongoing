@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -47,6 +45,7 @@ public class DungeonGenerator : MonoBehaviour
         objectsParent = currentDungeon.transform.GetChild(2).gameObject;
 
         dungeon = new Dungeon(width / 3, height / 3);
+
         InstantiateDungeonFeatures(dungeon);
     }
 
@@ -110,9 +109,10 @@ public class DungeonGenerator : MonoBehaviour
 
         for (int y = 0; y < height; y++) 
             for (int x = 0; x < width; x++) {
-                // add a floor if 1st bit of mask is 1
+                // Add a floor if 1st bit of mask is 1
+                // z = 1 so that it renders underneath everything else
                 if ((byte)(dungeon.getByte(x,y) & 0x1) > 0)
-                    CreateChildPrefab(floorPrefab, floorParent, x, y, 0);
+                    CreateChildPrefab(floorPrefab, floorParent, x, y, 1);
 
                 // add a wall if 2nd bit is a 1
                 if ((byte)(dungeon.getByte(x,y) & 0x2) > 0)
@@ -129,6 +129,7 @@ public class DungeonGenerator : MonoBehaviour
 
     public void OnStairsInteractEventReceived()
     {
-        Debug.Log("What a wonderful set of stairs!");
+        Destroy(currentDungeon);
+        CreateNewDungeon();
     }
 }
