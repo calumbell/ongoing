@@ -348,11 +348,14 @@ public class TileMap {
             i = Random.Range(0, rooms.Length);
         startRoom = i;
 
+        tiles[rooms[startRoom].getY() + rooms[startRoom].getHeight() / 2,
+    rooms[startRoom].getX() + rooms[startRoom].getWidth() / 2].setStairs("up");
+
         // then pick the furthest room as your end room
         endRoom = rooms[i].GetFurthestRoom(rooms);
 
         tiles[rooms[endRoom].getY() + rooms[endRoom].getHeight()/2,
-            rooms[endRoom].getX() + rooms[endRoom].getWidth()/2].setIsStair(true);
+            rooms[endRoom].getX() + rooms[endRoom].getWidth()/2].setStairs("down");
     }
 
 }

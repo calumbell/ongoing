@@ -195,8 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cd2cf2419fc45deae204fb8c82d07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 31
-  height: 31
+  width: 51
+  height: 51
   dungeonPrefab: {fileID: 665965584838833581, guid: 808aa7d060b874a00aa0a3f9b765ae52,
     type: 3}
   floorPrefab: {fileID: 604878441931748688, guid: 0702ba517dbde4d25af14986c947494a,
@@ -217,6 +217,8 @@ MonoBehaviour:
   - {fileID: 3724814222120006385, guid: 20d48f11ff96c4202af0a25825c0e04e, type: 3}
   wallParent: {fileID: 0}
   stairsDownPrefab: {fileID: 8763475182130465336, guid: 20038e1e7616e4173b69dd7c003f2033,
+    type: 3}
+  stairsUpPrefab: {fileID: 2693583498214976219, guid: 64548c9ea199046b8b7e3494a027d456,
     type: 3}
   playerPrefab: {fileID: 4488836852840157623, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
     type: 3}

@@ -1,11 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class DungeonGenerator : MonoBehaviour
+public class DungeonManager : MonoBehaviour
 {
     public int width;
     public int height;
 
     public Dungeon dungeon;
+
+    private Stack<Dungeon> floorsAbove;
+    private Stack<Dungeon> floorsBelow;
+
 
     public GameObject dungeonPrefab;
     private GameObject currentDungeon;
@@ -17,6 +22,7 @@ public class DungeonGenerator : MonoBehaviour
     public GameObject[] wallPrefabs;
     public GameObject wallParent;
     public GameObject stairsDownPrefab;
+    public GameObject stairsUpPrefab;
 
 
     public GameObject playerPrefab;
@@ -40,10 +46,15 @@ public class DungeonGenerator : MonoBehaviour
 
     void CreateNewDungeon()
     {
+        // Instantiate dungeon prefabs, and get references to child components
         currentDungeon = Instantiate(dungeonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         floorParent = currentDungeon.transform.GetChild(0).gameObject;
         wallParent = currentDungeon.transform.GetChild(1).gameObject;
         objectsParent = currentDungeon.transform.GetChild(2).gameObject;
+
+        // Initialise floor stacks
+        floorsAbove = new Stack<Dungeon>();
+        floorsBelow = new Stack<Dungeon>();
 
         dungeon = new Dungeon(width / 3, height / 3);
 
@@ -119,9 +130,12 @@ public class DungeonGenerator : MonoBehaviour
                 if ((byte)(dungeon.getByte(x,y) & 0x2) > 0)
                     CreateWallPrefab(wallParent, x, y, dungeon);
 
-                // add a staircase if 3rd bit is a 1
-                if ((byte)(dungeon.getByte(x, y) & 0x4) > 0)
+                // add a down staircase if 3rd bit is a 1
+                if (dungeon.getByte(x, y) == 0x4)
                     CreateChildPrefab(stairsDownPrefab, objectsParent, x, y, 0);
+
+                if (dungeon.getByte(x, y) == 0x5)
+                    CreateChildPrefab(stairsUpPrefab, objectsParent, x, y, 0);
             }
     }
 
@@ -133,7 +147,6 @@ public class DungeonGenerator : MonoBehaviour
         Destroy(currentDungeon);
         CreateNewDungeon();
         playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
-
 
     }
 }

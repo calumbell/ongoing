@@ -10,14 +10,14 @@
     // 0x1 = top wall, 0x2 = right wall, 0x4 = bottom wall, 0x8 = left wall
     private byte walls;
 
-    private bool isStair;
+    private string stairs;
 
     public Tile(int xInput, int yInput, bool openInput, byte wallsInput) {
         x = xInput;
         y = yInput;
         open = openInput;
         walls = wallsInput;
-        isStair = false;
+        stairs = null;
     }
 
     // ======================
@@ -56,7 +56,7 @@
     public void setOpen() { open = true; }
     public void setClosed() { open = false;  }
 
-    public void setIsStair(bool state) { isStair = state; }
+    public void setStairs(string dir) { stairs = dir; }
 
 
     /*
@@ -74,11 +74,13 @@
         {
 
             // generate a staircase is Tile isStair, else make unblocked floor
-            if (isStair)
+            if (stairs == "up")
                 map[1, 1] = 0x5;
+            else if (stairs == "down")
+                map[1, 1] = 0x4;
             else
                 map[1, 1] = 0x1;
-        
+
             // check for walls at the top
             byte wallCode = (byte)(((walls & 0x1) > 0) ? 0x3 : 0x1);
             for (int i = 0; i < 3; i++)

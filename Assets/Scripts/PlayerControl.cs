@@ -34,7 +34,7 @@ public class PlayerControl : MonoBehaviour
 
         // get references to dungeon
         dungeonObj = GameObject.FindGameObjectWithTag("DungeonManager");
-        dungeon = dungeonObj.GetComponentInChildren<DungeonGenerator>().dungeon;
+        dungeon = dungeonObj.GetComponentInChildren<DungeonManager>().dungeon;
         Room startRoom = dungeon.getStartRoom();
         Teleport(4 * (startRoom.getX() + (startRoom.getWidth() / 2)) + 1,
             4 * (startRoom.getY() + (startRoom.getHeight() / 2)) + 1);
