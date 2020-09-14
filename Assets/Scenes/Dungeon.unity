@@ -192,11 +192,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 639700148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76cd2cf2419fc45deae204fb8c82d07a, type: 3}
+  m_Script: {fileID: 11500000, guid: 60a8ce40af07f40bfb48d07011fcce0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 51
-  height: 51
+  width: 41
+  height: 41
   dungeonPrefab: {fileID: 665965584838833581, guid: 808aa7d060b874a00aa0a3f9b765ae52,
     type: 3}
   floorPrefab: {fileID: 604878441931748688, guid: 0702ba517dbde4d25af14986c947494a,
@@ -300,7 +300,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004436963}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 2, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1004436963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31dd61b6d328d4ab1b0272c4477bd932, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c17651edd54344799b1e5e00226cd0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothing: 1
+  smoothing: 20

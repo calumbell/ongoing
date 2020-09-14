@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 30469930}
   - component: {fileID: 30469931}
-  - component: {fileID: 4265662094769172682}
+  - component: {fileID: 859356343592390342}
   m_Layer: 0
   m_Name: down hit box
   m_TagString: Untagged
@@ -58,7 +58,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9236995, y: 0.61813784}
   m_EdgeRadius: 0
---- !u!114 &4265662094769172682
+--- !u!114 &859356343592390342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 30469929}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de9b4718e7acd4cf091f5e202fb7a52c, type: 3}
+  m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 404097707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de9b4718e7acd4cf091f5e202fb7a52c, type: 3}
+  m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1063447637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de9b4718e7acd4cf091f5e202fb7a52c, type: 3}
+  m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1661685820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de9b4718e7acd4cf091f5e202fb7a52c, type: 3}
+  m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
@@ -294,11 +294,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4488836852840157625}
   - component: {fileID: 4488836852840157624}
-  - component: {fileID: 4488836852840157626}
   - component: {fileID: 4488836852840157627}
   - component: {fileID: 4488836852840157628}
   - component: {fileID: 4488836852840157629}
   - component: {fileID: -4200460090425491795}
+  - component: {fileID: 155111716189645652}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -376,20 +376,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &4488836852840157626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488836852840157623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afa736e42856b4daf9001425b30b4945, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 20
-  currentState: 0
 --- !u!50 &4488836852840157627
 Rigidbody2D:
   serializedVersion: 4
@@ -552,3 +538,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &155111716189645652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488836852840157623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7943cb5de6b546e79bf2a6232ef9717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  currentState: 0

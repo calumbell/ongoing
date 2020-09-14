@@ -30,6 +30,10 @@ public class DungeonManager : MonoBehaviour
 
     void Start()
     {
+        // Initialise floor stacks
+        floorsAbove = new Stack<Dungeon>();
+        floorsBelow = new Stack<Dungeon>();
+
         CreateNewDungeon();
 
         // pick a random room and teleport the player there
@@ -51,10 +55,6 @@ public class DungeonManager : MonoBehaviour
         floorParent = currentDungeon.transform.GetChild(0).gameObject;
         wallParent = currentDungeon.transform.GetChild(1).gameObject;
         objectsParent = currentDungeon.transform.GetChild(2).gameObject;
-
-        // Initialise floor stacks
-        floorsAbove = new Stack<Dungeon>();
-        floorsBelow = new Stack<Dungeon>();
 
         dungeon = new Dungeon(width / 3, height / 3);
 
@@ -134,7 +134,7 @@ public class DungeonManager : MonoBehaviour
                 if (dungeon.getByte(x, y) == 0x4)
                     CreateChildPrefab(stairsDownPrefab, objectsParent, x, y, 0);
 
-                if (dungeon.getByte(x, y) == 0x5)
+                if (dungeon.getByte(x, y) == 0x5 & floorsAbove.Count > 0)
                     CreateChildPrefab(stairsUpPrefab, objectsParent, x, y, 0);
             }
     }
@@ -144,6 +144,8 @@ public class DungeonManager : MonoBehaviour
 
     public void OnStairsInteractEventReceived()
     {
+        floorsAbove.Push(dungeon);
+        Debug.Log(floorsAbove.Count);
         Destroy(currentDungeon);
         CreateNewDungeon();
         playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
