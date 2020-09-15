@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
+  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
 --- !u!1 &404097707
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
+  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
 --- !u!1 &1063447637
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
+  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
 --- !u!1 &1661685820
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onStairsInteract: {fileID: 11400000, guid: de84f4bd88a4b4791aa4c883e0ed65bc, type: 2}
+  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
 --- !u!1 &4488836852840157623
 GameObject:
   m_ObjectHideFlags: 0

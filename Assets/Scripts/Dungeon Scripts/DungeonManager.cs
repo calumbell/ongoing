@@ -146,13 +146,37 @@ public class DungeonManager : MonoBehaviour
     
     // -= Events =- 
 
-    public void OnStairsInteractEventReceived()
+    public void OnStairsInteractEventReceived(int input)
     {
-        floorsAbove.Push(dungeon);
-        Debug.Log(floorsAbove.Count);
-        Destroy(currentDungeon);
-        dungeon = new Dungeon(width / 3, height / 3);
-        InstantiateDungeon(dungeon);
-        playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
+        // an input of 0 means that this is a staircase going down
+        if (input == 0)
+        {
+            floorsAbove.Push(dungeon);
+            Destroy(currentDungeon);
+
+            // load dungeon if there are floors below, else generate new floor
+            if (floorsBelow.Count > 0)
+                dungeon = floorsBelow.Pop();
+            else
+                dungeon = new Dungeon(width / 3, height / 3);
+
+            InstantiateDungeon(dungeon);
+            playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
+        }
+
+        // an input of 1 means that this is a staircase going up
+        else if (input == 1)
+        {
+            floorsBelow.Push(dungeon);
+            Destroy(currentDungeon);
+
+            if (floorsAbove.Count > 0)
+                dungeon = floorsAbove.Pop();
+            else
+                dungeon = new Dungeon(width / 3, height / 3);
+
+            InstantiateDungeon(dungeon);
+            playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getEndCoordX(), dungeon.getEndCoordY());
+        }
     }
 }

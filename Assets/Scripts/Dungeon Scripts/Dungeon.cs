@@ -31,6 +31,8 @@ public class Dungeon
     public int getWidth() { return width; }
     public int getHeight() { return height; }
     public Room getStartRoom() { return tileMap.getRoom(startRoom); }
+    public Room getEndRoom() { return tileMap.getRoom(endRoom); }
+
     public int getStartCoordX()
     {
         return 4 * (getStartRoom().getX() + getStartRoom().getWidth() / 2);
@@ -39,6 +41,16 @@ public class Dungeon
     public int getStartCoordY()
     {
         return 4 * (getStartRoom().getY() + getStartRoom().getHeight() / 2);
+    }
+
+    public int getEndCoordX()
+    {
+        return 4 * (getEndRoom().getX() + getEndRoom().getWidth() / 2);
+    }
+
+    public int getEndCoordY()
+    {
+        return 4 * (getEndRoom().getY() + getEndRoom().getHeight() / 2);
     }
 
     // ===================
