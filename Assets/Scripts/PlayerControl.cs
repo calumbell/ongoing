@@ -13,6 +13,8 @@ public class PlayerControl : MonoBehaviour
     public float speed;
     public PlayerState currentState;
 
+    public BoolValue inputEnabled;
+
     private Rigidbody2D rb;
     private Animator animator;
     private AudioSource audioSource;
@@ -46,12 +48,13 @@ public class PlayerControl : MonoBehaviour
         change.x = Input.GetAxisRaw("Horizontal");
         change.y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetButtonDown("interact") && currentState != PlayerState.interact)
+        if (Input.GetButtonDown("interact") && currentState != PlayerState.interact
+            && inputEnabled.value)
         {
             StartCoroutine(InteractCo());
         }
 
-        else if (currentState == PlayerState.walk)
+        else if (currentState == PlayerState.walk && inputEnabled.value)
             UpdateAnimationAndMove();
 
     }
