@@ -222,6 +222,7 @@ MonoBehaviour:
     type: 3}
   playerPrefab: {fileID: 4488836852840157623, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
     type: 3}
+  inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
 --- !u!1 &1004436963
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,14 +13,15 @@ public class DungeonManager : MonoBehaviour
 
 
     public GameObject dungeonPrefab;
-    private GameObject currentDungeon;
+    private GameObject dungeonParent;
     public GameObject floorPrefab;
     private GameObject floorParent;
-
-    private GameObject objectsParent;
+    
 
     public GameObject[] wallPrefabs;
     public GameObject wallParent;
+
+    private GameObject objectsParent;
     public GameObject stairsDownPrefab;
     public GameObject stairsUpPrefab;
 
@@ -28,8 +29,14 @@ public class DungeonManager : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject playerInstance;
 
+    // Keep track of this SO to disable/reenable player input during dun. gen.
+    public BoolValue inputEnabled;
+
+
     void Start()
     {
+        inputEnabled.value = false;
+
         // Initialise floor stacks
         floorsAbove = new Stack<Dungeon>();
         floorsBelow = new Stack<Dungeon>();
@@ -40,7 +47,8 @@ public class DungeonManager : MonoBehaviour
 
         // pick a random room and teleport the player there
         playerInstance = Instantiate(playerPrefab, new Vector3(dungeon.getStartCoordX(), dungeon.getStartCoordY(), 0), Quaternion.identity);
-        
+
+        inputEnabled.value = true;
     }
     
     void CreateChildPrefab(GameObject prefab, GameObject parent, int x, int y, int z)
@@ -112,10 +120,10 @@ public class DungeonManager : MonoBehaviour
     void InstantiateDungeonContainers()
     {
         // Instantiate dungeon prefabs, and get references to child components
-        currentDungeon = Instantiate(dungeonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        floorParent = currentDungeon.transform.GetChild(0).gameObject;
-        wallParent = currentDungeon.transform.GetChild(1).gameObject;
-        objectsParent = currentDungeon.transform.GetChild(2).gameObject;
+        dungeonParent = Instantiate(dungeonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        floorParent = dungeonParent.transform.GetChild(0).gameObject;
+        wallParent = dungeonParent.transform.GetChild(1).gameObject;
+        objectsParent = dungeonParent.transform.GetChild(2).gameObject;
     }
 
     void InstantiateDungeonFeatures(Dungeon dungeon)
@@ -148,11 +156,13 @@ public class DungeonManager : MonoBehaviour
 
     public void OnStairsInteractEventReceived(int input)
     {
+        inputEnabled.value = false;
+
         // an input of 0 means that this is a staircase going down
         if (input == 0)
         {
             floorsAbove.Push(dungeon);
-            Destroy(currentDungeon);
+            Destroy(dungeonParent);
 
             // load dungeon if there are floors below, else generate new floor
             if (floorsBelow.Count > 0)
@@ -168,7 +178,7 @@ public class DungeonManager : MonoBehaviour
         else if (input == 1)
         {
             floorsBelow.Push(dungeon);
-            Destroy(currentDungeon);
+            Destroy(dungeonParent);
 
             if (floorsAbove.Count > 0)
                 dungeon = floorsAbove.Pop();
@@ -178,5 +188,7 @@ public class DungeonManager : MonoBehaviour
             InstantiateDungeon(dungeon);
             playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getEndCoordX(), dungeon.getEndCoordY());
         }
+
+        inputEnabled.value = true;
     }
 }
