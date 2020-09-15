@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 30469930}
   - component: {fileID: 30469931}
-  - component: {fileID: 859356343592390342}
+  - component: {fileID: 1603809534947044719}
   m_Layer: 0
   m_Name: down hit box
   m_TagString: Untagged
@@ -25,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30469929}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4488836852840157625}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &30469931
 BoxCollider2D:
@@ -58,7 +58,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9236995, y: 0.61813784}
   m_EdgeRadius: 0
---- !u!114 &859356343592390342
+--- !u!114 &1603809534947044719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 404097708}
   - component: {fileID: 404097709}
-  - component: {fileID: 5391622400203189524}
+  - component: {fileID: 5945073786439611904}
   m_Layer: 0
   m_Name: up hit box
   m_TagString: Untagged
@@ -96,12 +96,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 404097707}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.477, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4488836852840157625}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &404097709
 BoxCollider2D:
@@ -129,7 +129,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1633375, y: 0.8186512}
   m_EdgeRadius: 0
---- !u!114 &5391622400203189524
+--- !u!114 &5945073786439611904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1063447638}
   - component: {fileID: 1063447639}
-  - component: {fileID: 4783962474260327319}
+  - component: {fileID: 8889882475836674083}
   m_Layer: 0
   m_Name: right hit box
   m_TagString: Untagged
@@ -167,12 +167,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063447637}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4488836852840157625}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1063447639
 BoxCollider2D:
@@ -200,7 +200,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.53218293, y: 1.1169758}
   m_EdgeRadius: 0
---- !u!114 &4783962474260327319
+--- !u!114 &8889882475836674083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1661685821}
   - component: {fileID: 1661685822}
-  - component: {fileID: 4764753492496875661}
+  - component: {fileID: 2451379892819574071}
   m_Layer: 0
   m_Name: left hit box
   m_TagString: Untagged
@@ -238,12 +238,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1661685820}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.573, y: 0.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4488836852840157625}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1661685822
 BoxCollider2D:
@@ -271,7 +271,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64990556, y: 1.1169758}
   m_EdgeRadius: 0
---- !u!114 &4764753492496875661
+--- !u!114 &2451379892819574071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,10 +317,10 @@ Transform:
   m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 30469930}
-  - {fileID: 404097708}
-  - {fileID: 1063447638}
   - {fileID: 1661685821}
+  - {fileID: 1063447638}
+  - {fileID: 404097708}
+  - {fileID: 30469930}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

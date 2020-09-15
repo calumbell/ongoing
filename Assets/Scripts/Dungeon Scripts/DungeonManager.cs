@@ -34,7 +34,9 @@ public class DungeonManager : MonoBehaviour
         floorsAbove = new Stack<Dungeon>();
         floorsBelow = new Stack<Dungeon>();
 
-        CreateNewDungeon();
+        // generate a new dungeon 
+        dungeon = new Dungeon(width / 3, height / 3);
+        InstantiateDungeon(dungeon);
 
         // pick a random room and teleport the player there
         playerInstance = Instantiate(playerPrefab, new Vector3(dungeon.getStartCoordX(), dungeon.getStartCoordY(), 0), Quaternion.identity);
@@ -48,17 +50,10 @@ public class DungeonManager : MonoBehaviour
         myPrefab.transform.parent = parent.transform;
     }
 
-    void CreateNewDungeon()
+    void InstantiateDungeon(Dungeon d)
     {
-        // Instantiate dungeon prefabs, and get references to child components
-        currentDungeon = Instantiate(dungeonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        floorParent = currentDungeon.transform.GetChild(0).gameObject;
-        wallParent = currentDungeon.transform.GetChild(1).gameObject;
-        objectsParent = currentDungeon.transform.GetChild(2).gameObject;
-
-        dungeon = new Dungeon(width / 3, height / 3);
-
-        InstantiateDungeonFeatures(dungeon);
+        InstantiateDungeonContainers();    
+        InstantiateDungeonFeatures(d);
     }
 
     
@@ -114,6 +109,15 @@ public class DungeonManager : MonoBehaviour
 
     }
 
+    void InstantiateDungeonContainers()
+    {
+        // Instantiate dungeon prefabs, and get references to child components
+        currentDungeon = Instantiate(dungeonPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        floorParent = currentDungeon.transform.GetChild(0).gameObject;
+        wallParent = currentDungeon.transform.GetChild(1).gameObject;
+        objectsParent = currentDungeon.transform.GetChild(2).gameObject;
+    }
+
     void InstantiateDungeonFeatures(Dungeon dungeon)
     {
         int width = dungeon.getWidth();
@@ -147,8 +151,8 @@ public class DungeonManager : MonoBehaviour
         floorsAbove.Push(dungeon);
         Debug.Log(floorsAbove.Count);
         Destroy(currentDungeon);
-        CreateNewDungeon();
+        dungeon = new Dungeon(width / 3, height / 3);
+        InstantiateDungeon(dungeon);
         playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
-
     }
 }
