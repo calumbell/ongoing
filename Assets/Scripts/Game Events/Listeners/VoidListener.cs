@@ -1,1 +1,1 @@
-﻿public class VoidListener : BaseGameEventListener<Void, VoidEvent, UnityVoidEvent> { }
+﻿public class IntListener : BaseGameEventListener<int, IntEvent, UnityIntEvent> { }
