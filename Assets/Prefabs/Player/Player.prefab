@@ -552,3 +552,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   currentState: 0
+  onPlayerMoveEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}

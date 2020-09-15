@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum PlayerState
@@ -22,7 +21,8 @@ public class PlayerControl : MonoBehaviour
 
     private GameObject dungeonObj;
     private Dungeon dungeon;
-    private GameObject mainCamara;
+
+    public Vector3Event onPlayerMoveEvent;
 
     void Awake()
     {
@@ -38,11 +38,6 @@ public class PlayerControl : MonoBehaviour
         Room startRoom = dungeon.getStartRoom();
         Teleport(4 * (startRoom.getX() + (startRoom.getWidth() / 2)) + 1,
             4 * (startRoom.getY() + (startRoom.getHeight() / 2)) + 1);
-
-        // find main camera and set it to follow the player
-        mainCamara = GameObject.FindGameObjectWithTag("MainCamera");
-        CameraMovement camMoveScript = mainCamara.GetComponent<CameraMovement>();
-        camMoveScript.setTarget(transform);
     }
 
     void Update()
@@ -79,6 +74,9 @@ public class PlayerControl : MonoBehaviour
     {
         rb.MovePosition(
             transform.position + change.normalized * speed * Time.deltaTime);
+
+        onPlayerMoveEvent.Raise(new Vector3(
+            transform.position.x, transform.position.y, -10));
     }
 
     private IEnumerator InteractCo()
@@ -95,5 +93,6 @@ public class PlayerControl : MonoBehaviour
     public void Teleport(float x, float y)
     {
         rb.position = new Vector3(x, y, 0);
+        onPlayerMoveEvent.Raise(new Vector3(x, y, -10));
     }
 }

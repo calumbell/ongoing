@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 1004436965}
   - component: {fileID: 1004436964}
   - component: {fileID: 1004436967}
+  - component: {fileID: 1004436968}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -318,4 +319,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c17651edd54344799b1e5e00226cd0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothing: 20
+  smoothing: 1
+--- !u!114 &1004436968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004436963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b0fe3d7ee294ca897900bdc1020d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004436967}
+        m_TargetAssemblyTypeName: CameraMovement, Assembly-CSharp
+        m_MethodName: OnPlayerMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
