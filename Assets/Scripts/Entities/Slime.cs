@@ -1,21 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+
 
 public class Slime : EntityBaseClass
 {
-
     private Transform target;
     public float chaseRadius;
+    public float minDistance;
+    public Rigidbody2D rb;
 
-    // Start is called before the first frame update
-    void Start()
+    public bool movementEnabled;
+
+    void Awake()
     {
+        currentState = EntityState.idle;
+        rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        movementEnabled = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CheckDistance();
     }
@@ -23,9 +27,14 @@ public class Slime : EntityBaseClass
     void CheckDistance()
     {
         if(Vector3.Distance(target.position, transform.position) < chaseRadius
-            && Vector3.Distance(target.position, transform.position) > 1)
+            && Vector3.Distance(target.position, transform.position) > minDistance
+            && (currentState == EntityState.idle || currentState == EntityState.walk))
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+            Vector3 newPos = Vector3.MoveTowards(transform.position, target.position,
+                moveSpeed * Time.deltaTime);
+
+            rb.MovePosition(newPos);
+            ChangeState(EntityState.walk);
         }
     }
 }
