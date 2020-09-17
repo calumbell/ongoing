@@ -3,31 +3,35 @@ using UnityEngine;
 
 public class Knockback : MonoBehaviour
 {
-    public float force;
-    public float time;
+    public FloatValue force;
+    public FloatValue time;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Entity"))
-        {
-            Rigidbody2D target = other.GetComponent<Rigidbody2D>();
-            if (target == null) return;
+        // Only entities and players can be knocked back
+        if (!(other.gameObject.CompareTag("Entity") || other.gameObject.CompareTag("Player")))
+            return;
+        
+        Rigidbody2D target = other.GetComponent<Rigidbody2D>();
 
-            target.GetComponent<EntityBaseClass>().currentState = EntityState.stagger;
+        // make sure that the target has a RigidBody
+        if (target == null) return;
 
-            target.velocity = Vector2.zero;
-            Vector2 difference = target.transform.position - transform.position;
-            difference = difference.normalized * force;
-            target.AddForce(difference, ForceMode2D.Impulse);
-            StartCoroutine(KnockbackCoroutine(target));
-        }
+        target.GetComponent<EntityBaseClass>().currentState = EntityState.stagger;
+
+        target.velocity = Vector2.zero;
+        Vector2 difference = target.transform.position - transform.position;
+        difference = difference.normalized * force.value;
+        target.AddForce(difference, ForceMode2D.Impulse);
+        StartCoroutine(KnockbackCoroutine(target));
+        
     }
 
     private IEnumerator KnockbackCoroutine(Rigidbody2D rb)
     {
         if (rb != null)
         {
-            yield return new WaitForSeconds(time);
+            yield return new WaitForSeconds(time.value);
             rb.velocity = Vector2.zero;
             rb.GetComponent<EntityBaseClass>().currentState = EntityState.idle;
         }
