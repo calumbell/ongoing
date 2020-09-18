@@ -3,9 +3,10 @@ using UnityEngine;
 
 public enum PlayerState
 {
-
+    idle,
     walk,
-    interact
+    interact,
+    stagger
 }
 
 public class PlayerControl : MonoBehaviour
@@ -49,12 +50,13 @@ public class PlayerControl : MonoBehaviour
         change.y = Input.GetAxisRaw("Vertical");
 
         if (Input.GetButtonDown("interact") && currentState != PlayerState.interact
-            && inputEnabled.value)
+            && currentState != PlayerState.stagger && inputEnabled.value)
         {
             StartCoroutine(InteractCo());
         }
 
-        else if (currentState == PlayerState.walk && inputEnabled.value)
+        else if ((currentState == PlayerState.walk || currentState == PlayerState.idle)
+            && inputEnabled.value)
             UpdateAnimationAndMove();
 
     }
@@ -80,6 +82,18 @@ public class PlayerControl : MonoBehaviour
 
         onPlayerMoveEvent.Raise(new Vector3(
             transform.position.x, transform.position.y, -10));
+    }
+
+    public void Stagger(float time)
+    {
+        StartCoroutine(StaggerCoroutine(time));
+    }
+
+    private IEnumerator StaggerCoroutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        rb.velocity = Vector2.zero;
+        currentState = PlayerState.idle;
     }
 
     private IEnumerator InteractCo()

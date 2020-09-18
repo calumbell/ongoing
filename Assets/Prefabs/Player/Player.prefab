@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 30469930}
   - component: {fileID: 30469931}
   - component: {fileID: 1603809534947044719}
+  - component: {fileID: 1454395842975293038}
   m_Layer: 0
   m_Name: down hit box
   m_TagString: Untagged
@@ -71,6 +72,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+--- !u!114 &1454395842975293038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30469929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
 --- !u!1 &404097707
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,6 +97,7 @@ GameObject:
   - component: {fileID: 404097708}
   - component: {fileID: 404097709}
   - component: {fileID: 5945073786439611904}
+  - component: {fileID: 8040191049100156791}
   m_Layer: 0
   m_Name: up hit box
   m_TagString: Untagged
@@ -142,6 +158,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+--- !u!114 &8040191049100156791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404097707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
 --- !u!1 &1063447637
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +183,7 @@ GameObject:
   - component: {fileID: 1063447638}
   - component: {fileID: 1063447639}
   - component: {fileID: 8889882475836674083}
+  - component: {fileID: 5351232262793404065}
   m_Layer: 0
   m_Name: right hit box
   m_TagString: Untagged
@@ -213,6 +244,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+--- !u!114 &5351232262793404065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063447637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
 --- !u!1 &1661685820
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +269,7 @@ GameObject:
   - component: {fileID: 1661685821}
   - component: {fileID: 1661685822}
   - component: {fileID: 2451379892819574071}
+  - component: {fileID: 366674131107114973}
   m_Layer: 0
   m_Name: left hit box
   m_TagString: Untagged
@@ -284,6 +330,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+--- !u!114 &366674131107114973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661685820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
 --- !u!1 &4488836852840157623
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +359,7 @@ GameObject:
   - component: {fileID: 4488836852840157629}
   - component: {fileID: -4200460090425491795}
   - component: {fileID: 155111716189645652}
-  - component: {fileID: -7621270764120908637}
+  - component: {fileID: 4485574231622376633}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -555,17 +615,29 @@ MonoBehaviour:
   currentState: 0
   inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
   onPlayerMoveEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}
---- !u!114 &-7621270764120908637
-MonoBehaviour:
+--- !u!61 &4485574231622376633
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4488836852840157623}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
-  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.45778447, y: 0.44783127}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0.875, y: 0.9375}
+    newSize: {x: 0.14, y: 0.15}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7295579, y: 0.810765}
+  m_EdgeRadius: 0

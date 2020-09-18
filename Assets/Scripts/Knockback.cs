@@ -17,23 +17,16 @@ public class Knockback : MonoBehaviour
         // make sure that the target has a RigidBody
         if (target == null) return;
 
-        target.GetComponent<EntityBaseClass>().currentState = EntityState.stagger;
+        // Stagger entity, and begin coroutine to end stagger
+        if (other.gameObject.CompareTag("Entity"))
+            target.GetComponent<EntityBaseClass>().Stagger(target, time.value);
+        else if (other.gameObject.CompareTag("Player"))
+            target.GetComponent<PlayerControl>().Stagger(time.value);
 
         target.velocity = Vector2.zero;
         Vector2 difference = target.transform.position - transform.position;
         difference = difference.normalized * force.value;
         target.AddForce(difference, ForceMode2D.Impulse);
-        StartCoroutine(KnockbackCoroutine(target));
         
-    }
-
-    private IEnumerator KnockbackCoroutine(Rigidbody2D rb)
-    {
-        if (rb != null)
-        {
-            yield return new WaitForSeconds(time.value);
-            rb.velocity = Vector2.zero;
-            rb.GetComponent<EntityBaseClass>().currentState = EntityState.idle;
-        }
     }
 }
