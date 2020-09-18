@@ -59,6 +59,9 @@ public class PlayerControl : MonoBehaviour
             && inputEnabled.value)
             UpdateAnimationAndMove();
 
+        else if (currentState == PlayerState.stagger)
+            onPlayerMoveEvent.Raise(new Vector3(transform.position.x, transform.position.y, -10));
+
     }
 
     void UpdateAnimationAndMove()
@@ -91,6 +94,7 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator StaggerCoroutine(float time)
     {
+        currentState = PlayerState.stagger;
         yield return new WaitForSeconds(time);
         rb.velocity = Vector2.zero;
         currentState = PlayerState.idle;
