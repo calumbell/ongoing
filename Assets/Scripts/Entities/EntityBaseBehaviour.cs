@@ -15,7 +15,11 @@ public class EntityBaseBehaviour : MonoBehaviour
 
     public string entityName;
     public float moveSpeed;
+    public int id;
 
+    public void SetId(int n) { id = n; }
+    public int GetId() { return id; }
+    public Transform GetTransform() { return transform; }
 
     public void ChangeState(EntityState state)
     {

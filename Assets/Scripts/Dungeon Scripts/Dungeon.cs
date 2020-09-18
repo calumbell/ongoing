@@ -33,6 +33,9 @@ public class Dungeon
     public byte getByte(int x, int y) { return map[y, x]; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
+
+    public TileMap GetTileMap() { return tileMap; }
+
     public Room getStartRoom() { return tileMap.getRoom(startRoom); }
     public Room getEndRoom() { return tileMap.getRoom(endRoom); }
     public Room GetRandomRoom() { return tileMap.GetRandomRoom(); }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class EntityManager : MonoBehaviour
 {
@@ -14,21 +15,38 @@ public class EntityManager : MonoBehaviour
 
     public void PopulateDungeon(Dungeon d, int n)
     {
-        for (int i = 0; i < n; i++)
+        Room[] rooms = d.GetTileMap().getRooms();
+
+        foreach (Room room in rooms)
         {
-            // Pick a random room, and pick a spot inside it
-            Room room = d.GetRandomRoom();
- 
-            Vector3 location = new Vector3(
-                4*(room.getX() + Random.Range(0, room.getWidth())) + 1,
-                4*(room.getY() + Random.Range(0, room.getHeight())) + 1,
+            if (Random.value > 0.66)
+            {
+                Vector3 location = new Vector3(
+                4 * (room.getX() + Random.Range(1, room.getWidth()-1)),
+                4 * (room.getY() + Random.Range(1, room.getHeight()-1)),
                 -1);
 
-            // Pick a random entity type
-            int type = Random.Range(0, entityPrefabs.Length);
+                // Pick a random entity type
+                int type = Random.Range(0, entityPrefabs.Length);
 
-            // Add entity to the list inside dungeon
-            d.GetEntities().Add(new EntityData(entityPrefabs[type], location, i++));
+                // Add entity to the list inside dungeon
+                d.GetEntities().Add(new EntityData(entityPrefabs[type], location, i++));
+            }
+        }
+    }
+
+    public void UpdateEntitiesInDungeon(Dungeon d, GameObject parent)
+    {
+        List<EntityData> entityData = d.GetEntities();
+        EntityBaseBehaviour[] entityScripts = parent.GetComponentsInChildren<EntityBaseBehaviour>();
+
+        foreach (EntityData data in entityData)
+        {
+            foreach(EntityBaseBehaviour script in entityScripts)
+            {
+                if (data.id == script.GetId())
+                    data.location = script.GetTransform().position;
+            }
         }
     }
 }

@@ -77,9 +77,13 @@ public class DungeonManager : MonoBehaviour
     void InstantiateEntitiesInDungeon(Dungeon d)
     {
         foreach (EntityData entity in d.GetEntities())
-        {
-            CreateChildPrefab(entity.prefab, entitiesParent,
-                (int)entity.location.x, (int)entity.location.y, -1);
+        { 
+            var myPrefab = Instantiate(entity.prefab,
+                new Vector3(entity.location.x, entity.location.y, -1),
+                Quaternion.identity);
+            myPrefab.transform.parent = entitiesParent.transform;
+
+            myPrefab.GetComponent<EntityBaseBehaviour>().SetId(entity.id);            
         }
     }
     
@@ -180,6 +184,7 @@ public class DungeonManager : MonoBehaviour
         // an input of 0 means that this is a staircase going down
         if (input == 0)
         {
+            entityManager.UpdateEntitiesInDungeon(dungeon, entitiesParent);
             floorsAbove.Push(dungeon);
             Destroy(dungeonParent);
 
@@ -201,6 +206,7 @@ public class DungeonManager : MonoBehaviour
         // an input of 1 means that this is a staircase going up
         else if (input == 1)
         {
+            entityManager.UpdateEntitiesInDungeon(dungeon, entitiesParent);
             floorsBelow.Push(dungeon);
             Destroy(dungeonParent);
 
