@@ -6,10 +6,10 @@ public class EntityData
     public Vector3 location;
     public int id;
 
-    public EntityData(GameObject prefabInput, int n)
+    public EntityData(GameObject prefabInput, Vector3 locationInput, int n)
     {
         prefab = prefabInput;
         id = n;
-        location = new Vector3();
+        location = locationInput;
     }
 }

@@ -30,6 +30,7 @@ public class TileMap {
     public int getHeight() { return height; }
     public Tile getTile(int x, int y) { return tiles[y, x]; }
     public Tile[,] getTiles() { return tiles; }
+    public Room GetRandomRoom() { return rooms[Random.Range(0, rooms.Length)]; }
     public Room getRoom(int i) { return rooms[i]; }
     public Room[] getRooms() { return rooms; }
     public int getStartRoomIndex() { return startRoom; }
@@ -121,11 +122,10 @@ public class TileMap {
      */
 
     void GenerateRooms(int n)
-    {
-        rooms = new Room[n];
-
-        // only allow n+30 attempts to create a room (base-case)
-        int attempts = n + 30;
+    {    
+        List<Room> roomList = new List<Room>();
+        // only allow n+10 attempts to create a room (base-case)
+        int attempts = n + 10;
 
         for (int i = 0; i < n; i++)
         {
@@ -134,20 +134,21 @@ public class TileMap {
             
             // check for collisions between new and existing rooms
             bool roomCollisionFlag = false;
-            foreach(Room room in rooms) 
+            foreach(Room room in roomList) 
                 // make sure array index is not null to avoid seg. faults
                 if (room != null)                     
                     if (room.CollidesWithRoom(newRoom))
                         roomCollisionFlag = true;
-                            
+
             // if no collisions, add newRoom to rooms array
             if (!roomCollisionFlag)
-                rooms[i] = newRoom;
+                roomList.Add(newRoom);
+            //rooms[i] = newRoom;
 
             // else, decrement iterator so that the loop repeats
             // possible bug: if geometries of rooms do not allow another room to be
             // added, we have an infinity loop - add some kind of base-case?
-            else 
+            else
                 i--;
 
             if (attempts <= 0)
@@ -155,7 +156,9 @@ public class TileMap {
 
             else
                 attempts--;          
-        }       
+        }
+
+        rooms = roomList.ToArray();
     }
 
 

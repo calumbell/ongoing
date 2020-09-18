@@ -49,6 +49,8 @@ public class DungeonManager : MonoBehaviour
 
         // generate a new dungeon 
         dungeon = new Dungeon(width / 3, height / 3);
+        entityManager.PopulateDungeon(dungeon, 5);
+
         InstantiateDungeon(dungeon);
 
         // pick a random room and teleport the player there
@@ -74,15 +76,6 @@ public class DungeonManager : MonoBehaviour
 
     void InstantiateEntitiesInDungeon(Dungeon d)
     {
-
-        /* 
-        List<EntityData> entities = dungeon.GetEntities();
-
-        EntityData ent = entityManager.GenerateEntity(0);
-        ent.location = new Vector3(0, 0, -1);
-        entities.Add(ent);
-        */
-
         foreach (EntityData entity in d.GetEntities())
         {
             CreateChildPrefab(entity.prefab, entitiesParent,
@@ -194,9 +187,13 @@ public class DungeonManager : MonoBehaviour
             if (floorsBelow.Count > 0)
                 dungeon = floorsBelow.Pop();
             else
+            {
                 dungeon = new Dungeon(width / 3, height / 3);
+                entityManager.PopulateDungeon(dungeon, 5);
+            }
 
             InstantiateDungeon(dungeon);
+            InstantiateEntitiesInDungeon(dungeon);
             playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
 
         }
@@ -210,9 +207,13 @@ public class DungeonManager : MonoBehaviour
             if (floorsAbove.Count > 0)
                 dungeon = floorsAbove.Pop();
             else
+            {
                 dungeon = new Dungeon(width / 3, height / 3);
+                entityManager.PopulateDungeon(dungeon, 5);
+            }
 
             InstantiateDungeon(dungeon);
+            InstantiateEntitiesInDungeon(dungeon);
             playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getEndCoordX(), dungeon.getEndCoordY());
         }
 

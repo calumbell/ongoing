@@ -35,6 +35,7 @@ public class Dungeon
     public int getHeight() { return height; }
     public Room getStartRoom() { return tileMap.getRoom(startRoom); }
     public Room getEndRoom() { return tileMap.getRoom(endRoom); }
+    public Room GetRandomRoom() { return tileMap.GetRandomRoom(); }
     public EntityData GetEntity(int i) { return entities[i]; }
     public List<EntityData> GetEntities() { return entities; }
 
