@@ -14,20 +14,24 @@ public class DungeonManager : MonoBehaviour
 
     public GameObject dungeonPrefab;
     private GameObject dungeonParent;
+
     public GameObject floorPrefab;
     private GameObject floorParent;
     
 
     public GameObject[] wallPrefabs;
-    public GameObject wallParent;
+    private GameObject wallParent;
 
     private GameObject objectsParent;
     public GameObject stairsDownPrefab;
     public GameObject stairsUpPrefab;
 
+    private GameObject entitiesParent;
+    private EntityManager entityManager;
 
     public GameObject playerPrefab;
     private GameObject playerInstance;
+
 
     // Keep track of this SO to disable/reenable player input during dun. gen.
     public BoolValue inputEnabled;
@@ -41,12 +45,16 @@ public class DungeonManager : MonoBehaviour
         floorsAbove = new Stack<Dungeon>();
         floorsBelow = new Stack<Dungeon>();
 
+        entityManager = gameObject.GetComponent<EntityManager>();
+
         // generate a new dungeon 
         dungeon = new Dungeon(width / 3, height / 3);
         InstantiateDungeon(dungeon);
 
         // pick a random room and teleport the player there
         playerInstance = Instantiate(playerPrefab, new Vector3(dungeon.getStartCoordX(), dungeon.getStartCoordY(), 0), Quaternion.identity);
+
+        InstantiateEntitiesInDungeon(dungeon);
 
         inputEnabled.value = true;
     }
@@ -64,6 +72,23 @@ public class DungeonManager : MonoBehaviour
         InstantiateDungeonFeatures(d);
     }
 
+    void InstantiateEntitiesInDungeon(Dungeon d)
+    {
+
+        /* 
+        List<EntityData> entities = dungeon.GetEntities();
+
+        EntityData ent = entityManager.GenerateEntity(0);
+        ent.location = new Vector3(0, 0, -1);
+        entities.Add(ent);
+        */
+
+        foreach (EntityData entity in d.GetEntities())
+        {
+            CreateChildPrefab(entity.prefab, entitiesParent,
+                (int)entity.location.x, (int)entity.location.y, -1);
+        }
+    }
     
     void CreateWallPrefab(GameObject parent, int x, int y, Dungeon d)
     {
@@ -124,6 +149,7 @@ public class DungeonManager : MonoBehaviour
         floorParent = dungeonParent.transform.GetChild(0).gameObject;
         wallParent = dungeonParent.transform.GetChild(1).gameObject;
         objectsParent = dungeonParent.transform.GetChild(2).gameObject;
+        entitiesParent = dungeonParent.transform.GetChild(3).gameObject;
     }
 
     void InstantiateDungeonFeatures(Dungeon dungeon)
@@ -172,6 +198,7 @@ public class DungeonManager : MonoBehaviour
 
             InstantiateDungeon(dungeon);
             playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
+
         }
 
         // an input of 1 means that this is a staircase going up

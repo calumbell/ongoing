@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Dungeon
@@ -11,15 +10,19 @@ public class Dungeon
 
     int startRoom, endRoom;
 
+    private List<EntityData> entities;
+
     public Dungeon(int x, int y)
     {
 
         tileMap = new TileMap(x, y);
 
+        entities = new List<EntityData>();
+
         // get array dims
         width = 4 * tileMap.getWidth() + 1;
         height = 4 * tileMap.getHeight() + 1;
-
+        
         InitialiseDungeon();
 
     }
@@ -32,6 +35,8 @@ public class Dungeon
     public int getHeight() { return height; }
     public Room getStartRoom() { return tileMap.getRoom(startRoom); }
     public Room getEndRoom() { return tileMap.getRoom(endRoom); }
+    public EntityData GetEntity(int i) { return entities[i]; }
+    public List<EntityData> GetEntities() { return entities; }
 
     public int getStartCoordX()
     {

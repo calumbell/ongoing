@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 639700149}
   - component: {fileID: 639700151}
   - component: {fileID: 639700150}
+  - component: {fileID: 639700152}
   m_Layer: 0
   m_Name: Dungeon Manager
   m_TagString: DungeonManager
@@ -215,7 +216,6 @@ MonoBehaviour:
   - {fileID: 5441129437781974408, guid: 5c7ff860e0dd744b193e9442fc52fbac, type: 3}
   - {fileID: 8935834364720071951, guid: 68af6e7bfa03446859470893ae2d3b2b, type: 3}
   - {fileID: 3724814222120006385, guid: 20d48f11ff96c4202af0a25825c0e04e, type: 3}
-  wallParent: {fileID: 0}
   stairsDownPrefab: {fileID: 8763475182130465336, guid: 20038e1e7616e4173b69dd7c003f2033,
     type: 3}
   stairsUpPrefab: {fileID: 2693583498214976219, guid: 64548c9ea199046b8b7e3494a027d456,
@@ -223,6 +223,20 @@ MonoBehaviour:
   playerPrefab: {fileID: 4488836852840157623, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
     type: 3}
   inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
+--- !u!114 &639700152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639700148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d381356b113849dc9c64c2e3e9fb2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityPrefabs:
+  - {fileID: 6048415908946237424, guid: 49d252b9e98d64f91b9e8534d6472447, type: 3}
 --- !u!1 &1004436963
 GameObject:
   m_ObjectHideFlags: 0

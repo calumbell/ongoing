@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 
-
-
-public class Slime : EntityBaseClass
+public class SlimeBehaviour : EntityBaseBehaviour
 {
     private Transform target;
     public float chaseRadius;
     public float minDistance;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     public bool movementEnabled;
 

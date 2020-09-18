@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum EntityState
@@ -10,10 +9,9 @@ public enum EntityState
     stagger
 }
 
-public class EntityBaseClass : MonoBehaviour
+public class EntityBaseBehaviour : MonoBehaviour
 {
     public EntityState currentState;
-
 
     public string entityName;
     public float moveSpeed;

@@ -19,7 +19,7 @@ public class Knockback : MonoBehaviour
 
         // Stagger entity, and begin coroutine to end stagger
         if (other.gameObject.CompareTag("Entity"))
-            target.GetComponent<EntityBaseClass>().Stagger(target, time.value);
+            target.GetComponent<EntityBaseBehaviour>().Stagger(target, time.value);
 
         else if (other.gameObject.CompareTag("Player"))
             target.GetComponent<PlayerControl>().Stagger(time.value);

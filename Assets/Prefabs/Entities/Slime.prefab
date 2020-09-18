@@ -164,15 +164,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6048415908946237424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ae81817ed84645ad8c3d9e383a02019, type: 3}
+  m_Script: {fileID: 11500000, guid: 64d6bd7f9010a4eab846376ce8ba2cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
   entityName: Slime
   moveSpeed: 2
-  chaseRadius: 7
-  minDistance: 1.5
-  rb: {fileID: 0}
+  chaseRadius: 6
+  minDistance: 2
   movementEnabled: 0
 --- !u!61 &4673504878087126401
 BoxCollider2D:
