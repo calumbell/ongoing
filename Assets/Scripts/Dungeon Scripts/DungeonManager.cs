@@ -7,6 +7,8 @@ public class DungeonManager : MonoBehaviour
     public int height;
 
     public Dungeon dungeon;
+    public IntValue currentFloor;
+    public IntEvent onFloorChange;
 
     private Stack<Dungeon> floorsAbove;
     private Stack<Dungeon> floorsBelow;
@@ -222,6 +224,9 @@ public class DungeonManager : MonoBehaviour
             InstantiateEntitiesInDungeon(dungeon);
             playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getEndCoordX(), dungeon.getEndCoordY());
         }
+
+        currentFloor.value = floorsAbove.Count + 1;
+        onFloorChange.Raise(currentFloor.value);
 
         inputEnabled.value = true;
     }
