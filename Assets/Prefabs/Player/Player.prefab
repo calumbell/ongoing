@@ -614,8 +614,10 @@ MonoBehaviour:
   speed: 20
   currentState: 0
   inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
-  location: {fileID: 11400000, guid: afe91a8d35ff34f42b25e67f069a33c0, type: 2}
   onPlayerMoveEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}
+  playerHealth: {fileID: 11400000, guid: 10c05dab2dae1404688f403f02236998, type: 2}
+  onPlayerHealthChange: {fileID: 11400000, guid: 98258855ec68a4bbeae1ce9ab85d7d9a,
+    type: 2}
 --- !u!61 &4485574231622376633
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -626,10 +628,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.45778447, y: 0.44783127}
+  m_Offset: {x: 0.448012, y: 0.44605178}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -640,5 +642,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7295579, y: 0.810765}
+  m_Size: {x: 0.6005602, y: 0.7716166}
   m_EdgeRadius: 0

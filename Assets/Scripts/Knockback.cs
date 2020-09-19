@@ -21,8 +21,10 @@ public class Knockback : MonoBehaviour
         if (other.gameObject.CompareTag("Entity"))
             target.GetComponent<EntityBaseBehaviour>().Stagger(target, time.value);
 
-        else if (other.gameObject.CompareTag("Player"))
+        else if (other.gameObject.CompareTag("Player") && other.isTrigger == true)
+        {
             target.GetComponent<PlayerControl>().Stagger(time.value);
+        }
 
         target.velocity = Vector2.zero;
         Vector2 difference = target.transform.position - transform.position;

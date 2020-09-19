@@ -27,6 +27,9 @@ public class PlayerControl : MonoBehaviour
 
     public Vector3Event onPlayerMoveEvent;
 
+    public IntValue playerHealth;
+    public IntEvent onPlayerHealthChange;
+
     void Awake()
     {
         currentState = PlayerState.walk;
@@ -41,6 +44,8 @@ public class PlayerControl : MonoBehaviour
         Room startRoom = dungeon.getStartRoom();
         Teleport(4 * (startRoom.getX() + (startRoom.getWidth() / 2)) + 1,
             4 * (startRoom.getY() + (startRoom.getHeight() / 2)) + 1);
+
+        playerHealth.value = 3;
     }
 
     void Update()
@@ -95,6 +100,8 @@ public class PlayerControl : MonoBehaviour
     private IEnumerator StaggerCoroutine(float time)
     {
         currentState = PlayerState.stagger;
+        playerHealth.value = playerHealth.value - 1;
+        onPlayerHealthChange.Raise(playerHealth.value);
         yield return new WaitForSeconds(time);
         rb.velocity = Vector2.zero;
         currentState = PlayerState.idle;
