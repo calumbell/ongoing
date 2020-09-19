@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7943cb5de6b546e79bf2a6232ef9717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 8
   currentState: 0
   inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
   onPlayerMoveEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}

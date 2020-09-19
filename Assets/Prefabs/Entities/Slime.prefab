@@ -169,7 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   entityName: Slime
-  moveSpeed: 2
+  moveSpeed: 1
+  id: 0
   chaseRadius: 6
   minDistance: 2
   movementEnabled: 0
