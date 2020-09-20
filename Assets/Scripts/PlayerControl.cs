@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum PlayerState
 {
@@ -94,13 +95,15 @@ public class PlayerControl : MonoBehaviour
 
     public void Stagger(float time)
     {
+        playerHealth.value = playerHealth.value - 1;
+        if (playerHealth.value == 0)
+            SceneManager.LoadScene("End");
         StartCoroutine(StaggerCoroutine(time));
     }
 
     private IEnumerator StaggerCoroutine(float time)
     {
-        currentState = PlayerState.stagger;
-        playerHealth.value = playerHealth.value - 1;
+        currentState = PlayerState.stagger;      
         onPlayerHealthChange.Raise(playerHealth.value);
         yield return new WaitForSeconds(time);
         rb.velocity = Vector2.zero;
