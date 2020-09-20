@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 639700151}
   - component: {fileID: 639700150}
   - component: {fileID: 639700152}
+  - component: {fileID: 639700153}
   m_Layer: 0
   m_Name: Dungeon Manager
   m_TagString: DungeonManager
@@ -305,6 +306,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityPrefabs:
   - {fileID: 6048415908946237424, guid: 49d252b9e98d64f91b9e8534d6472447, type: 3}
+--- !u!114 &639700153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639700148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92dc102bf13974b4bbc5cd8edc434b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInPanel: {fileID: 8600433726605060962, guid: b712611a5f0944a74b8565314e09ffc3,
+    type: 3}
 --- !u!1 &945291388
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +333,7 @@ GameObject:
   - component: {fileID: 945291390}
   - component: {fileID: 945291389}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
