@@ -251,6 +251,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 639700153}
+        m_TargetAssemblyTypeName: DungeonTransitionManager, Assembly-CSharp
+        m_MethodName: OnStairsInteractEventReceived
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &639700151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,8 +330,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92dc102bf13974b4bbc5cd8edc434b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeInPanel: {fileID: 8600433726605060962, guid: b712611a5f0944a74b8565314e09ffc3,
+  fadeInPanel: {fileID: 8475520234129841982, guid: 5c861d21b918e4c0c9ab76efa0be73ec,
     type: 3}
+  fadeOutPanel: {fileID: 8600433726605060962, guid: b712611a5f0944a74b8565314e09ffc3,
+    type: 3}
+  fadeTime: 0.1
 --- !u!1 &945291388
 GameObject:
   m_ObjectHideFlags: 0
