@@ -103,10 +103,12 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator StaggerCoroutine(float time)
     {
-        currentState = PlayerState.stagger;      
+        currentState = PlayerState.stagger;
+        animator.SetBool("hurt", true);
         onPlayerHealthChange.Raise(playerHealth.value);
         yield return new WaitForSeconds(time);
         rb.velocity = Vector2.zero;
+        animator.SetBool("hurt", false);
         currentState = PlayerState.idle;
     }
 
