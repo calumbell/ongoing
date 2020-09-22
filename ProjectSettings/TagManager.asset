@@ -9,6 +9,7 @@ TagManager:
   - DungeonManager
   - StairUp
   - Entity
+  - WorldCollider
   layers:
   - Default
   - TransparentFX

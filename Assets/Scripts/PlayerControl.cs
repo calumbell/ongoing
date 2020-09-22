@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviour
 
     public BoolValue inputEnabled;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private Animator animator;
     private AudioSource audioSource;
 
@@ -35,16 +35,18 @@ public class PlayerControl : MonoBehaviour
     {
         currentState = PlayerState.walk;
 
-        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
         // get references to dungeon
         dungeonObj = GameObject.FindGameObjectWithTag("DungeonManager");
-        dungeon = dungeonObj.GetComponentInChildren<DungeonManager>().dungeon;
-        Room startRoom = dungeon.getStartRoom();
-        Teleport(4 * (startRoom.getX() + (startRoom.getWidth() / 2)) + 1,
-            4 * (startRoom.getY() + (startRoom.getHeight() / 2)) + 1);
+
+        if (dungeonObj != null) {
+            dungeon = dungeonObj.GetComponentInChildren<DungeonManager>().dungeon;
+            Room startRoom = dungeon.getStartRoom();
+            Teleport(4 * (startRoom.getX() + (startRoom.getWidth() / 2)) + 1,
+                4 * (startRoom.getY() + (startRoom.getHeight() / 2)) + 1);
+        }
 
         playerHealth.value = 3;
     }
