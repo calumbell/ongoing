@@ -15,6 +15,8 @@ public class PlayerControl : MonoBehaviour
     public float speed;
     public PlayerState currentState;
 
+    public BoolValue interacting;
+
     public BoolValue inputEnabled;
 
     public Rigidbody2D rb;
@@ -33,6 +35,8 @@ public class PlayerControl : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 60;
+
         currentState = PlayerState.walk;
 
         animator = GetComponent<Animator>();
@@ -41,7 +45,8 @@ public class PlayerControl : MonoBehaviour
         // get references to dungeon
         dungeonObj = GameObject.FindGameObjectWithTag("DungeonManager");
 
-        if (dungeonObj != null) {
+        if (dungeonObj != null)
+        {
             dungeon = dungeonObj.GetComponentInChildren<DungeonManager>().dungeon;
             Room startRoom = dungeon.getStartRoom();
             Teleport(4 * (startRoom.getX() + (startRoom.getWidth() / 2)) + 1,
@@ -60,7 +65,7 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetButtonDown("interact") && currentState != PlayerState.interact
             && currentState != PlayerState.stagger && inputEnabled.value)
         {
-            StartCoroutine(InteractCo());
+            // StartCoroutine(InteractCo());
         }
 
         else if ((currentState == PlayerState.walk || currentState == PlayerState.idle)
