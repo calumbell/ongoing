@@ -9,15 +9,22 @@ public class Interactable : MonoBehaviour
 
     public BoolValue interactionAvailable;
 
+    public string interactionType;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         interactionAvailable.value = true;
-        onInteractTriggerEnter.Raise("interact");
+        onInteractTriggerEnter.Raise(interactionType);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         interactionAvailable.value = false;
-        onInteractTriggerExit.Raise("interact");
+        onInteractTriggerExit.Raise(interactionType);
+    }
+
+    public void OnInteract()
+    {
+
     }
 }

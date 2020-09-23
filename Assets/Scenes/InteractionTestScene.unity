@@ -231,7 +231,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &109686179
 MonoBehaviour:
@@ -251,6 +251,7 @@ MonoBehaviour:
     type: 2}
   interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
     type: 2}
+  interactionType: interact
 --- !u!1 &268402807
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +385,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 30469929, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitBox
+      objectReference: {fileID: 0}
     - target: {fileID: 119179104, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -395,6 +400,33 @@ PrefabInstance:
     - target: {fileID: 119179106, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 119179109, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+      propertyPath: interactBubble
+      value: 
+      objectReference: {fileID: 5955781087917997448, guid: b3043cbfc2bb24a91a4ed7bcfb103bd1,
+        type: 3}
+    - target: {fileID: 119179109, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+      propertyPath: stairsUpBubble
+      value: 
+      objectReference: {fileID: 21300000, guid: 2089beedec29f4ef88529cfde443af49,
+        type: 3}
+    - target: {fileID: 119179109, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+      propertyPath: stairsDownBubble
+      value: 
+      objectReference: {fileID: 21300000, guid: 4dd6b06dbfeb448038b4c27a416cfd37,
+        type: 3}
+    - target: {fileID: 404097707, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063447637, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661685820, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitBox
       objectReference: {fileID: 0}
     - target: {fileID: 792705404162408281, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
         type: 3}
@@ -456,7 +488,7 @@ PrefabInstance:
     - target: {fileID: 4488836852840157625, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4488836852840157625, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
         type: 3}
@@ -487,4 +519,99 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents:
     - {fileID: 8909141470222508917, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+    - {fileID: 1750305458, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+--- !u!1 &639949698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2693583498214976219, guid: 64548c9ea199046b8b7e3494a027d456,
+    type: 3}
+  m_PrefabInstance: {fileID: 1643308300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &639949699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639949698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c230b725e58ad4468abd1bbccbe4d151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteractTriggerEnter: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
+    type: 2}
+  onInteractTriggerExit: {fileID: 11400000, guid: 9280f5b371fef457e899e95c351c192b,
+    type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
+    type: 2}
+  interactionType: stairs up
+--- !u!1001 &1643308300
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 259362927760694341, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693583498214976219, guid: 64548c9ea199046b8b7e3494a027d456,
+        type: 3}
+      propertyPath: m_Name
+      value: StairsUp
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 64548c9ea199046b8b7e3494a027d456, type: 3}
