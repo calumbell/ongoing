@@ -31,7 +31,10 @@ public class PlayerControl : MonoBehaviour
     public Vector3Event onPlayerMoveEvent;
 
     public IntValue playerHealth;
+
     public IntEvent onPlayerHealthChange;
+
+    public VoidEvent onPlayerAttackTriggered;
 
     void Awake()
     {
@@ -65,7 +68,8 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetButtonDown("interact") && currentState != PlayerState.interact
             && currentState != PlayerState.stagger && inputEnabled.value)
         {
-            // StartCoroutine(InteractCo());
+            onPlayerAttackTriggered.Raise();
+            StartCoroutine(InteractCo());
         }
 
         else if ((currentState == PlayerState.walk || currentState == PlayerState.idle)

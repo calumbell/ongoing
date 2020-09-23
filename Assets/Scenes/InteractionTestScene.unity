@@ -385,66 +385,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 30469929, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: m_TagString
-      value: PlayerHitBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 119179104, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 119179104, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 119179106, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 119179109, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: interactBubble
-      value: 
-      objectReference: {fileID: 5955781087917997448, guid: b3043cbfc2bb24a91a4ed7bcfb103bd1,
-        type: 3}
-    - target: {fileID: 119179109, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: stairsUpBubble
-      value: 
-      objectReference: {fileID: 21300000, guid: 2089beedec29f4ef88529cfde443af49,
-        type: 3}
-    - target: {fileID: 119179109, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: stairsDownBubble
-      value: 
-      objectReference: {fileID: 21300000, guid: 4dd6b06dbfeb448038b4c27a416cfd37,
-        type: 3}
-    - target: {fileID: 404097707, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: m_TagString
-      value: PlayerHitBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063447637, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: m_TagString
-      value: PlayerHitBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 1661685820, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-      propertyPath: m_TagString
-      value: PlayerHitBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 792705404162408281, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1603809534947044719, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
-        type: 3}
-      propertyPath: interactionAvailable
-      value: 
-      objectReference: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-        type: 2}
-    - target: {fileID: 2451379892819574071, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
-        type: 3}
-      propertyPath: interactionAvailable
-      value: 
-      objectReference: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-        type: 2}
     - target: {fileID: 4488836852840157623, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
         type: 3}
       propertyPath: m_Name
@@ -505,21 +445,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5945073786439611904, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
-        type: 3}
-      propertyPath: interactionAvailable
-      value: 
-      objectReference: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-        type: 2}
-    - target: {fileID: 8889882475836674083, guid: 25fbaaf78519c4bce9ffc3075e57a73d,
-        type: 3}
-      propertyPath: interactionAvailable
-      value: 
-      objectReference: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-        type: 2}
-    m_RemovedComponents:
-    - {fileID: 8909141470222508917, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
-    - {fileID: 1750305458, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25fbaaf78519c4bce9ffc3075e57a73d, type: 3}
 --- !u!1 &639949698 stripped
 GameObject:

@@ -1,34 +1,64 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Knockback : MonoBehaviour
 {
     public FloatValue force;
     public FloatValue time;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private List<Collider2D> targetsInRange;
+
+    private void Awake()
     {
-        // Only entities and players can be knocked back
-        if (!(other.gameObject.CompareTag("Entity") || other.gameObject.CompareTag("Player")))
-            return;
+        targetsInRange = new List<Collider2D>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D target)
+    {
         
-        Rigidbody2D target = other.GetComponent<Rigidbody2D>();
 
-        // make sure that the target has a RigidBody
-        if (target == null) return;
+        if (!(target.gameObject.CompareTag("Entity") || target.gameObject.CompareTag("Player")))
+            return;
 
-        // Stagger entity, and begin coroutine to end stagger
-        if (other.gameObject.CompareTag("Entity"))
-            target.GetComponent<EntityBaseBehaviour>().Stagger(target, time.value);
-
-        else if (other.gameObject.CompareTag("Player") && other.isTrigger == true)
+        if (!targetsInRange.Contains(target))
         {
-            target.GetComponent<PlayerControl>().Stagger(time.value);
+            targetsInRange.Add(target);
         }
 
-        target.velocity = Vector2.zero;
-        Vector2 difference = target.transform.position - transform.position;
-        difference = difference.normalized * force.value;
-        target.AddForce(difference, ForceMode2D.Impulse);
-        
+      
+    }
+
+    private void OnTriggerExit2D(Collider2D target)
+    {
+        if (targetsInRange.Contains(target))
+        {
+            targetsInRange.Remove(target);
+        }
+    }
+
+    public void OnAttackTriggerReceived()
+    {
+        foreach (Collider2D targetCollider in targetsInRange)
+        {
+            Rigidbody2D target = targetCollider.GetComponent<Rigidbody2D>();
+
+            // make sure that the target has a RigidBody
+            if (target == null) continue;
+
+            // Stagger entity, and begin coroutine to end stagger
+            if (targetCollider.gameObject.CompareTag("Entity"))
+                target.GetComponent<EntityBaseBehaviour>().Stagger(target, time.value);
+
+            else if (targetCollider.gameObject.CompareTag("Player") && targetCollider.isTrigger == true)
+            {
+                target.GetComponent<PlayerControl>().Stagger(time.value);
+            }
+
+            target.velocity = Vector2.zero;
+            Vector2 difference = target.transform.position - transform.position;
+            difference = difference.normalized * force.value;
+            target.AddForce(difference, ForceMode2D.Impulse);
+
+        }
     }
 }

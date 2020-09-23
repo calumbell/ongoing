@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 30469930}
   - component: {fileID: 30469931}
   - component: {fileID: 1603809534947044719}
+  - component: {fileID: 1792766786}
+  - component: {fileID: 482154601}
   m_Layer: 0
   m_Name: down hit box
-  m_TagString: Untagged
+  m_TagString: PlayerHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,6 +73,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
+    type: 2}
+--- !u!114 &1792766786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30469929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+--- !u!114 &482154601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30469929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8847371c6cdd4bd491d91e73808ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 2cb6b4588c8474d0e8bc149830018710, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1792766786}
+        m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
+        m_MethodName: OnAttackTriggerReceived
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &119179104
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,17 +127,16 @@ GameObject:
   m_Component:
   - component: {fileID: 792705404162408281}
   - component: {fileID: 119179106}
-  - component: {fileID: 8909141470222508917}
   - component: {fileID: 119179105}
   - component: {fileID: 119179107}
   - component: {fileID: 119179109}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ContextClue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &792705404162408281
 RectTransform:
   m_ObjectHideFlags: 0
@@ -100,7 +145,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119179104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4488836852840157625}
@@ -118,7 +163,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119179104}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -163,14 +208,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!222 &8909141470222508917
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 119179104}
-  m_CullTransparentMesh: 0
 --- !u!114 &119179105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +277,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thoughtBubble: {fileID: 119179106}
+  interactBubble: {fileID: 5955781087917997448, guid: b3043cbfc2bb24a91a4ed7bcfb103bd1,
+    type: 3}
+  stairsUpBubble: {fileID: 21300000, guid: 2089beedec29f4ef88529cfde443af49, type: 3}
+  stairsDownBubble: {fileID: 21300000, guid: 4dd6b06dbfeb448038b4c27a416cfd37, type: 3}
 --- !u!1 &404097707
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,9 +292,11 @@ GameObject:
   - component: {fileID: 404097708}
   - component: {fileID: 404097709}
   - component: {fileID: 5945073786439611904}
+  - component: {fileID: 122859481}
+  - component: {fileID: 482154600}
   m_Layer: 0
   m_Name: up hit box
-  m_TagString: Untagged
+  m_TagString: PlayerHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,6 +354,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
+    type: 2}
+--- !u!114 &122859481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404097707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+--- !u!114 &482154600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404097707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8847371c6cdd4bd491d91e73808ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 2cb6b4588c8474d0e8bc149830018710, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 122859481}
+        m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
+        m_MethodName: OnAttackTriggerReceived
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1063447637
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,9 +409,11 @@ GameObject:
   - component: {fileID: 1063447638}
   - component: {fileID: 1063447639}
   - component: {fileID: 8889882475836674083}
+  - component: {fileID: 1506010066}
+  - component: {fileID: 482154599}
   m_Layer: 0
   m_Name: right hit box
-  m_TagString: Untagged
+  m_TagString: PlayerHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -382,6 +471,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
+    type: 2}
+--- !u!114 &1506010066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063447637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+--- !u!114 &482154599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063447637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8847371c6cdd4bd491d91e73808ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 2cb6b4588c8474d0e8bc149830018710, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1506010066}
+        m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
+        m_MethodName: OnAttackTriggerReceived
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1661685820
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,9 +526,11 @@ GameObject:
   - component: {fileID: 1661685821}
   - component: {fileID: 1661685822}
   - component: {fileID: 2451379892819574071}
+  - component: {fileID: 193439858}
+  - component: {fileID: 482154598}
   m_Layer: 0
   m_Name: left hit box
-  m_TagString: Untagged
+  m_TagString: PlayerHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -453,6 +588,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
+    type: 2}
+--- !u!114 &193439858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661685820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+--- !u!114 &482154598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661685820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8847371c6cdd4bd491d91e73808ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 2cb6b4588c8474d0e8bc149830018710, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 193439858}
+        m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
+        m_MethodName: OnAttackTriggerReceived
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4488836852840157623
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,7 +647,6 @@ GameObject:
   - component: {fileID: 869049601}
   - component: {fileID: 842782387886365068}
   - component: {fileID: 155111716189645652}
-  - component: {fileID: 1750305458}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -724,25 +902,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   currentState: 0
-  interacting: {fileID: 0}
+  interacting: {fileID: 11400000, guid: 3d1097402f58c4d96bf10728f4eef108, type: 2}
   inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
   rb: {fileID: 869049601}
   onPlayerMoveEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}
   playerHealth: {fileID: 11400000, guid: 10c05dab2dae1404688f403f02236998, type: 2}
   onPlayerHealthChange: {fileID: 11400000, guid: 98258855ec68a4bbeae1ce9ab85d7d9a,
     type: 2}
---- !u!114 &1750305458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488836852840157623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 750e44f577e024bc18a0f0dbbc2121fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  onPlayerAttackTriggered: {fileID: 11400000, guid: 2cb6b4588c8474d0e8bc149830018710,
+    type: 2}
 --- !u!1 &7613766828523437573
 GameObject:
   m_ObjectHideFlags: 0
