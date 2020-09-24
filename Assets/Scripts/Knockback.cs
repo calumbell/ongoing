@@ -15,8 +15,6 @@ public class Knockback : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D target)
     {
-        
-
         if (!(target.gameObject.CompareTag("Entity") || target.gameObject.CompareTag("Player")))
             return;
 

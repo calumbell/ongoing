@@ -36,6 +36,10 @@ public class PlayerControl : MonoBehaviour
 
     public VoidEvent onPlayerAttackTriggered;
 
+
+    public VoidEvent onPlayerInteractTriggered;
+    public BoolValue interactionAvailable;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -70,6 +74,14 @@ public class PlayerControl : MonoBehaviour
         {
             onPlayerAttackTriggered.Raise();
             StartCoroutine(InteractCo());
+        }
+        //
+        if (Input.GetKeyDown(KeyCode.E) && interactionAvailable.value
+        && currentState != PlayerState.interact
+        && currentState != PlayerState.stagger
+        && inputEnabled.value)
+        {
+            onPlayerInteractTriggered.Raise();
         }
 
         else if ((currentState == PlayerState.walk || currentState == PlayerState.idle)

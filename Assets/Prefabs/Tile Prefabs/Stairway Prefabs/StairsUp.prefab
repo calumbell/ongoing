@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 259362927760694341}
   - component: {fileID: 4639640360530086262}
   - component: {fileID: 4480745472630709040}
+  - component: {fileID: 639949700}
   m_Layer: 0
   m_Name: StairsUp
   m_TagString: StairUp
@@ -110,3 +111,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &639949700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2693583498214976219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e56e3fb2934d4440ad0b4e28fca45f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteractTriggerEnter: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
+    type: 2}
+  onInteractTriggerExit: {fileID: 11400000, guid: 9280f5b371fef457e899e95c351c192b,
+    type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
+    type: 2}
+  interactionType: stairs up
+  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}

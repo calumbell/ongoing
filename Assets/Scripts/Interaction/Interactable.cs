@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
@@ -23,8 +21,8 @@ public class Interactable : MonoBehaviour
         onInteractTriggerExit.Raise(interactionType);
     }
 
-    public void OnInteract()
+    public virtual void OnInteract()
     {
-
+        return;
     }
 }

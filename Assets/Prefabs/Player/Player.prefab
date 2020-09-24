@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 30469930}
   - component: {fileID: 30469931}
-  - component: {fileID: 1603809534947044719}
   - component: {fileID: 1792766786}
   - component: {fileID: 482154601}
+  - component: {fileID: 330568430}
+  - component: {fileID: 330568431}
   m_Layer: 0
   m_Name: down hit box
   m_TagString: PlayerHitBox
@@ -60,21 +61,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.803252, y: 0.66842914}
   m_EdgeRadius: 0
---- !u!114 &1603809534947044719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 30469929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
-  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-    type: 2}
 --- !u!114 &1792766786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +94,46 @@ MonoBehaviour:
       - m_Target: {fileID: 1792766786}
         m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
         m_MethodName: OnAttackTriggerReceived
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &330568430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30469929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &330568431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30469929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8847371c6cdd4bd491d91e73808ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1404ee8abce944ec6b3e2b71da820df2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 330568430}
+        m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
+        m_MethodName: OnInteractTriggered
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -291,9 +317,10 @@ GameObject:
   m_Component:
   - component: {fileID: 404097708}
   - component: {fileID: 404097709}
-  - component: {fileID: 5945073786439611904}
   - component: {fileID: 122859481}
   - component: {fileID: 482154600}
+  - component: {fileID: 764537314}
+  - component: {fileID: 764537313}
   m_Layer: 0
   m_Name: up hit box
   m_TagString: PlayerHitBox
@@ -341,21 +368,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.7350467, y: 1.1955202}
   m_EdgeRadius: 0
---- !u!114 &5945073786439611904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 404097707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
-  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-    type: 2}
 --- !u!114 &122859481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +410,46 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &764537314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404097707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &764537313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404097707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8847371c6cdd4bd491d91e73808ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1404ee8abce944ec6b3e2b71da820df2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 764537314}
+        m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
+        m_MethodName: OnInteractTriggered
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1063447637
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,9 +460,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1063447638}
   - component: {fileID: 1063447639}
-  - component: {fileID: 8889882475836674083}
   - component: {fileID: 1506010066}
   - component: {fileID: 482154599}
+  - component: {fileID: 482154591}
+  - component: {fileID: 482154593}
   m_Layer: 0
   m_Name: right hit box
   m_TagString: PlayerHitBox
@@ -458,21 +511,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8838944, y: 1.7326627}
   m_EdgeRadius: 0
---- !u!114 &8889882475836674083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063447637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
-  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-    type: 2}
 --- !u!114 &1506010066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +553,46 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &482154591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063447637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &482154593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063447637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8847371c6cdd4bd491d91e73808ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1404ee8abce944ec6b3e2b71da820df2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 482154591}
+        m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
+        m_MethodName: OnInteractTriggered
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1661685820
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,9 +603,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1661685821}
   - component: {fileID: 1661685822}
-  - component: {fileID: 2451379892819574071}
   - component: {fileID: 193439858}
   - component: {fileID: 482154598}
+  - component: {fileID: 819603123}
+  - component: {fileID: 819603124}
   m_Layer: 0
   m_Name: left hit box
   m_TagString: PlayerHitBox
@@ -575,21 +654,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0134034, y: 1.8352776}
   m_EdgeRadius: 0
---- !u!114 &2451379892819574071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661685820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15e99481939b43b88668887164e34ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
-  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-    type: 2}
 --- !u!114 &193439858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,6 +687,46 @@ MonoBehaviour:
       - m_Target: {fileID: 193439858}
         m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
         m_MethodName: OnAttackTriggerReceived
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &819603123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661685820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &819603124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661685820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8847371c6cdd4bd491d91e73808ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 1404ee8abce944ec6b3e2b71da820df2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 819603123}
+        m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
+        m_MethodName: OnInteractTriggered
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -910,6 +1014,10 @@ MonoBehaviour:
   onPlayerHealthChange: {fileID: 11400000, guid: 98258855ec68a4bbeae1ce9ab85d7d9a,
     type: 2}
   onPlayerAttackTriggered: {fileID: 11400000, guid: 2cb6b4588c8474d0e8bc149830018710,
+    type: 2}
+  onPlayerInteractTriggered: {fileID: 11400000, guid: 1404ee8abce944ec6b3e2b71da820df2,
+    type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
     type: 2}
 --- !u!1 &7613766828523437573
 GameObject:

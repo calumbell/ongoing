@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27353b760bbe244ce8329bbe8afb6841, type: 3}
-  m_Name: OnInteractTriggered
+  m_Script: {fileID: 11500000, guid: ff2dbc783925d456fad201b47b6f3e78, type: 3}
+  m_Name: OnPlayerInteractTriggered
   m_EditorClassIdentifier: 
