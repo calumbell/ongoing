@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class HitboxInteractionManager : MonoBehaviour
 {
 
-    private List<Interactable> targetsInRange;
-    private Interactable currentTarget;
+    public List<Interactable> targetsInRange;
+    public Interactable currentTarget;
+
+    public StringEvent updateContextClueBubble;
 
     void Start()
     {
@@ -27,6 +30,7 @@ public class HitboxInteractionManager : MonoBehaviour
             if (currentTarget == null)
             {
                 currentTarget = target;
+                updateContextClueBubble.Raise(currentTarget.interactionType);
             }
         }
     }
@@ -52,16 +56,22 @@ public class HitboxInteractionManager : MonoBehaviour
             {
                 currentTarget = targetsInRange[0];
             }
+
+            UpdateContextClue();
         }
     }
 
-    public void OnInteractSwitch()
+    public void OnInteractCycle()
     {
         // if more than 1 target is in range, make the next target the current 
         if (targetsInRange.Count > 1)
         {
             int i = targetsInRange.IndexOf(currentTarget);
-            currentTarget = targetsInRange[(i % targetsInRange.Count) - 1];
+
+            // wrap around end of list
+            i = i + 1 == targetsInRange.Count ? 0 : i + 1;
+            currentTarget = targetsInRange[i];
+            UpdateContextClue();
         }
     }
 
@@ -73,4 +83,16 @@ public class HitboxInteractionManager : MonoBehaviour
         }
     }
 
+    public void UpdateContextClue()
+    {
+        if (currentTarget != null)
+        {
+            updateContextClueBubble.Raise(currentTarget.interactionType);
+        }
+
+        else
+        {
+            updateContextClueBubble.Raise("clear");
+        }
+    }
 }

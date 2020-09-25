@@ -129,5 +129,5 @@ MonoBehaviour:
     type: 2}
   interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
     type: 2}
-  interactionType: stairs up
+  interactionType: stairs down
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}

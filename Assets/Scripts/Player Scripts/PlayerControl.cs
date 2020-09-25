@@ -36,9 +36,9 @@ public class PlayerControl : MonoBehaviour
 
     public VoidEvent onPlayerAttackTriggered;
 
-
     public VoidEvent onPlayerInteractTriggered;
-    public BoolValue interactionAvailable;
+
+    public VoidEvent onPlayerInteractCycle;
 
     void Awake()
     {
@@ -69,14 +69,21 @@ public class PlayerControl : MonoBehaviour
         change.x = Input.GetAxisRaw("Horizontal");
         change.y = Input.GetAxisRaw("Vertical");
 
+        // Handle player attacks
         if (Input.GetButtonDown("interact") && currentState != PlayerState.interact
             && currentState != PlayerState.stagger && inputEnabled.value)
         {
             onPlayerAttackTriggered.Raise();
             StartCoroutine(InteractCo());
         }
-        //
-        if (Input.GetKeyDown(KeyCode.E) && interactionAvailable.value
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            onPlayerInteractCycle.Raise();
+        }
+
+        // Handle player interactions
+        if (Input.GetKeyDown(KeyCode.E)
         && currentState != PlayerState.interact
         && currentState != PlayerState.stagger
         && inputEnabled.value)
@@ -84,10 +91,12 @@ public class PlayerControl : MonoBehaviour
             onPlayerInteractTriggered.Raise();
         }
 
+        // Handle player movement
         else if ((currentState == PlayerState.walk || currentState == PlayerState.idle)
             && inputEnabled.value)
             UpdateAnimationAndMove();
 
+        // Update camera movement if player is being moved by something else
         else if (currentState == PlayerState.stagger)
             onPlayerMoveEvent.Raise(new Vector3(transform.position.x, transform.position.y, -10));
 
@@ -104,7 +113,9 @@ public class PlayerControl : MonoBehaviour
         }
 
         else
+        { 
             animator.SetBool("moving", false);
+        }
     }
 
     public void MoveCharacter()

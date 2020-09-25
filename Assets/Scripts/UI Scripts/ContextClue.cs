@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ContextClue : MonoBehaviour
 {
@@ -13,13 +11,29 @@ public class ContextClue : MonoBehaviour
     public void OnInteractTriggerEnter(string type)
     {
         if (type == "interact")
+        {
             thoughtBubble.sprite = interactBubble;
-        else if (type == "stairs up")
-            thoughtBubble.sprite = stairsUpBubble;
-        else if (type == "stairs down")
-            thoughtBubble.sprite = stairsDownBubble;
+        }
 
-        thoughtBubble.enabled = true;
+        else if (type == "stairs up")
+        {
+            thoughtBubble.sprite = stairsUpBubble;
+        }
+
+        else if (type == "stairs down")
+        {
+            thoughtBubble.sprite = stairsDownBubble;
+        }
+
+
+        if (type == "clear")
+        {
+            thoughtBubble.enabled = false;
+        }
+        else
+        {
+            thoughtBubble.enabled = true;
+        }
     }
 
     public void OnInteractTriggerExit(string type)

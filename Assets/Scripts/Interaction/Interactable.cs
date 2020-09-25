@@ -9,17 +9,18 @@ public class Interactable : MonoBehaviour
 
     public string interactionType;
 
+    /* Refactored elsewhere, but maybe useful in the future!
+        
     private void OnTriggerEnter2D(Collider2D other)
     {
-        interactionAvailable.value = true;
-        onInteractTriggerEnter.Raise(interactionType);
+
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        interactionAvailable.value = false;
-        onInteractTriggerExit.Raise(interactionType);
+
     }
+    */
 
     public virtual void OnInteract()
     {
