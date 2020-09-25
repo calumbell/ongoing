@@ -6,7 +6,6 @@ public class StairsDownInteractable : Interactable
 
     public override void OnInteract()
     {
-        Debug.Log("Looks like a stairs down to me, boss");
         onStairsInteract.Raise(0);
     }
 }

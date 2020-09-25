@@ -28,18 +28,20 @@ public class PlayerControl : MonoBehaviour
     private GameObject dungeonObj;
     private Dungeon dungeon;
 
-    public Vector3Event onPlayerMoveEvent;
+
 
     public IntValue playerHealth;
 
+
+
+    // Events
+
     public IntEvent onPlayerHealthChange;
-
     public VoidEvent onPlayerAttackTriggered;
-
     public VoidEvent onPlayerInteractTriggered;
-
     public VoidEvent onPlayerInteractCycle;
-
+    public Vector3Event onPlayerMoveEvent;
+    public Vector3Event onPlayerTeleport;
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -160,6 +162,7 @@ public class PlayerControl : MonoBehaviour
     public void Teleport(float x, float y)
     {
         rb.position = new Vector3(x, y, 0);
-        onPlayerMoveEvent.Raise(new Vector3(x, y, -10));
+        onPlayerTeleport.Raise(new Vector3(x, y, -10));
+        // onPlayerMoveEvent.Raise(new Vector3(x, y, -10));
     }
 }

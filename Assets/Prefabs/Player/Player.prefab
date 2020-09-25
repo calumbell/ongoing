@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 330568430}
   - component: {fileID: 330568431}
   - component: {fileID: 1293709071}
+  - component: {fileID: 482154592}
   m_Layer: 0
   m_Name: down hit box
   m_TagString: PlayerHitBox
@@ -116,6 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetsInRange: []
+  currentTarget: {fileID: 0}
   updateContextClueBubble: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
 --- !u!114 &330568431
@@ -166,6 +169,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
         m_MethodName: OnInteractCycle
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &482154592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30469929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b0fe3d7ee294ca897900bdc1020d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 6860388fe467246148ecb801fe4350f2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 330568430}
+        m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
+        m_MethodName: OnTeleport
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -353,6 +384,7 @@ GameObject:
   - component: {fileID: 764537314}
   - component: {fileID: 764537313}
   - component: {fileID: 216267549}
+  - component: {fileID: 482154595}
   m_Layer: 0
   m_Name: up hit box
   m_TagString: PlayerHitBox
@@ -454,6 +486,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetsInRange: []
+  currentTarget: {fileID: 0}
   updateContextClueBubble: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
 --- !u!114 &764537313
@@ -512,6 +546,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &482154595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404097707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b0fe3d7ee294ca897900bdc1020d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 6860388fe467246148ecb801fe4350f2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 764537314}
+        m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
+        m_MethodName: OnTeleport
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1063447637
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +589,7 @@ GameObject:
   - component: {fileID: 482154591}
   - component: {fileID: 482154593}
   - component: {fileID: 402167948}
+  - component: {fileID: 482154598}
   m_Layer: 0
   m_Name: right hit box
   m_TagString: PlayerHitBox
@@ -628,6 +691,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetsInRange: []
+  currentTarget: {fileID: 0}
   updateContextClueBubble: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
 --- !u!114 &482154593
@@ -686,6 +751,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &482154598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063447637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b0fe3d7ee294ca897900bdc1020d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 6860388fe467246148ecb801fe4350f2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 482154591}
+        m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
+        m_MethodName: OnTeleport
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1661685820
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,10 +790,11 @@ GameObject:
   - component: {fileID: 1661685821}
   - component: {fileID: 1661685822}
   - component: {fileID: 193439858}
-  - component: {fileID: 482154598}
+  - component: {fileID: 8954031455878360522}
   - component: {fileID: 819603123}
   - component: {fileID: 819603124}
   - component: {fileID: 651900851}
+  - component: {fileID: 7626424121904570245}
   m_Layer: 0
   m_Name: left hit box
   m_TagString: PlayerHitBox
@@ -762,7 +856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
   time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
---- !u!114 &482154598
+--- !u!114 &8954031455878360522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -802,6 +896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetsInRange: []
+  currentTarget: {fileID: 0}
   updateContextClueBubble: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
 --- !u!114 &819603124
@@ -852,6 +948,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
         m_MethodName: OnInteractCycle
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7626424121904570245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661685820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b0fe3d7ee294ca897900bdc1020d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 6860388fe467246148ecb801fe4350f2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 819603123}
+        m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
+        m_MethodName: OnTeleport
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1133,7 +1257,6 @@ MonoBehaviour:
   interacting: {fileID: 11400000, guid: 3d1097402f58c4d96bf10728f4eef108, type: 2}
   inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
   rb: {fileID: 869049601}
-  onPlayerMoveEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}
   playerHealth: {fileID: 11400000, guid: 10c05dab2dae1404688f403f02236998, type: 2}
   onPlayerHealthChange: {fileID: 11400000, guid: 98258855ec68a4bbeae1ce9ab85d7d9a,
     type: 2}
@@ -1143,6 +1266,8 @@ MonoBehaviour:
     type: 2}
   onPlayerInteractCycle: {fileID: 11400000, guid: 22ef81fa8ab5d454bb5639cd26183dfd,
     type: 2}
+  onPlayerMoveEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}
+  onPlayerTeleport: {fileID: 11400000, guid: 6860388fe467246148ecb801fe4350f2, type: 2}
 --- !u!1 &7613766828523437573
 GameObject:
   m_ObjectHideFlags: 0

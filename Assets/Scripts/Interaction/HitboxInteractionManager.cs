@@ -9,6 +9,7 @@ public class HitboxInteractionManager : MonoBehaviour
     public List<Interactable> targetsInRange;
     public Interactable currentTarget;
 
+    // Events
     public StringEvent updateContextClueBubble;
 
     void Start()
@@ -94,5 +95,12 @@ public class HitboxInteractionManager : MonoBehaviour
         {
             updateContextClueBubble.Raise("clear");
         }
+    }
+
+    public void OnTeleport(Vector3 position)
+    {
+        targetsInRange = new List<Interactable>();
+        currentTarget = null;
+        UpdateContextClue();
     }
 }
