@@ -97,7 +97,6 @@ public class Maze
                 // once we find an unblocked tile, begin algorithm
                 if (!blockedTiles[y,x])
                 {
-
                     // push initial tile too stack and mark it as visited
                     tileStack.Push(tiles[y, x]);
                     blockedTiles[y, x] = true;

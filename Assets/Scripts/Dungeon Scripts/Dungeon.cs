@@ -115,16 +115,18 @@ public class Dungeon
 
                 // if there are two floors either side of a space, connect them
                 if (map[y - 1, x] == 0x1 & map[y + 1, x] == 0x1)
-
+                {
                     map[y, x] = (byte)(map[y, x] | 0x1);
+                }
 
                 // if there is a wall N+S AND either floor NE+SE OR floor NW+SW
                 // then this is the edge of a vertical passage, make a wall.
                 else if (map[y - 1, x] == 0x3 & map[y + 1, x] == 0x3
                     & ((map[y - 1, x + 1] == 0x1 & map[y + 1, x + 1] == 0x1)
                     | ((map[y - 1, x - 1] == 0x1 & map[y + 1, x - 1] == 0x1))))
-
+                {
                     map[y, x] = (byte)(map[y, x] | (byte)0x3);
+                }
             }
        
 

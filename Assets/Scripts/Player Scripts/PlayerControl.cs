@@ -163,6 +163,5 @@ public class PlayerControl : MonoBehaviour
     {
         rb.position = new Vector3(x, y, 0);
         onPlayerTeleport.Raise(new Vector3(x, y, -10));
-        // onPlayerMoveEvent.Raise(new Vector3(x, y, -10));
     }
 }

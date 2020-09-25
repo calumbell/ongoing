@@ -134,6 +134,7 @@ public class TileMap {
             
             // check for collisions between new and existing rooms
             bool roomCollisionFlag = false;
+
             foreach(Room room in roomList) 
                 // make sure array index is not null to avoid seg. faults
                 if (room != null)                     
@@ -142,23 +143,23 @@ public class TileMap {
 
             // if no collisions, add newRoom to rooms array
             if (!roomCollisionFlag)
+            {
                 roomList.Add(newRoom);
-            //rooms[i] = newRoom;
-
-            // else, decrement iterator so that the loop repeats
-            // possible bug: if geometries of rooms do not allow another room to be
-            // added, we have an infinity loop - add some kind of base-case?
-            else
-                i--;
-
-            if (attempts <= 0)
-                break;
-
-            else
-                attempts--;          
+            }
+        
         }
 
-        rooms = roomList.ToArray();
+        // If fewer than two rooms were generated, try again
+
+        if (roomList.Count > 2)
+        {
+            rooms = roomList.ToArray();
+        }
+
+        else
+        {
+            GenerateRooms(n);
+        }
     }
 
 
