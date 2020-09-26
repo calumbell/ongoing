@@ -2,9 +2,9 @@
 
 public class PotInteractable : Interactable
 {
-    public override void OnInteract()
+    public override void OnInteract(GameObject interactor)
     {
-        Debug.Log("Looks like a pot to me, boss");
+        interactor.GetComponent<PlayerControl>().PickUp(gameObject);
     }
 }
 

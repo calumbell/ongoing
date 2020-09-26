@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public class HitboxInteractionManager : MonoBehaviour
 {
 
-    public List<Interactable> targetsInRange;
-    public Interactable currentTarget;
+    private List<Interactable> targetsInRange;
+    private Interactable currentTarget;
 
     // Events
     public StringEvent updateContextClueBubble;
 
-    void Start()
+    void OnEnable()
     {
         targetsInRange = new List<Interactable>();
     }
@@ -80,7 +78,7 @@ public class HitboxInteractionManager : MonoBehaviour
     {
         if (currentTarget != null)
         {
-            currentTarget.OnInteract();
+            currentTarget.OnInteract(gameObject.transform.parent.gameObject);
         }
     }
 

@@ -4,7 +4,7 @@ public class StairsUpInteractable : Interactable
 {
     public IntEvent onStairsInteract;
 
-    public override void OnInteract()
+    public override void OnInteract(GameObject interactor)
     {
         onStairsInteract.Raise(1);
     }

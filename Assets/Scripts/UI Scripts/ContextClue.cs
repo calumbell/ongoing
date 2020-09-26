@@ -8,8 +8,10 @@ public class ContextClue : MonoBehaviour
     public Sprite stairsUpBubble;
     public Sprite stairsDownBubble;
 
+
     public void OnInteractTriggerEnter(string type)
     {
+
         if (type == "interact")
         {
             thoughtBubble.sprite = interactBubble;
@@ -30,6 +32,7 @@ public class ContextClue : MonoBehaviour
         {
             thoughtBubble.enabled = false;
         }
+
         else
         {
             thoughtBubble.enabled = true;

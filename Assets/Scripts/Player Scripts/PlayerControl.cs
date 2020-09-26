@@ -7,7 +7,8 @@ public enum PlayerState
     idle,
     walk,
     interact,
-    stagger
+    stagger,
+    carrying
 }
 
 public class PlayerControl : MonoBehaviour
@@ -28,10 +29,9 @@ public class PlayerControl : MonoBehaviour
     private GameObject dungeonObj;
     private Dungeon dungeon;
 
-
-
     public IntValue playerHealth;
 
+    private GameObject carriedObject;
 
 
     // Events
@@ -42,6 +42,7 @@ public class PlayerControl : MonoBehaviour
     public VoidEvent onPlayerInteractCycle;
     public Vector3Event onPlayerMoveEvent;
     public Vector3Event onPlayerTeleport;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -72,11 +73,17 @@ public class PlayerControl : MonoBehaviour
         change.y = Input.GetAxisRaw("Vertical");
 
         // Handle player attacks
-        if (Input.GetButtonDown("interact") && currentState != PlayerState.interact
-            && currentState != PlayerState.stagger && inputEnabled.value)
+        if (Input.GetButtonDown("interact") && inputEnabled.value &&
+            (currentState == PlayerState.idle || currentState == PlayerState.walk))
         {
             onPlayerAttackTriggered.Raise();
             StartCoroutine(InteractCo());
+        }
+
+        else if (Input.GetButtonDown("interact") && inputEnabled.value &&
+            currentState == PlayerState.carrying)
+        {
+            Throw();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -94,7 +101,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Handle player movement
-        else if ((currentState == PlayerState.walk || currentState == PlayerState.idle)
+        else if ((currentState == PlayerState.walk || currentState == PlayerState.idle || currentState == PlayerState.carrying)
             && inputEnabled.value)
             UpdateAnimationAndMove();
 
@@ -132,8 +139,12 @@ public class PlayerControl : MonoBehaviour
     public void Stagger(float time)
     {
         playerHealth.value = playerHealth.value - 1;
+
         if (playerHealth.value == 0)
+        {
             SceneManager.LoadScene("End");
+        }
+
         StartCoroutine(StaggerCoroutine(time));
     }
 
@@ -159,9 +170,36 @@ public class PlayerControl : MonoBehaviour
         currentState = PlayerState.walk;
     }
 
+    public void PickUp(GameObject obj)
+    {
+        if (currentState == PlayerState.carrying)
+        {
+            return;
+        }
+
+        obj.transform.parent = gameObject.transform;
+        carriedObject = obj;
+        obj.transform.position = new Vector3(
+            gameObject.transform.position.x, gameObject.transform.position.y + 0.75f, obj.transform.position.z);
+        currentState = PlayerState.carrying;
+
+        // turn off context clues
+        gameObject.transform.Find("ContextClue").gameObject.SetActive(false);
+
+    }
+
     public void Teleport(float x, float y)
     {
         rb.position = new Vector3(x, y, 0);
         onPlayerTeleport.Raise(new Vector3(x, y, -10));
+    }
+
+    public void Throw()
+    {
+        carriedObject.transform.parent = null;
+        currentState = PlayerState.idle;
+
+        gameObject.transform.Find("ContextClue").gameObject.SetActive(true);
+
     }
 }
