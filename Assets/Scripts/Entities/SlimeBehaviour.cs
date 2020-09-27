@@ -16,6 +16,8 @@ public class SlimeBehaviour : EntityBaseBehaviour
 
     public HitboxAttackManager[] hitboxes;
 
+    public ProgressBar progressBar;
+
     void Awake()
     {
         currentState = EntityState.idle;
@@ -64,8 +66,10 @@ public class SlimeBehaviour : EntityBaseBehaviour
 
     public IEnumerator AttackCoroutine()
     {
-        Debug.Log("Attack starting");
+        progressBar.Begin(attackTime);
+
         ChangeState(EntityState.attack);
+
         yield return new WaitForSeconds(attackTime);
 
         foreach (HitboxAttackManager hitbox in hitboxes)
@@ -73,7 +77,6 @@ public class SlimeBehaviour : EntityBaseBehaviour
             hitbox.OnAttackTriggerReceived();
         }
 
-        Debug.Log("SPLAT!");
         ChangeState(EntityState.stagger);
         yield return new WaitForSeconds(attackCooldown);
         ChangeState(EntityState.idle);
