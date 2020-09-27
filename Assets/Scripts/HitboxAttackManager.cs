@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Knockback : MonoBehaviour
+public class HitboxAttackManager : MonoBehaviour
 {
     public FloatValue force;
     public FloatValue time;
 
-    private List<Collider2D> targetsInRange;
+    public List<Collider2D> targetsInRange;
 
     private void Awake()
     {
@@ -15,15 +15,13 @@ public class Knockback : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D target)
     {
-        if (!(target.gameObject.CompareTag("Entity") || target.gameObject.CompareTag("Player")))
+        if (!target.gameObject.CompareTag("EntityHurtBox") && !target.gameObject.CompareTag("PlayerHurtBox"))
             return;
 
         if (!targetsInRange.Contains(target))
         {
             targetsInRange.Add(target);
-        }
-
-      
+        }    
     }
 
     private void OnTriggerExit2D(Collider2D target)
@@ -36,18 +34,22 @@ public class Knockback : MonoBehaviour
 
     public void OnAttackTriggerReceived()
     {
+
         foreach (Collider2D targetCollider in targetsInRange)
         {
-            Rigidbody2D target = targetCollider.GetComponent<Rigidbody2D>();
+            Rigidbody2D target = targetCollider.GetComponentInParent<Rigidbody2D>();
 
             // make sure that the target has a RigidBody
             if (target == null) continue;
 
-            // Stagger entity, and begin coroutine to end stagger
-            if (targetCollider.gameObject.CompareTag("Entity"))
-                target.GetComponent<EntityBaseBehaviour>().Stagger(target, time.value);
 
-            else if (targetCollider.gameObject.CompareTag("Player") && targetCollider.isTrigger == true)
+            // Stagger entity, and begin coroutine to end stagger
+            if (target.gameObject.CompareTag("Entity"))
+            {
+                target.GetComponent<EntityBaseBehaviour>().Stagger(target, time.value);
+            }
+
+            else if (target.gameObject.CompareTag("Player"))
             {
                 target.GetComponent<PlayerControl>().Stagger(time.value);
             }
@@ -57,6 +59,32 @@ public class Knockback : MonoBehaviour
             difference = difference.normalized * force.value;
             target.AddForce(difference, ForceMode2D.Impulse);
 
+        }
+    }
+
+    public Collider2D GetPlayerCollider()
+    {
+        foreach (Collider2D target in targetsInRange)
+        {
+            if (target.gameObject.CompareTag("PlayerHurtBox"))
+            {
+                return target;
+            }
+        }
+
+        return null;
+    }
+
+    public bool IsTargetInRange()
+    {
+        if (targetsInRange.Count > 0)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
         }
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 30469930}
   - component: {fileID: 30469931}
-  - component: {fileID: 1792766786}
+  - component: {fileID: 2215025477445944769}
   - component: {fileID: 482154601}
   - component: {fileID: 330568430}
   - component: {fileID: 330568431}
@@ -63,7 +63,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.803252, y: 0.66842914}
   m_EdgeRadius: 0
---- !u!114 &1792766786
+--- !u!114 &2215025477445944769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,11 +72,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 30469929}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Script: {fileID: 11500000, guid: a9302e6a5ba5d447c9e030f9728cff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
   time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+  targetsInRange: []
 --- !u!114 &482154601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,8 +94,8 @@ MonoBehaviour:
   unityEventResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1792766786}
-        m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
+      - m_Target: {fileID: 2215025477445944769}
+        m_TargetAssemblyTypeName: HitboxAttackManager, Assembly-CSharp
         m_MethodName: OnAttackTriggerReceived
         m_Mode: 1
         m_Arguments:
@@ -117,8 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetsInRange: []
-  currentTarget: {fileID: 0}
   updateContextClueBubble: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
 --- !u!114 &330568431
@@ -379,7 +378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 404097708}
   - component: {fileID: 404097709}
-  - component: {fileID: 122859481}
+  - component: {fileID: 7684087321957564279}
   - component: {fileID: 482154600}
   - component: {fileID: 764537314}
   - component: {fileID: 764537313}
@@ -432,7 +431,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.7350467, y: 1.1955202}
   m_EdgeRadius: 0
---- !u!114 &122859481
+--- !u!114 &7684087321957564279
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -441,11 +440,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 404097707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Script: {fileID: 11500000, guid: a9302e6a5ba5d447c9e030f9728cff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
-  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+  force: {fileID: 0}
+  time: {fileID: 0}
+  targetsInRange: []
 --- !u!114 &482154600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,8 +462,8 @@ MonoBehaviour:
   unityEventResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 122859481}
-        m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
+      - m_Target: {fileID: 7684087321957564279}
+        m_TargetAssemblyTypeName: HitboxAttackManager, Assembly-CSharp
         m_MethodName: OnAttackTriggerReceived
         m_Mode: 1
         m_Arguments:
@@ -486,8 +486,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetsInRange: []
-  currentTarget: {fileID: 0}
   updateContextClueBubble: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
 --- !u!114 &764537313
@@ -584,7 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1063447638}
   - component: {fileID: 1063447639}
-  - component: {fileID: 1506010066}
+  - component: {fileID: 842077074359015170}
   - component: {fileID: 482154599}
   - component: {fileID: 482154591}
   - component: {fileID: 482154593}
@@ -637,7 +635,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8838944, y: 1.7326627}
   m_EdgeRadius: 0
---- !u!114 &1506010066
+--- !u!114 &842077074359015170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -646,11 +644,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1063447637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Script: {fileID: 11500000, guid: a9302e6a5ba5d447c9e030f9728cff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
   time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+  targetsInRange: []
 --- !u!114 &482154599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,8 +666,8 @@ MonoBehaviour:
   unityEventResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1506010066}
-        m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
+      - m_Target: {fileID: 842077074359015170}
+        m_TargetAssemblyTypeName: HitboxAttackManager, Assembly-CSharp
         m_MethodName: OnAttackTriggerReceived
         m_Mode: 1
         m_Arguments:
@@ -691,8 +690,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetsInRange: []
-  currentTarget: {fileID: 0}
   updateContextClueBubble: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
 --- !u!114 &482154593
@@ -789,7 +786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1661685821}
   - component: {fileID: 1661685822}
-  - component: {fileID: 193439858}
+  - component: {fileID: 1819535091268343084}
   - component: {fileID: 8954031455878360522}
   - component: {fileID: 819603123}
   - component: {fileID: 819603124}
@@ -842,7 +839,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0134034, y: 1.8352776}
   m_EdgeRadius: 0
---- !u!114 &193439858
+--- !u!114 &1819535091268343084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -851,11 +848,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1661685820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7744c66d92524bea838383c6c5cb91d, type: 3}
+  m_Script: {fileID: 11500000, guid: a9302e6a5ba5d447c9e030f9728cff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
   time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
+  targetsInRange: []
 --- !u!114 &8954031455878360522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -872,8 +870,8 @@ MonoBehaviour:
   unityEventResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 193439858}
-        m_TargetAssemblyTypeName: Knockback, Assembly-CSharp
+      - m_Target: {fileID: 1819535091268343084}
+        m_TargetAssemblyTypeName: HitboxAttackManager, Assembly-CSharp
         m_MethodName: OnAttackTriggerReceived
         m_Mode: 1
         m_Arguments:
@@ -896,8 +894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f5159a32db3477196c8d1747eab2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetsInRange: []
-  currentTarget: {fileID: 0}
   updateContextClueBubble: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
 --- !u!114 &819603124
@@ -1279,8 +1275,8 @@ GameObject:
   - component: {fileID: 550649450657356746}
   - component: {fileID: 5725117659441017788}
   m_Layer: 0
-  m_Name: HurtBox
-  m_TagString: WorldCollider
+  m_Name: Player HurtBox
+  m_TagString: PlayerHurtBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

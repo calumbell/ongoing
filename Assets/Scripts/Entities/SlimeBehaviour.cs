@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class SlimeBehaviour : EntityBaseBehaviour
 {
     private Transform target;
-    public float chaseRadius;
-    public float minDistance;
     private Rigidbody2D rb;
 
+    public float chaseRadius;
+    public float minDistance;
+
+    public float attackTime;
+    public float attackCooldown;
+
     public bool movementEnabled;
+
+    public HitboxAttackManager[] hitboxes;
 
     void Awake()
     {
@@ -17,9 +24,13 @@ public class SlimeBehaviour : EntityBaseBehaviour
         movementEnabled = true;
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        CheckDistance();
+        if (currentState != EntityState.attack && currentState != EntityState.stagger)
+        { 
+            CheckDistance();
+            CheckForAttack();
+        }
     }
 
     void CheckDistance()
@@ -34,5 +45,37 @@ public class SlimeBehaviour : EntityBaseBehaviour
             rb.MovePosition(newPos);
             ChangeState(EntityState.walk);
         }
+    }
+
+    void CheckForAttack()
+    {
+        Collider2D target = null;
+
+        foreach (HitboxAttackManager hitbox in hitboxes)
+        {
+            target = hitbox.GetPlayerCollider();
+            if (target != null) break;
+        }
+
+        if (target == null) return;
+
+        StartCoroutine(AttackCoroutine());
+    }
+
+    public IEnumerator AttackCoroutine()
+    {
+        Debug.Log("Attack starting");
+        ChangeState(EntityState.attack);
+        yield return new WaitForSeconds(attackTime);
+
+        foreach (HitboxAttackManager hitbox in hitboxes)
+        {
+            hitbox.OnAttackTriggerReceived();
+        }
+
+        Debug.Log("SPLAT!");
+        ChangeState(EntityState.stagger);
+        yield return new WaitForSeconds(attackCooldown);
+        ChangeState(EntityState.idle);
     }
 }
