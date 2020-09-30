@@ -138,14 +138,18 @@ public class PlayerControl : MonoBehaviour
 
     public void Stagger(float time)
     {
+
+        StartCoroutine(StaggerCoroutine(time));
+    }
+
+    public void TakeDamage()
+    {
         playerHealth.value = playerHealth.value - 1;
 
         if (playerHealth.value == 0)
         {
             SceneManager.LoadScene("End");
         }
-
-        StartCoroutine(StaggerCoroutine(time));
     }
 
     private IEnumerator StaggerCoroutine(float time)

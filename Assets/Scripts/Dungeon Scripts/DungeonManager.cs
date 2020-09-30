@@ -20,7 +20,6 @@ public class DungeonManager : MonoBehaviour
     public GameObject floorPrefab;
     private GameObject floorParent;
     
-
     public GameObject[] wallPrefabs;
     private GameObject wallParent;
 

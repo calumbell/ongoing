@@ -51,6 +51,7 @@ public class HitboxAttackManager : MonoBehaviour
 
             else if (target.gameObject.CompareTag("Player"))
             {
+                target.GetComponent<PlayerControl>().TakeDamage();
                 target.GetComponent<PlayerControl>().Stagger(time.value);
             }
 

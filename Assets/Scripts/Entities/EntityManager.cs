@@ -19,7 +19,6 @@ public class EntityManager : MonoBehaviour
 
         foreach (Room room in rooms)
         {
-            //if (Random.value > 0.66)
             if (room != d.getStartRoom())
             {
                 Vector3 location = new Vector3(
