@@ -42,7 +42,6 @@ public class HitboxAttackManager : MonoBehaviour
             // make sure that the target has a RigidBody
             if (target == null) continue;
 
-
             // Stagger entity, and begin coroutine to end stagger
             if (target.gameObject.CompareTag("Entity"))
             {

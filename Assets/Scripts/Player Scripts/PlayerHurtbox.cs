@@ -9,8 +9,6 @@ public class PlayerHurtbox : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-
-        Debug.Log(other.gameObject.tag.ToString());
         if (other.gameObject.tag == "Entity")
         {
             playerControl.Stagger(0.05f);
@@ -18,6 +16,9 @@ public class PlayerHurtbox : MonoBehaviour
             Vector2 difference = gameObject.transform.position - other.transform.position;
             difference = difference.normalized * 10;
             rb.AddForce(difference, ForceMode2D.Impulse);
+
+            // stop the other object from being knocked back via physics engine
+            other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
 }

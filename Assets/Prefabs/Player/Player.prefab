@@ -443,8 +443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9302e6a5ba5d447c9e030f9728cff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: {fileID: 0}
-  time: {fileID: 0}
+  force: {fileID: 11400000, guid: 16b99f6c9431a44739314957c2dfeb3b, type: 2}
+  time: {fileID: 11400000, guid: 9b9c5269e0f8f4ceb8793d4683d83acf, type: 2}
   targetsInRange: []
 --- !u!114 &482154600
 MonoBehaviour:

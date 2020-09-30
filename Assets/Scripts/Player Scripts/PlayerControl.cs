@@ -83,7 +83,7 @@ public class PlayerControl : MonoBehaviour
         else if (Input.GetButtonDown("interact") && inputEnabled.value &&
             currentState == PlayerState.carrying)
         {
-            Throw();
+            PutDown();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -154,6 +154,9 @@ public class PlayerControl : MonoBehaviour
 
     private IEnumerator StaggerCoroutine(float time)
     {
+        if (currentState == PlayerState.carrying)
+            Destroy(carriedObject);
+
         currentState = PlayerState.stagger;
         animator.SetBool("hurt", true);
         onPlayerHealthChange.Raise(playerHealth.value);
@@ -183,6 +186,8 @@ public class PlayerControl : MonoBehaviour
 
         obj.transform.parent = gameObject.transform;
         carriedObject = obj;
+        obj.GetComponent<BoxCollider2D>().enabled = false;
+
         obj.transform.position = new Vector3(
             gameObject.transform.position.x, gameObject.transform.position.y + 0.75f, obj.transform.position.z);
         currentState = PlayerState.carrying;
@@ -198,11 +203,45 @@ public class PlayerControl : MonoBehaviour
         onPlayerTeleport.Raise(new Vector3(x, y, -10));
     }
 
-    public void Throw()
+    public void PutDown()
     {
-        carriedObject.transform.parent = null;
-        currentState = PlayerState.idle;
+        Vector3 originalPosition = carriedObject.transform.position;
 
+        if (animator.GetFloat("moveX") == 1.0f)
+        {
+            carriedObject.transform.position = new Vector3(
+                gameObject.transform.position.x + 1,
+                gameObject.transform.position.y,
+                gameObject.transform.position.z);
+        }
+
+        else if (animator.GetFloat("moveX") == -1.0f)
+        {
+            carriedObject.transform.position = new Vector3(
+                gameObject.transform.position.x - 1,
+                gameObject.transform.position.y,
+                gameObject.transform.position.z);
+        }
+
+        else if (animator.GetFloat("moveY") == 1.0f)
+        {
+            carriedObject.transform.position = new Vector3(
+                gameObject.transform.position.x,
+                gameObject.transform.position.y + 1,
+                gameObject.transform.position.z);
+        }
+
+        else
+        {
+            carriedObject.transform.position = new Vector3(
+                gameObject.transform.position.x,
+                gameObject.transform.position.y - 1,
+                gameObject.transform.position.z);
+        }
+
+        carriedObject.transform.parent = null;
+        carriedObject.GetComponent<BoxCollider2D>().enabled = true;
+        currentState = PlayerState.idle;
         gameObject.transform.Find("ContextClue").gameObject.SetActive(true);
 
     }
