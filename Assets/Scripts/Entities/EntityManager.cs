@@ -4,13 +4,20 @@ using UnityEngine;
 public class EntityManager : MonoBehaviour
 {
     private static int i;
-    public GameObject[] entityPrefabs;
+    public GameObject[] NPCPrefabs;
+    public GameObject[] objectPrefabs;
 
-    public EntityData GenerateEntity(int n, Vector3 location)
+    public Entity GenerateNPC(int n, Vector3 location)
     {
-        n = n > entityPrefabs.Length - 1 ? entityPrefabs.Length - 1 : n;
+        n = n > NPCPrefabs.Length - 1 ? NPCPrefabs.Length - 1 : n;
 
-        return new EntityData(entityPrefabs[n], location, i++);    
+        return new Entity(NPCPrefabs[n], location, i++);    
+    }
+
+    public Entity GenerateObject(int n, Vector3 location)
+    {
+        n = n > objectPrefabs.Length - 1 ? objectPrefabs.Length - 1 : n;
+        return new Entity(objectPrefabs[n], location, i++);
     }
 
     public void PopulateDungeon(Dungeon d, int n)
@@ -19,33 +26,59 @@ public class EntityManager : MonoBehaviour
 
         foreach (Room room in rooms)
         {
+
+            Vector3 location = new Vector3(
+                4 * (room.getX() + Random.Range(1, room.getWidth() - 1)),
+                4 * (room.getY() + Random.Range(1, room.getHeight() - 1)),
+                -1);
+
+            int type = 0;
+
+            d.GetEntities().Add(new Entity(objectPrefabs[type], location, i++));
+
             if (room != d.getStartRoom())
             {
-                Vector3 location = new Vector3(
+                location = new Vector3(
                 4 * (room.getX() + Random.Range(1, room.getWidth()-1)),
                 4 * (room.getY() + Random.Range(1, room.getHeight()-1)),
                 -1);
 
                 // Pick a random entity type
-                int type = Random.Range(0, entityPrefabs.Length);
+                type = Random.Range(0, NPCPrefabs.Length);
 
                 // Add entity to the list inside dungeon
-                d.GetEntities().Add(new EntityData(entityPrefabs[type], location, i++));
+                d.GetEntities().Add(new Entity(NPCPrefabs[type], location, i++));
             }
         }
+
     }
 
     public void UpdateEntitiesInDungeon(Dungeon d, GameObject parent)
     {
-        List<EntityData> entityData = d.GetEntities();
-        EntityBaseBehaviour[] entityScripts = parent.GetComponentsInChildren<EntityBaseBehaviour>();
+        List<Entity> entitiesInMemory = d.GetEntities();
+        Entity[] entitiesInScene = parent.GetComponentsInChildren<Entity>();
+        Entity entityInMemory;
 
-        foreach (EntityData data in entityData)
+        bool entityStillExistsInScene;
+
+        for (int i = entitiesInMemory.Count; i > 0; i--)
+        //foreach (Entity entityInMemory in entitiesInMemory)
         {
-            foreach(EntityBaseBehaviour script in entityScripts)
+            entityInMemory = entitiesInMemory[i - 1];
+            entityStillExistsInScene = false;
+
+            foreach (Entity entityInScene in entitiesInScene)
             {
-                if (data.id == script.GetId())
-                    data.location = script.GetTransform().position;
+                if (entityInMemory.id == entityInScene.id)
+                {
+                    entityInMemory.location = entityInScene.transform.position;
+                    entityStillExistsInScene = true;
+                }
+            }
+
+            if (!entityStillExistsInScene)
+            {
+                entitiesInMemory.Remove(entityInMemory);
             }
         }
     }

@@ -77,14 +77,14 @@ public class DungeonManager : MonoBehaviour
 
     void InstantiateEntitiesInDungeon(Dungeon d)
     {
-        foreach (EntityData entity in d.GetEntities())
+        foreach (Entity entity in d.GetEntities())
         { 
             var myPrefab = Instantiate(entity.prefab,
                 new Vector3(entity.location.x, entity.location.y, -1),
                 Quaternion.identity);
             myPrefab.transform.parent = entitiesParent.transform;
 
-            myPrefab.GetComponent<EntityBaseBehaviour>().SetId(entity.id);            
+            myPrefab.GetComponent<Entity>().id = entity.id;
         }
     }
     

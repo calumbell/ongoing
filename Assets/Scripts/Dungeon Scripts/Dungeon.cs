@@ -10,14 +10,14 @@ public class Dungeon
 
     int startRoom, endRoom;
 
-    private List<EntityData> entities;
+    private List<Entity> entities;
 
     public Dungeon(int x, int y)
     {
 
         tileMap = new TileMap(x, y);
 
-        entities = new List<EntityData>();
+        entities = new List<Entity>();
 
         // get array dims
         width = 4 * tileMap.getWidth() + 1;
@@ -39,8 +39,8 @@ public class Dungeon
     public Room getStartRoom() { return tileMap.getRoom(startRoom); }
     public Room getEndRoom() { return tileMap.getRoom(endRoom); }
     public Room GetRandomRoom() { return tileMap.GetRandomRoom(); }
-    public EntityData GetEntity(int i) { return entities[i]; }
-    public List<EntityData> GetEntities() { return entities; }
+    public Entity GetEntity(int i) { return entities[i]; }
+    public List<Entity> GetEntities() { return entities; }
 
     public int getStartCoordX()
     {

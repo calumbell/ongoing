@@ -45,7 +45,7 @@ public class HitboxAttackManager : MonoBehaviour
             // Stagger entity, and begin coroutine to end stagger
             if (target.gameObject.CompareTag("Entity"))
             {
-                target.GetComponent<EntityBaseBehaviour>().Stagger(target, time.value);
+                target.GetComponent<NPC>().Stagger(target, time.value);
             }
 
             else if (target.gameObject.CompareTag("Player"))

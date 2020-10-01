@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SlimeBehaviour : EntityBaseBehaviour
+public class Slime : NPC
 {
     private Transform target;
     private Rigidbody2D rb;
@@ -18,9 +18,19 @@ public class SlimeBehaviour : EntityBaseBehaviour
 
     public ProgressBar progressBar;
 
+
+
+    public Slime(GameObject prefabInput, Vector3 locationInput, int n) : base(prefabInput, locationInput, n)
+    {
+        prefab = prefabInput;
+        id = n;
+        location = locationInput;
+    }
+
+
     void Awake()
     {
-        currentState = EntityState.idle;
+        currentState = State.idle;
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         movementEnabled = true;
@@ -28,7 +38,7 @@ public class SlimeBehaviour : EntityBaseBehaviour
 
     void Update()
     {
-        if (currentState != EntityState.attack && currentState != EntityState.stagger)
+        if (currentState != State.attack && currentState != State.stagger)
         { 
             CheckDistance();
             CheckForAttack();
@@ -39,13 +49,13 @@ public class SlimeBehaviour : EntityBaseBehaviour
     {
         if(Vector3.Distance(target.position, transform.position) < chaseRadius
             && Vector3.Distance(target.position, transform.position) > minDistance
-            && (currentState == EntityState.idle || currentState == EntityState.walk))
+            && (currentState == State.idle || currentState == State.walk))
         {
             Vector3 newPos = Vector3.MoveTowards(transform.position, target.position,
                 moveSpeed * Time.deltaTime);
 
             rb.MovePosition(newPos);
-            ChangeState(EntityState.walk);
+            ChangeState(State.walk);
         }
     }
 
@@ -68,7 +78,7 @@ public class SlimeBehaviour : EntityBaseBehaviour
     {
         progressBar.Begin(attackTime);
 
-        ChangeState(EntityState.attack);
+        ChangeState(State.attack);
 
         yield return new WaitForSeconds(attackTime);
 
@@ -77,8 +87,8 @@ public class SlimeBehaviour : EntityBaseBehaviour
             hitbox.OnAttackTriggerReceived();
         }
 
-        ChangeState(EntityState.stagger);
+        ChangeState(State.stagger);
         yield return new WaitForSeconds(attackCooldown);
-        ChangeState(EntityState.idle);
+        ChangeState(State.idle);
     }
 }

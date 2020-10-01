@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public enum EntityState
+public enum State
 {
     idle,
     walk,
@@ -9,19 +9,25 @@ public enum EntityState
     stagger
 }
 
-public class EntityBaseBehaviour : MonoBehaviour
+public class NPC : Entity
 {
-    public EntityState currentState;
+    public State currentState;
 
-    public string entityName;
     public float moveSpeed;
-    public int id;
+
 
     public void SetId(int n) { id = n; }
     public int GetId() { return id; }
     public Transform GetTransform() { return transform; }
 
-    public void ChangeState(EntityState state)
+    public NPC(GameObject prefabInput, Vector3 locationInput, int n) : base(prefabInput, locationInput, n)
+    { 
+        prefab = prefabInput;
+        id = n;
+        location = locationInput;
+    }
+
+    public void ChangeState(State state)
     {
         if (state != currentState)
             currentState = state;
@@ -34,9 +40,9 @@ public class EntityBaseBehaviour : MonoBehaviour
 
     public void Stagger(Rigidbody2D rb, float time)
     {
-        if (rb == null || currentState == EntityState.stagger) return;
+        if (rb == null || currentState == State.stagger) return;
 
-        ChangeState(EntityState.stagger);
+        ChangeState(State.stagger);
         StartCoroutine(StaggerCoroutine(rb, time));
     }
 
@@ -44,6 +50,6 @@ public class EntityBaseBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         rb.velocity = Vector2.zero;
-        ChangeState(EntityState.idle);
+        ChangeState(State.idle);
     }
 }

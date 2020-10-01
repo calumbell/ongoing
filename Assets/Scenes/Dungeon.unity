@@ -316,8 +316,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d381356b113849dc9c64c2e3e9fb2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityPrefabs:
+  NPCPrefabs:
   - {fileID: 6048415908946237424, guid: 49d252b9e98d64f91b9e8534d6472447, type: 3}
+  objectPrefabs:
+  - {fileID: 5493003155452209632, guid: 644dc520c390d4a43ba8409e031f1ad2, type: 3}
 --- !u!114 &639700153
 MonoBehaviour:
   m_ObjectHideFlags: 0
