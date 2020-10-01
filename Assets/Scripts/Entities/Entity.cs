@@ -4,9 +4,9 @@ public class Entity : MonoBehaviour
 {
     public GameObject prefab;
 
-    public Vector3 location { get; set; }
+    public Vector3 location;
 
-    public int id { get; set; }
+    public int id;
 
     public string entityName;
 

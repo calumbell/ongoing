@@ -18,8 +18,6 @@ public class Slime : NPC
 
     public ProgressBar progressBar;
 
-
-
     public Slime(GameObject prefabInput, Vector3 locationInput, int n) : base(prefabInput, locationInput, n)
     {
         prefab = prefabInput;

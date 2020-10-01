@@ -155,7 +155,10 @@ public class PlayerControl : MonoBehaviour
     private IEnumerator StaggerCoroutine(float time)
     {
         if (currentState == PlayerState.carrying)
+        {
             Destroy(carriedObject);
+            gameObject.transform.Find("ContextClue").gameObject.SetActive(true);
+        }
 
         currentState = PlayerState.stagger;
         animator.SetBool("hurt", true);

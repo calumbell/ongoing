@@ -62,7 +62,6 @@ public class EntityManager : MonoBehaviour
         bool entityStillExistsInScene;
 
         for (int i = entitiesInMemory.Count; i > 0; i--)
-        //foreach (Entity entityInMemory in entitiesInMemory)
         {
             entityInMemory = entitiesInMemory[i - 1];
             entityStillExistsInScene = false;
