@@ -23,8 +23,8 @@ public class Entity : MonoBehaviour
             return false;
         }
 
-        return AABBCollision(transform.position.x, transform.position.y,
-            other.transform.position.x, other.transform.position.y);
+        return AABBCollision(transform.position.x, transform.position.y, 1.0f, 1.0f,
+            other.transform.position.x, other.transform.position.y, 1.0f, 1.0f);
     }
 
     public bool IsTouchingAnotherEntity(Entity[] entities)
@@ -45,10 +45,26 @@ public class Entity : MonoBehaviour
         return false;
     }
 
-    public bool AABBCollision(float x1, float y1, float x2, float y2)
+    public bool IsTouchingWalls()
     {
-        if (x1 < x2 + 1.0f && x1 + 1.0f > x2 &&
-            y1 < y2 + 1.0f && y1 + 1.0f > y2)
+        Collider2D[] wallColliders = GameObject.FindGameObjectWithTag("WallsList").GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D wall in wallColliders)
+        {
+            if (AABBCollision(transform.position.x, transform.position.y, 0.65f, 0.65f,
+                wall.transform.position.x, wall.transform.position.y, 0.65f, 0.65f))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool AABBCollision(float x1, float y1, float w1, float h1,
+        float x2, float y2, float h2, float w2)
+    {
+        if (x1 < x2 + h2 && x1 + h1 > x2 &&
+            y1 < y2 + h2 && y1 + h1 > y2)
         {
             return true;
         }

@@ -255,7 +255,8 @@ public class PlayerControl : MonoBehaviour
         // if new position is invalid, return
         Entity[] entities = GameObject.FindObjectsOfType<Entity>();
 
-        if (carriedObject.GetComponent<Entity>().IsTouchingAnotherEntity(entities))
+        if (carriedObject.GetComponent<Entity>().IsTouchingAnotherEntity(entities) ||
+            carriedObject.GetComponent<Entity>().IsTouchingWalls())
         {
             carriedObject.GetComponent<BoxCollider2D>().enabled = false;
             carriedObject.transform.position = originalPosition;

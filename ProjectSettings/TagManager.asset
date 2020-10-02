@@ -17,6 +17,7 @@ TagManager:
   - DungeonManager
   - Dungeon
   - EntitiesList
+  - WallsList
   layers:
   - Default
   - TransparentFX
