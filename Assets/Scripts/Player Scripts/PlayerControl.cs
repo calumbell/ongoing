@@ -97,7 +97,15 @@ public class PlayerControl : MonoBehaviour
         && currentState != PlayerState.stagger
         && inputEnabled.value)
         {
-            onPlayerInteractTriggered.Raise();
+
+            if (currentState == PlayerState.carrying)
+            {
+                PutDown();
+            }
+            else
+            {
+                onPlayerInteractTriggered.Raise();
+            }
         }
 
         // Handle player movement
@@ -242,8 +250,19 @@ public class PlayerControl : MonoBehaviour
                 gameObject.transform.position.z);
         }
 
-        carriedObject.transform.parent = null;
         carriedObject.GetComponent<BoxCollider2D>().enabled = true;
+
+        // if new position is invalid, return
+        Entity[] entities = GameObject.FindObjectsOfType<Entity>();
+
+        if (carriedObject.GetComponent<Entity>().IsTouchingAnotherEntity(entities))
+        {
+            carriedObject.GetComponent<BoxCollider2D>().enabled = false;
+            carriedObject.transform.position = originalPosition;
+            return;
+        }
+
+        carriedObject.transform.parent = GameObject.FindGameObjectWithTag("EntitiesList").transform;
         currentState = PlayerState.idle;
         gameObject.transform.Find("ContextClue").gameObject.SetActive(true);
 

@@ -160,4 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5493003155452209632}
+  hurtbox: {fileID: 5493003155452209631}
+  location: {x: 0, y: 0, z: 0}
+  id: 0
   entityName: Pot

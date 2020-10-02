@@ -380,6 +380,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 6048415908946237424}
+  hurtbox: {fileID: 1546270328}
+  location: {x: 0, y: 0, z: 0}
+  id: 0
   entityName: Slime
   currentState: 0
   moveSpeed: 1
