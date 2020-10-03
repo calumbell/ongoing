@@ -13,7 +13,6 @@ public class DungeonManager : MonoBehaviour
     private Stack<Dungeon> floorsAbove;
     private Stack<Dungeon> floorsBelow;
 
-
     public GameObject dungeonPrefab;
     private GameObject dungeonParent;
 
@@ -33,7 +32,6 @@ public class DungeonManager : MonoBehaviour
     public GameObject playerPrefab;
     private GameObject playerInstance;
 
-
     // Keep track of this SO to disable/reenable player input during dun. gen.
     public BoolValue inputEnabled;
 
@@ -50,7 +48,7 @@ public class DungeonManager : MonoBehaviour
 
         // generate a new dungeon 
         dungeon = new Dungeon(width / 3, height / 3);
-        entityManager.PopulateDungeon(dungeon, 5);
+        entityManager.PopulateDungeon(dungeon, 7);
 
         InstantiateDungeon(dungeon);
 
@@ -168,10 +166,10 @@ public class DungeonManager : MonoBehaviour
 
                 // add a down staircase if 3rd bit is a 1
                 if (dungeon.getByte(x, y) == 0x4)
-                    CreateChildPrefab(stairsDownPrefab, objectsParent, x, y, 0);
+                    CreateChildPrefab(stairsDownPrefab, entitiesParent, x, y, 0);
 
                 if (dungeon.getByte(x, y) == 0x5 & floorsAbove.Count > 0)
-                    CreateChildPrefab(stairsUpPrefab, objectsParent, x, y, 0);
+                    CreateChildPrefab(stairsUpPrefab, entitiesParent, x, y, 0);
             }
     }
 

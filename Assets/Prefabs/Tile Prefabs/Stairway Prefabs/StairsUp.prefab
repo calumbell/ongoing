@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4639640360530086262}
   - component: {fileID: 4480745472630709040}
   - component: {fileID: 639949700}
+  - component: {fileID: -8366132394696305003}
   m_Layer: 0
   m_Name: StairsUp
   m_TagString: StairUp
@@ -131,3 +132,20 @@ MonoBehaviour:
     type: 2}
   interactionType: stairs up
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
+--- !u!114 &-8366132394696305003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2693583498214976219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae1164d132dc4dd083e99fb13ca04f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2693583498214976219}
+  hurtbox: {fileID: 4480745472630709040}
+  location: {x: 0, y: 0, z: 0}
+  id: 0
+  entityName: Stairs Up
