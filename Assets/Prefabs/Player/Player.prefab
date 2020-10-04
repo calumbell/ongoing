@@ -1254,6 +1254,8 @@ MonoBehaviour:
   inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
   rb: {fileID: 869049601}
   playerHealth: {fileID: 11400000, guid: 10c05dab2dae1404688f403f02236998, type: 2}
+  audioManager: {fileID: 268279384454300060, guid: 95e5e38f0941a47a2864cf45c205cdc7,
+    type: 3}
   onPlayerHealthChange: {fileID: 11400000, guid: 98258855ec68a4bbeae1ce9ab85d7d9a,
     type: 2}
   onPlayerAttackTriggered: {fileID: 11400000, guid: 2cb6b4588c8474d0e8bc149830018710,

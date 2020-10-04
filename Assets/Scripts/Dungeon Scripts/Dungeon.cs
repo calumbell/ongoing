@@ -76,10 +76,10 @@ public class Dungeon
         // declare var to the tile as a 3x3 array of bytes
         byte[,] tileInBytes;
 
-        // iterate for all of our tiles
-        for (int y = 0; y < tileMap.getHeight(); y++) {
-            for (int x = 0; x < tileMap.getWidth(); x++) {
-
+        for (int y = 0; y < tileMap.getHeight(); y++)
+        {
+            for (int x = 0; x < tileMap.getWidth(); x++)
+            {
                 currentTile = tileMap.getTile(x, y);
 
                 // if the current tile isn't null, convert to a 3x3 byte array
@@ -168,7 +168,6 @@ public class Dungeon
         // if above 0, and  there is an open path down from current tileMap
         if (y > 0 & tileInBytes[0,1] == 0x1)
         {
-
             // if current tile has no left wall, but tile below does
             if ((tileMap.getTile(x, y).getWalls() & 0x8) == 0
             & (tileMap.getTile(x, y-1).getWalls() & 0x8) > 0) 

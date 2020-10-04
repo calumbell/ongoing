@@ -31,6 +31,8 @@ public class PlayerControl : MonoBehaviour
 
     public IntValue playerHealth;
 
+    private AudioManager audioManager;
+
     private GameObject carriedObject;
 
 
@@ -55,6 +57,8 @@ public class PlayerControl : MonoBehaviour
         // get references to dungeon
         dungeonObj = GameObject.FindGameObjectWithTag("DungeonManager");
 
+        audioManager = GameObject.FindObjectOfType<AudioManager>();
+
         if (dungeonObj != null)
         {
             dungeon = dungeonObj.GetComponentInChildren<DungeonManager>().dungeon;
@@ -76,6 +80,7 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetButtonDown("interact") && inputEnabled.value &&
             (currentState == PlayerState.idle || currentState == PlayerState.walk))
         {
+            audioManager.PlayAudio(AudioType.SFX_woof);
             onPlayerAttackTriggered.Raise();
             StartCoroutine(InteractCo());
         }
@@ -181,7 +186,7 @@ public class PlayerControl : MonoBehaviour
     {
         animator.SetBool("attacking", true);
         currentState = PlayerState.interact;
-        audioSource.Play();
+        // audioSource.Play();
         yield return null;
         animator.SetBool("attacking", false);
         yield return new WaitForSeconds(0.3f);
