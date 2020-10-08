@@ -8,7 +8,15 @@ public class MainMenu : MonoBehaviour
     public GameObject fadeOutPanel;
     public float fadeTime;
 
-    void Update()
+    private AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindObjectOfType<AudioManager>();
+        audioManager.PlayAudio(AudioType.Music_808Pipes);
+    }
+
+    private void Update()
     {
         if (Input.anyKeyDown)
             StartCoroutine(FadeCoroutine());

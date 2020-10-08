@@ -5,7 +5,9 @@
 public enum AudioType
 {
     None,
-    Music_909Chimes,
-    SFX_woof
+    Music_808Pipes,
+    SFX_woof,
+    SFX_Footstep_Generic_01,
+    SFX_Footstep_Generic_02
 }
 

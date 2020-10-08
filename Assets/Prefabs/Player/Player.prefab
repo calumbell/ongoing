@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 330568430}
   - component: {fileID: 330568431}
   - component: {fileID: 1293709071}
-  - component: {fileID: 482154592}
+  - component: {fileID: 2536027310893486752}
   m_Layer: 0
   m_Name: down hit box
   m_TagString: PlayerHitBox
@@ -176,7 +176,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &482154592
+--- !u!114 &2536027310893486752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 1063447639}
   - component: {fileID: 842077074359015170}
   - component: {fileID: 482154599}
-  - component: {fileID: 482154591}
+  - component: {fileID: 3653706556614338405}
   - component: {fileID: 482154593}
   - component: {fileID: 402167948}
   - component: {fileID: 482154598}
@@ -678,7 +678,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &482154591
+--- !u!114 &3653706556614338405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -708,7 +708,7 @@ MonoBehaviour:
   unityEventResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 482154591}
+      - m_Target: {fileID: 3653706556614338405}
         m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
         m_MethodName: OnInteractTriggered
         m_Mode: 1
@@ -736,7 +736,7 @@ MonoBehaviour:
   unityEventResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 482154591}
+      - m_Target: {fileID: 3653706556614338405}
         m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
         m_MethodName: OnInteractCycle
         m_Mode: 1
@@ -764,7 +764,7 @@ MonoBehaviour:
   unityEventResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 482154591}
+      - m_Target: {fileID: 3653706556614338405}
         m_TargetAssemblyTypeName: HitboxInteractionManager, Assembly-CSharp
         m_MethodName: OnTeleport
         m_Mode: 0
@@ -991,10 +991,11 @@ GameObject:
   - component: {fileID: 4488836852840157625}
   - component: {fileID: 4488836852840157624}
   - component: {fileID: 4488836852840157629}
-  - component: {fileID: -4200460090425491795}
   - component: {fileID: 869049601}
   - component: {fileID: 842782387886365068}
   - component: {fileID: 155111716189645652}
+  - component: {fileID: 482154591}
+  - component: {fileID: 482154592}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1093,102 +1094,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!82 &-4200460090425491795
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488836852840157623}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1c3174267ffbf4535917e1c3ee77360e, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!50 &869049601
 Rigidbody2D:
   serializedVersion: 4
@@ -1254,8 +1159,6 @@ MonoBehaviour:
   inputEnabled: {fileID: 11400000, guid: 28883340673e549ff894610b4ee13041, type: 2}
   rb: {fileID: 869049601}
   playerHealth: {fileID: 11400000, guid: 10c05dab2dae1404688f403f02236998, type: 2}
-  audioManager: {fileID: 268279384454300060, guid: 95e5e38f0941a47a2864cf45c205cdc7,
-    type: 3}
   onPlayerHealthChange: {fileID: 11400000, guid: 98258855ec68a4bbeae1ce9ab85d7d9a,
     type: 2}
   onPlayerAttackTriggered: {fileID: 11400000, guid: 2cb6b4588c8474d0e8bc149830018710,
@@ -1266,6 +1169,49 @@ MonoBehaviour:
     type: 2}
   onPlayerMoveEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}
   onPlayerTeleport: {fileID: 11400000, guid: 6860388fe467246148ecb801fe4350f2, type: 2}
+--- !u!114 &482154591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488836852840157623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65966c6fbc1134a0587ff71778d4c5d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepInterval: 0.4
+  footstepDelay: 0.06
+  footsteps: 0300000004000000
+--- !u!114 &482154592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4488836852840157623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b0fe3d7ee294ca897900bdc1020d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: db4f60f7803624650b42a53e82db9cde, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 482154591}
+        m_TargetAssemblyTypeName: Footsteps, Assembly-CSharp
+        m_MethodName: OnPlayerMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7613766828523437573
 GameObject:
   m_ObjectHideFlags: 0
