@@ -43,7 +43,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -182,7 +182,13 @@ MonoBehaviour:
     - type: 2
       clip: {fileID: 8300000, guid: 1c3174267ffbf4535917e1c3ee77360e, type: 3}
     - type: 3
-      clip: {fileID: 8300000, guid: 14f9954519d7c443b88d671ce992c076, type: 3}
+      clip: {fileID: 8300000, guid: 3c1441eaa21b64ef392140de9a2fea59, type: 3}
+    - type: 4
+      clip: {fileID: 8300000, guid: f7517c61a8957477a98acdca667ca207, type: 3}
+    - type: 5
+      clip: {fileID: 8300000, guid: 4e94383770d3642c3b6a27de70e28eb4, type: 3}
+    - type: 6
+      clip: {fileID: 8300000, guid: 7220b044db51348e991eab5cb9b6a853, type: 3}
 --- !u!1 &268279384677775481
 GameObject:
   m_ObjectHideFlags: 0

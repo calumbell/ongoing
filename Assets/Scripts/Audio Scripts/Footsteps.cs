@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Footsteps : MonoBehaviour
@@ -11,12 +10,13 @@ public class Footsteps : MonoBehaviour
 
     public AudioType[] footsteps;
 
+    private int lastFootstepIndex;
     private int nextFootstepIndex;
 
     void Start()
     {
         audioManager = GameObject.FindObjectOfType<AudioManager>();
-        nextFootstepIndex = 0;
+        lastFootstepIndex = 0;
     }
 
 
@@ -32,8 +32,17 @@ public class Footsteps : MonoBehaviour
 
     private IEnumerator FootstepCoroutine(float interval)
     {
-        audioManager.PlayAudio(footsteps[nextFootstepIndex++], false, footstepDelay);
-        nextFootstepIndex = nextFootstepIndex >= footsteps.Length ? 0 : nextFootstepIndex;
+        nextFootstepIndex = Random.Range(0, footsteps.Length);
+
+        if (nextFootstepIndex == lastFootstepIndex)
+        {
+            nextFootstepIndex = (nextFootstepIndex + 1) % (footsteps.Length - 1);
+        }
+
+        audioManager.PlayAudio(footsteps[nextFootstepIndex], false, footstepDelay);
+
+        lastFootstepIndex = nextFootstepIndex;
+
         yield return new WaitForSeconds(interval);
         footstepPlayingFlag = false;
     }

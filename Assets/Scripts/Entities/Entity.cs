@@ -47,7 +47,12 @@ public class Entity : MonoBehaviour
 
     public bool IsTouchingWalls()
     {
-        Collider2D[] wallColliders = GameObject.FindGameObjectWithTag("WallsList").GetComponentsInChildren<Collider2D>();
+        GameObject wallsList = GameObject.FindGameObjectWithTag("WallsList");
+
+        // If there is no walls list, then there are no walls: return false
+        if (wallsList == null) return false;
+
+        Collider2D[] wallColliders = wallsList.GetComponentsInChildren<Collider2D>();
         foreach (Collider2D wall in wallColliders)
         {
             if (AABBCollision(transform.position.x, transform.position.y, 0.65f, 0.65f,

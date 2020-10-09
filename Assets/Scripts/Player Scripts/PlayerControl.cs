@@ -268,7 +268,10 @@ public class PlayerControl : MonoBehaviour
             return;
         }
 
-        carriedObject.transform.parent = GameObject.FindGameObjectWithTag("EntitiesList").transform;
+        GameObject entityListParent = GameObject.FindGameObjectWithTag("EntitiesList");
+        if (entityListParent != null) carriedObject.transform.parent = entityListParent.transform;
+        else carriedObject.transform.parent = null;
+
         currentState = PlayerState.idle;
         gameObject.transform.Find("ContextClue").gameObject.SetActive(true);
 
