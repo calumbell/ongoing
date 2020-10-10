@@ -10,9 +10,18 @@ public class HitboxInteractionManager : MonoBehaviour
     // Events
     public StringEvent updateContextClueBubble;
 
-    void OnEnable()
+    private void OnEnable()
     {
         targetsInRange = new List<Interactable>();
+    }
+
+    private void OnDisable()
+    {
+        if (currentTarget != null)
+        {
+            currentTarget.DisableHighlight();
+            currentTarget = null;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D targetCollider)
@@ -29,6 +38,7 @@ public class HitboxInteractionManager : MonoBehaviour
             if (currentTarget == null)
             {
                 currentTarget = target;
+                target.EnableHighlight();
                 updateContextClueBubble.Raise(currentTarget.interactionType);
             }
         }
@@ -48,12 +58,14 @@ public class HitboxInteractionManager : MonoBehaviour
         {
             if (targetsInRange.Count == 0)
             {
+                target.DisableHighlight();
                 currentTarget = null;
             }
 
             else
             {
                 currentTarget = targetsInRange[0];
+                currentTarget.EnableHighlight();
             }
 
             UpdateContextClue();
@@ -69,7 +81,9 @@ public class HitboxInteractionManager : MonoBehaviour
 
             // wrap around end of list
             i = i + 1 == targetsInRange.Count ? 0 : i + 1;
+            currentTarget.DisableHighlight();
             currentTarget = targetsInRange[i];
+            currentTarget.EnableHighlight();
             UpdateContextClue();
         }
     }
@@ -78,6 +92,7 @@ public class HitboxInteractionManager : MonoBehaviour
     {
         if (currentTarget != null)
         {
+            currentTarget.DisableHighlight();
             currentTarget.OnInteract(gameObject.transform.parent.gameObject);
         }
     }

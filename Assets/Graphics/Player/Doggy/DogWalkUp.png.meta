@@ -23,6 +23,9 @@ TextureImporter:
   - first:
       213: -6926483183269233403
     second: DogWalkUp_3
+  - first:
+      213: 2207238944223005636
+    second: DogWalkUp_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -64,7 +67,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -117,7 +120,7 @@ TextureImporter:
         y: 0
         width: 16
         height: 16
-      alignment: 6
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -138,7 +141,7 @@ TextureImporter:
         y: 0
         width: 16
         height: 16
-      alignment: 6
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -159,7 +162,7 @@ TextureImporter:
         y: 0
         width: 16
         height: 16
-      alignment: 6
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -180,15 +183,15 @@ TextureImporter:
         y: 0
         width: 16
         height: 16
-      alignment: 6
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50d358e2e3030ef90800000000000000
-      internalID: -6926483183269233403
+      spriteID: 4cb02d41020b1ae10800000000000000
+      internalID: 2207238944223005636
       vertices: []
       indices: 
       edges: []

@@ -35,6 +35,8 @@ public class PlayerControl : MonoBehaviour
 
     private GameObject carriedObject;
 
+    public Collider2D[] hitboxes;
+
 
     // Events
 
@@ -165,6 +167,15 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    private void SetHitboxes(bool state)
+    {
+        foreach(Collider2D hitbox in hitboxes)
+        {
+            hitbox.enabled = state;
+        }
+
+    }
+
     private IEnumerator StaggerCoroutine(float time)
     {
         if (currentState == PlayerState.carrying)
@@ -210,6 +221,9 @@ public class PlayerControl : MonoBehaviour
 
         // turn off context clues
         gameObject.transform.Find("ContextClue").gameObject.SetActive(false);
+
+        // disable player hitboxes
+        SetHitboxes(false);
 
     }
 
@@ -275,5 +289,7 @@ public class PlayerControl : MonoBehaviour
         currentState = PlayerState.idle;
         gameObject.transform.Find("ContextClue").gameObject.SetActive(true);
 
+        // re-enable hitboxes
+        SetHitboxes(true);
     }
 }

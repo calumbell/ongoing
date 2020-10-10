@@ -14,6 +14,18 @@ TextureImporter:
   - first:
       213: 3211543383787958412
     second: DogWalkRight_3
+  - first:
+      213: -4779220418626221067
+    second: DogWalkRight_0
+  - first:
+      213: 8174573028632229272
+    second: DogWalkRight_1
+  - first:
+      213: -4361280013612238748
+    second: DogWalkRight_2
+  - first:
+      213: -3713045772902485204
+    second: DogWalkRight_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -55,7 +67,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -104,19 +116,19 @@ TextureImporter:
       name: DogWalkRight_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 0
-        width: 12
+        width: 16
         height: 16
-      alignment: 6
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0522fc58a0475fca0800000000000000
-      internalID: -5983748941348396464
+      spriteID: 5fb8d74c95cccadb0800000000000000
+      internalID: -4779220418626221067
       vertices: []
       indices: 
       edges: []
@@ -125,19 +137,19 @@ TextureImporter:
       name: DogWalkRight_1
       rect:
         serializedVersion: 2
-        x: 18
+        x: 16
         y: 0
-        width: 12
-        height: 15
-      alignment: 6
+        width: 16
+        height: 16
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e06d3c441b81ad30800000000000000
-      internalID: 4440983626858717417
+      spriteID: 895fc1adbdae17170800000000000000
+      internalID: 8174573028632229272
       vertices: []
       indices: 
       edges: []
@@ -146,19 +158,19 @@ TextureImporter:
       name: DogWalkRight_2
       rect:
         serializedVersion: 2
-        x: 33
+        x: 32
         y: 0
-        width: 13
+        width: 16
         height: 16
-      alignment: 6
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1c07715057c50b20800000000000000
-      internalID: 3100103066292522011
+      spriteID: 468b1a64fee9973c0800000000000000
+      internalID: -4361280013612238748
       vertices: []
       indices: 
       edges: []
@@ -167,19 +179,19 @@ TextureImporter:
       name: DogWalkRight_3
       rect:
         serializedVersion: 2
-        x: 50
+        x: 48
         y: 0
-        width: 12
-        height: 15
-      alignment: 6
+        width: 16
+        height: 16
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c80ff6b21b1b19c20800000000000000
-      internalID: 3211543383787958412
+      spriteID: c23b167ca8c987cc0800000000000000
+      internalID: -3713045772902485204
       vertices: []
       indices: 
       edges: []

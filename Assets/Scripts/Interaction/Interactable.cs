@@ -9,8 +9,32 @@ public class Interactable : MonoBehaviour
 
     public string interactionType;
 
+    Material material;
+
+    private void Awake()
+    {
+        material = gameObject.GetComponent<SpriteRenderer>().material;
+
+    }
+
     public virtual void OnInteract(GameObject interactor)
     {
         return;
+    }
+
+    public void EnableHighlight()
+    {
+        if (material != null)
+        {
+            material.SetFloat("_Intensity", 1);
+        }
+    }
+
+    public void DisableHighlight()
+    {
+        if (material != null)
+        {
+            material.SetInt("_Intensity", 0);
+        }
     }
 }

@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 6680317827576949264
     second: HEROS8bit_Dog Idle U_0
+  - first:
+      213: -8307613299255654009
+    second: DogIdleUp_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -46,7 +49,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -92,22 +95,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HEROS8bit_Dog Idle U_0
+      name: DogIdleUp_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 14
-        height: 15
-      alignment: 6
+        width: 16
+        height: 16
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01aee6b9ba145bc50800000000000000
-      internalID: 6680317827576949264
+      spriteID: 7894e8e48bd65bc80800000000000000
+      internalID: -8307613299255654009
       vertices: []
       indices: 
       edges: []

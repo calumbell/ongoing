@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 6131347377005227886
     second: DogIdleLeft_0
+  - first:
+      213: 3116331939739661953
+    second: DogIdleLeft_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -46,7 +49,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 6
   spritePivot: {x: 0, y: 0}
   spritePixelsToUnits: 16
@@ -95,19 +98,19 @@ TextureImporter:
       name: DogIdleLeft_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 12
-        height: 15
-      alignment: 6
+        width: 16
+        height: 16
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e6f6be044fbe61550800000000000000
-      internalID: 6131347377005227886
+      spriteID: 186f26e536f6f3b20800000000000000
+      internalID: 3116331939739661953
       vertices: []
       indices: 
       edges: []

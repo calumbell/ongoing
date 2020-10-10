@@ -8,6 +8,12 @@ TextureImporter:
   - first:
       213: 395359788694665492
     second: DogAttackRight_1
+  - first:
+      213: -5275910060741817269
+    second: DogAttackRight_0
+  - first:
+      213: -3521022655170583793
+    second: DogAttackRight_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -49,7 +55,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -98,19 +104,19 @@ TextureImporter:
       name: DogAttackRight_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 0
-        width: 12
-        height: 13
-      alignment: 6
+        width: 16
+        height: 16
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7859ff0e1f5b7df0800000000000000
-      internalID: -181446777256716164
+      spriteID: b4c0392b0c338c6b0800000000000000
+      internalID: -5275910060741817269
       vertices: []
       indices: 
       edges: []
@@ -119,19 +125,19 @@ TextureImporter:
       name: DogAttackRight_1
       rect:
         serializedVersion: 2
-        x: 17
+        x: 16
         y: 0
-        width: 15
-        height: 13
-      alignment: 6
+        width: 16
+        height: 16
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4197e9312a99c7500800000000000000
-      internalID: 395359788694665492
+      spriteID: f036470ec80d22fc0800000000000000
+      internalID: -3521022655170583793
       vertices: []
       indices: 
       edges: []

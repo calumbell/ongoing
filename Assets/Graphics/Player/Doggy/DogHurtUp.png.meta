@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 8297399720682525983
     second: DogHurtUp_0
+  - first:
+      213: 1245463688865055872
+    second: DogHurtUp_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -46,7 +49,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -99,15 +102,15 @@ TextureImporter:
         y: 0
         width: 16
         height: 16
-      alignment: 6
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1515be9519462370800000000000000
-      internalID: 8297399720682525983
+      spriteID: 084037350a6c84110800000000000000
+      internalID: 1245463688865055872
       vertices: []
       indices: 
       edges: []
