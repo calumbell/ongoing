@@ -48,6 +48,8 @@ public class HitboxInteractionManager : MonoBehaviour
     {
         Interactable target = targetCollider.gameObject.GetComponent<Interactable>();
 
+        if (target == null) return;
+
 
         if (targetsInRange.Contains(target))
         {
