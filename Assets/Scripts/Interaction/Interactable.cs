@@ -26,7 +26,7 @@ public class Interactable : MonoBehaviour
     {
         if (material != null)
         {
-            material.SetFloat("_Intensity", 1);
+            material.SetFloat("_Intensity", 1.2f);
         }
     }
 
