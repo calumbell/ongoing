@@ -1,0 +1,1 @@
+﻿public class AudioDataListener : BaseGameEventListener<AudioData, AudioDataEvent, UnityAudioDataEvent> { }

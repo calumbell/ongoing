@@ -125,13 +125,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d41c8c1cc4440e6bcb2efc831a1652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightsEnabled: {fileID: 11400000, guid: 24cf67c9952b14238b9bc2e5bfe0f790, type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
+    type: 2}
+  interactionType: interact
   onInteractTriggerEnter: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
   onInteractTriggerExit: {fileID: 11400000, guid: 9280f5b371fef457e899e95c351c192b,
     type: 2}
-  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-    type: 2}
-  interactionType: interact
+  onInteractionEvent: {fileID: 11400000, guid: b6dbe0b17477044f0bc9afd0cdc6dd8a, type: 2}
 --- !u!114 &5493003155452209628
 MonoBehaviour:
   m_ObjectHideFlags: 0

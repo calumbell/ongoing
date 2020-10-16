@@ -46,18 +46,20 @@ public class HitboxAttackManager : MonoBehaviour
             if (target.gameObject.CompareTag("Entity"))
             {
                 target.GetComponent<NPC>().Stagger(target, time.value);
+                target.velocity = Vector2.zero;
+                Vector2 difference = target.transform.position - transform.position;
+                difference = difference.normalized * force.value;
+                target.AddForce(difference, ForceMode2D.Impulse);
             }
 
             else if (target.gameObject.CompareTag("Player"))
             {
-                target.GetComponent<PlayerControl>().TakeDamage();
-                target.GetComponent<PlayerControl>().Stagger(time.value);
+                target.velocity = Vector2.zero;
+                Vector2 difference = target.transform.position - transform.position;
+                difference = difference.normalized * force.value;
+                target.GetComponent<PlayerPhysics>().Push(difference, time.value);
             }
 
-            target.velocity = Vector2.zero;
-            Vector2 difference = target.transform.position - transform.position;
-            difference = difference.normalized * force.value;
-            target.AddForce(difference, ForceMode2D.Impulse);
 
         }
     }

@@ -12,13 +12,6 @@ public class AudioManager : MonoBehaviour
     private Hashtable audioTable; // relationship btwn AudioTypes (key) & channels (value)
     private Hashtable jobTable;
 
-    private enum AudioAction
-    {
-        START,
-        STOP,
-        RESTART
-    }
-
     [System.Serializable]
     public class AudioObject
     {
@@ -49,7 +42,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Unity Functions
+#region Unity Functions
 
     private void Awake()
     {
@@ -63,7 +56,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Public Methods
+#endregion
+
+#region Public Methods
 
     public void PlayAudio(AudioType _type, bool _fade = false, float _delay = 0.0f)
     {
@@ -80,7 +75,18 @@ public class AudioManager : MonoBehaviour
         AddJob(new AudioJob(AudioAction.RESTART, _type, _fade, _delay));
     }
 
-    // Private Methods
+#endregion
+
+
+#region Event Handlers
+
+    public void OnAudioEventRaised(AudioData data)
+    {
+        AddJob(new AudioJob(data.action, data.type, data.fade, data.delay));
+    }
+
+#endregion
+#region Private Methods
 
     private void AddJob(AudioJob _job)
     {
@@ -215,4 +221,7 @@ public class AudioManager : MonoBehaviour
 
         jobTable.Remove(_job.type);
     }
+
+#endregion
+
 }

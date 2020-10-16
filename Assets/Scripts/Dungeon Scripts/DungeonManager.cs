@@ -198,7 +198,8 @@ public class DungeonManager : MonoBehaviour
 
             InstantiateDungeon(dungeon);
             InstantiateEntitiesInDungeon(dungeon);
-            playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getStartCoordX(), dungeon.getStartCoordY());
+            playerInstance.GetComponent<PlayerPhysics>().Teleport(
+                new Vector3(dungeon.getStartCoordX(), dungeon.getStartCoordY(), playerInstance.transform.position.z));
 
         }
 
@@ -219,7 +220,8 @@ public class DungeonManager : MonoBehaviour
 
             InstantiateDungeon(dungeon);
             InstantiateEntitiesInDungeon(dungeon);
-            playerInstance.GetComponent<PlayerControl>().Teleport(dungeon.getEndCoordX(), dungeon.getEndCoordY());
+            playerInstance.GetComponent<PlayerPhysics>().Teleport(
+                new Vector3(dungeon.getEndCoordX(), dungeon.getEndCoordY(), playerInstance.transform.position.z));
         }
 
         currentFloor.value = floorsAbove.Count + 1;

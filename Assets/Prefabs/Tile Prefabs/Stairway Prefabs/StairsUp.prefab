@@ -124,13 +124,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e56e3fb2934d4440ad0b4e28fca45f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightsEnabled: {fileID: 11400000, guid: 24cf67c9952b14238b9bc2e5bfe0f790, type: 2}
+  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
+    type: 2}
+  interactionType: stairs up
   onInteractTriggerEnter: {fileID: 11400000, guid: cfba677836a5c4ab8aa90b6b4f011679,
     type: 2}
   onInteractTriggerExit: {fileID: 11400000, guid: 9280f5b371fef457e899e95c351c192b,
     type: 2}
-  interactionAvailable: {fileID: 11400000, guid: 68c18b85069e0430b8cc241c29d36123,
-    type: 2}
-  interactionType: stairs up
   onStairsInteract: {fileID: 11400000, guid: 8e296104cff0a46b698b7f19a567c029, type: 2}
 --- !u!114 &-8366132394696305003
 MonoBehaviour:

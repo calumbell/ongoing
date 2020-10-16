@@ -2,9 +2,12 @@
 
 public class PotInteractable : Interactable
 {
+    public InteractionEvent onInteractionEvent;
+
     public override void OnInteract(GameObject interactor)
     {
-        interactor.GetComponent<PlayerControl>().PickUp(gameObject);
+        Interaction interaction = new Interaction(InteractionType.PickUp, interactor, gameObject);
+        onInteractionEvent.Raise(interaction);
     }
 }
 

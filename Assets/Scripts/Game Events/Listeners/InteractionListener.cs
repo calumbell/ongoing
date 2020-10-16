@@ -1,0 +1,1 @@
+﻿public class InteractionListener : BaseGameEventListener<Interaction, InteractionEvent, UnityInteractionEvent> { }
