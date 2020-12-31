@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHurtbox : MonoBehaviour, IAttackable
 {
@@ -30,6 +31,7 @@ public class PlayerHurtbox : MonoBehaviour, IAttackable
     public void OnDamage(int _damage)
     {
         playerHealth.value -= _damage;
+        if (playerHealth.value <= 0) SceneManager.LoadScene("End");
         onPlayerHealthChangeEvent.Raise();
     }
 
