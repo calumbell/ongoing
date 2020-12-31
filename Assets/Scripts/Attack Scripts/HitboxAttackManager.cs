@@ -15,8 +15,7 @@ public class HitboxAttackManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D target)
     {
-        if (!target.gameObject.CompareTag("EntityHurtBox") && !target.gameObject.CompareTag("PlayerHurtBox"))
-            return;
+        if (target.GetComponentInParent<IAttackable>() == null) return;
 
         if (!targetsInRange.Contains(target))
         {
@@ -34,35 +33,12 @@ public class HitboxAttackManager : MonoBehaviour
 
     public void OnAttackTriggerReceived()
     {
-
         foreach (Collider2D targetCollider in targetsInRange)
         {
-            Rigidbody2D target = targetCollider.GetComponentInParent<Rigidbody2D>();
-
-            // make sure that the target has a RigidBody
-            if (target == null) continue;
-
-            // Stagger entity, and begin coroutine to end stagger
-            if (target.gameObject.CompareTag("Entity"))
-            {
-                target.GetComponent<NPC>().Stagger(target, time.value);
-                target.velocity = Vector2.zero;
-                Vector2 difference = target.transform.position - transform.position;
-                difference = difference.normalized * force.value;
-                target.AddForce(difference, ForceMode2D.Impulse);
-            }
-
-            else if (target.gameObject.CompareTag("Player"))
-            {
-                target.velocity = Vector2.zero;
-                Vector2 difference = target.transform.position - transform.position;
-                difference = difference.normalized * force.value;
-                target.GetComponent<PlayerPhysics>().Push(difference, time.value);
-            }
-
-
+            targetCollider.GetComponentInParent<IAttackable>().OnAttack(transform.parent.gameObject, 1);
         }
     }
+
 
     public Collider2D GetPlayerCollider()
     {

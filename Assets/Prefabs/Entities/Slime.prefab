@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 6048415908946237325}
   - component: {fileID: 6048415908946237324}
   - component: {fileID: 1393366035}
+  - component: {fileID: 1229173563}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Entity
@@ -394,6 +395,20 @@ MonoBehaviour:
   hitboxes:
   - {fileID: 8396926553589058816}
   progressBar: {fileID: 471161222}
+--- !u!114 &1229173563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6048415908946237424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acecc0f0bea774078ac0e93bfe7e27df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 6048415908946237325}
+  movementSpeed: {fileID: 11400000, guid: 70f42d438aa5345a4a222628905b02fb, type: 2}
 --- !u!1 &7259669027701272495
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,6 +419,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7670211694580451806}
   - component: {fileID: 1546270328}
+  - component: {fileID: 32285521}
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: EntityHurtBox
@@ -451,6 +467,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0257187, y: 0.6943536}
   m_EdgeRadius: 0
+--- !u!114 &32285521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7259669027701272495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97673951b51847b3bbc4b4a9aa64140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physics: {fileID: 1229173563}
 --- !u!1 &8988198418082627947
 GameObject:
   m_ObjectHideFlags: 0

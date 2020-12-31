@@ -3,16 +3,17 @@ using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
+    [Header("State Variables")]
     public IntValue playerHealth;
     public Text text;
 
     void Start()
     {
-        onPlayerHealthChanged(playerHealth.value);
+        OnPlayerHealthChanged();
     }
 
-    public void onPlayerHealthChanged(int health)
+    public void OnPlayerHealthChanged()
     {
-        text.text = "Health: " + health.ToString();
+        text.text = "Health: " + playerHealth.value;
     }
 }

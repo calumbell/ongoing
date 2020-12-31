@@ -69,9 +69,10 @@ public class InteractionManager : MonoBehaviour
 
         _carried.GetComponent<Collider2D>().enabled = true;
 
-        // if new position is invalid, return
+        // Perhaps an entities list can be my an EntityManager class? or a Scriptable Object?
         Entity[] entities = GameObject.FindObjectsOfType<Entity>();
 
+        // if new position is invalid, return
         if (_carried.GetComponent<Entity>().IsTouchingAnotherEntity(entities) ||
             _carried.GetComponent<Entity>().IsTouchingWalls())
         {
@@ -80,7 +81,11 @@ public class InteractionManager : MonoBehaviour
             return;
         }
 
-        _carried.transform.parent = null;
+        
+
+        GameObject entityObjectInHierarchy = GameObject.FindGameObjectWithTag("EntitiesList");
+        if (entityObjectInHierarchy != null)  _carried.transform.parent = entityObjectInHierarchy.transform;
+        else _carried.transform.parent = null;
 
         if (_subject.CompareTag("Player"))
         {

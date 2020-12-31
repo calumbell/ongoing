@@ -40,20 +40,18 @@ public class DungeonManager : MonoBehaviour
     {
         inputEnabled.value = false;
 
-        // Initialise floor stacks
         floorsAbove = new Stack<Dungeon>();
         floorsBelow = new Stack<Dungeon>();
 
         entityManager = gameObject.GetComponent<EntityManager>();
 
-        // generate a new dungeon 
         dungeon = new Dungeon(width / 3, height / 3);
         entityManager.PopulateDungeon(dungeon, 7);
 
         InstantiateDungeon(dungeon);
 
         // pick a random room and teleport the player there
-        playerInstance = Instantiate(playerPrefab, new Vector3(dungeon.getStartCoordX(), dungeon.getStartCoordY(), 0), Quaternion.identity);
+        playerInstance = Instantiate(playerPrefab, new Vector3(dungeon.getStartCoordX(), dungeon.getStartCoordY(), -4), Quaternion.identity);
 
         InstantiateEntitiesInDungeon(dungeon);
 

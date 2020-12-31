@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PlayerPhysics : MonoBehaviour
+public class PlayerPhysics : MonoBehaviour, IPhysics
 {
 
 #region Member Fields
@@ -30,10 +30,11 @@ public class PlayerPhysics : MonoBehaviour
 
 #endregion
 
-#region Public Methods
+#region Public Methods (implementing IPhysics)
 
     public void Push(Vector2 _force, float _time)
     {
+        Stop();
         StartCoroutine(PushCoroutine(_force, _time));
     }
 
@@ -42,6 +43,11 @@ public class PlayerPhysics : MonoBehaviour
         rb.MovePosition(
             transform.position + _input.normalized * movementSpeed.value * Time.deltaTime);
         onPlayerMoveEvent.Raise(rb.position);
+    }
+
+    public void Stop()
+    {
+        rb.velocity = Vector2.zero;
     }
 
     public void Teleport(Vector3 _input)
@@ -62,7 +68,7 @@ public class PlayerPhysics : MonoBehaviour
 
     #endregion
 
-    #region Private Methods (Coroutines)
+#region Private Methods (Coroutines)
 
     private IEnumerator PushCoroutine(Vector2 _force, float _time)
     {

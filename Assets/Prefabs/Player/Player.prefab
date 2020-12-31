@@ -406,7 +406,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0039171576, y: -0.03744012}
@@ -434,8 +434,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a9ff6dfaa8b4c9d99ed62a370dc449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  playerHealth: {fileID: 11400000, guid: 10c05dab2dae1404688f403f02236998, type: 2}
   onPlayerStagger: {fileID: 11400000, guid: d2b9b6d8667754d47866e57720d894e1, type: 2}
+  onPlayerHealthChangeEvent: {fileID: 11400000, guid: c67eebef366ca4fbbb444d249498bf04,
+    type: 2}
 --- !u!1 &4871641815656425015
 GameObject:
   m_ObjectHideFlags: 0
